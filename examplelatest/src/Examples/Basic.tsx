@@ -2,7 +2,7 @@ import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import React from 'react';
 import { KeyboardAvoidingView, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { RichText, Toolbar, useEditorBridge } from '@10play/tentap-editor';
+import { RichText, Toolbar, useEditorBridge } from 'tentap-editor-heck';
 
 export const Basic = ({}: NativeStackScreenProps<any, any, any>) => {
   const editor = useEditorBridge({

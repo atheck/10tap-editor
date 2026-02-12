@@ -1,6 +1,6 @@
 import React from 'react';
 import { EditorContent } from '@tiptap/react';
-import { useTenTap, CoreBridge } from '@10play/tentap-editor';
+import { useTenTap, CoreBridge } from 'tentap-editor-heck';
 import Document from '@tiptap/extension-document';
 import Paragraph from '@tiptap/extension-paragraph';
 import Text from '@tiptap/extension-text';

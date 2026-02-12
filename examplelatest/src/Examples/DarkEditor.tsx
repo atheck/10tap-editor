@@ -18,7 +18,7 @@ import {
   CoreBridge,
   darkEditorTheme,
   darkEditorCss,
-} from '@10play/tentap-editor';
+} from 'tentap-editor-heck';
 
 const EDITOR_BACKGROUND_COLOR = '#1C1C1E';
 

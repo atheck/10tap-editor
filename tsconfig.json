@@ -2,7 +2,7 @@
   "compilerOptions": {
     "rootDir": ".",
     "paths": {
-      "@10play/tentap-editor": ["./src/index"]
+      "tentap-editor-heck": ["./src/index"]
     },
     "allowUnreachableCode": false,
     "allowUnusedLabels": false,

@@ -1,7 +1,7 @@
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import React from 'react';
 import { View, KeyboardAvoidingView, StyleSheet, Platform } from 'react-native';
-import { RichText, Toolbar, useEditorBridge } from '@10play/tentap-editor';
+import { RichText, Toolbar, useEditorBridge } from 'tentap-editor-heck';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const HEADER_HEIGHT = 38; // IOS Only

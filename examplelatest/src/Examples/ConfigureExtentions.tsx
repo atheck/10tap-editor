@@ -8,7 +8,7 @@ import {
   TenTapStartKit,
   useEditorBridge,
   DropCursorBridge,
-} from '@10play/tentap-editor';
+} from 'tentap-editor-heck';
 
 export const ConfigureExtensions = () => {
   const [hideContent, setHideContent] = React.useState(false);

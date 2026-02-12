@@ -8,7 +8,7 @@ import {
   useBridgeState,
   type EditorBridge,
   TenTapStartKit,
-} from '@10play/tentap-editor';
+} from 'tentap-editor-heck';
 
 import { editorHtml } from './editor-web/build/editorHtml';
 import { CounterBridge } from './CounterBridge';

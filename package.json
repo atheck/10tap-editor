@@ -1,6 +1,6 @@
 {
-  "name": "@10play/tentap-editor",
-  "version": "1.0.1",
+  "name": "tentap-editor-heck",
+  "version": "1.0.0",
   "description": "React Native Rich Text Editor",
   "main": "lib/commonjs/index.js",
   "module": "lib/module/index.js",
@@ -64,14 +64,14 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/10play/10Tap-Editor.git"
+    "url": "git+https://github.com/atheck/10tap-editor.git"
   },
-  "author": "Amir Angel <36531255+17Amir17@users.noreply.github.com> (https://www.10play.dev)",
+  "author": "atheck",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/10play/10Tap-Editor/issues"
+    "url": "https://github.com/atheck/10tap-editor/issues"
   },
-  "homepage": "https://github.com/10play/10Tap-Editor#readme",
+  "homepage": "https://github.com/atheck/10tap-editor#readme",
   "publishConfig": {
     "registry": "https://registry.npmjs.org/",
     "access": "public"
@@ -151,7 +151,8 @@
       "tagName": "v${version}"
     },
     "npm": {
-      "publish": true
+      "publish": true,
+      "publishArgs": ["--provenance", "--access", "public"]
     },
     "github": {
       "release": true

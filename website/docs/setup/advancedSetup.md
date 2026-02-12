@@ -26,8 +26,8 @@ Create `editor-web/tsconfig.json`:
     "lib": ["dom", "dom.iterable", "esnext"],
     "module": "esnext",
     "paths": {
-      "@10play/tentap-editor": [
-        "../node_modules/@10play/tentap-editor/lib-web/typescript/webEditorUtils/index.d.ts"
+      "tentap-editor-heck": [
+        "../node_modules/tentap-editor-heck/lib-web/typescript/webEditorUtils/index.d.ts"
       ]
     },
     "moduleResolution": "bundler",
@@ -106,7 +106,7 @@ Add the following files
 ```tsx title="AdvancedEditor.tsx"
 import React from 'react';
 import { EditorContent } from '@tiptap/react';
-import { useTenTap, TenTapStartKit } from '@10play/tentap-editor';
+import { useTenTap, TenTapStartKit } from 'tentap-editor-heck';
 import { CounterBridge } from '../CounterBridge';
 import Document from '@tiptap/extension-document';
 import Paragraph from '@tiptap/extension-paragraph';
@@ -189,17 +189,17 @@ export default defineConfig({
   resolve: {
     alias: [
       {
-        find: '@10play/tentap-editor', // On our web bundle we only want to include web related code
-        replacement: '@10play/tentap-editor/web',
+        find: 'tentap-editor-heck', // On our web bundle we only want to include web related code
+        replacement: 'tentap-editor-heck/web',
       },
       // We alias tiptap view and state to use the internal version of tiptap to avoid this error https://github.com/ueberdostiptap/issues/3869#issuecomment-2167931620
       {
         find: '@tiptap/pm/view',
-        replacement: '@10play/tentap-editor/web',
+        replacement: 'tentap-editor-heck/web',
       },
       {
         find: '@tiptap/pm/state',
-        replacement: '@10play/tentap-editor/web',
+        replacement: 'tentap-editor-heck/web',
       },
     ],
   },
@@ -221,7 +221,7 @@ Add scripts on package.json so it will be easy to run/build editor-web:
     ...
     "editor:dev": "vite --config ./editor-web/vite.config.ts",
     "editor:build": "vite --config ./editor-web/vite.config.ts build && yarn editor:post-build",
-    "editor:post-build":"node ./node_modules/@10play/tentap-editor/scripts/buildEditor.js ./editor-web/build/index.html",
+    "editor:post-build":"node ./node_modules/tentap-editor-heck/scripts/buildEditor.js ./editor-web/build/index.html",
     "reverse-android": "adb reverse tcp:3000 tcp:3000",
 }
 ```

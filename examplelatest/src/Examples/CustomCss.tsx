@@ -13,7 +13,7 @@ import {
   TenTapStartKit,
   Toolbar,
   useEditorBridge,
-} from '@10play/tentap-editor';
+} from 'tentap-editor-heck';
 import { ProtestRiotFont } from './CustomFont';
 
 const customFont = `

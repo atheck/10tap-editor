@@ -9,7 +9,7 @@ import {
   ScrollView,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { RichText, Toolbar, useEditorBridge } from '@10play/tentap-editor';
+import { RichText, Toolbar, useEditorBridge } from 'tentap-editor-heck';
 import WebView from 'react-native-webview';
 
 const exampleStyles = StyleSheet.create({

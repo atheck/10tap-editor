@@ -12,6 +12,9 @@ on:
 jobs:
   release:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write      # Required for creating releases and pushing tags
+      id-token: write      # Required for npm trusted publishing (provenance)
     steps:
       - uses: actions/checkout@v2
         with:
@@ -29,8 +32,7 @@ jobs:
         run: yarn editor:build-web-utils
       - name: Build package
         run: yarn prepare
-      - run: npm config set //registry.npmjs.org/:_authToken ${{ secrets.NPM_TOKEN }}
-      - run: yarn release
+      - name: Publish to npm with provenance
+        run: yarn release
         env:
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GH_PAT }}

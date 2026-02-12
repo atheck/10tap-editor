@@ -73,7 +73,7 @@ import {
   StyleSheet,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { RichText, Toolbar, useEditorBridge } from '@10play/tentap-editor';
+import { RichText, Toolbar, useEditorBridge } from 'tentap-editor-heck';
 
 export const Basic = () => {
   const editor = useEditorBridge({

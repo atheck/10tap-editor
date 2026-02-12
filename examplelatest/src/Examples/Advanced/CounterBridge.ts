@@ -1,4 +1,4 @@
-import { BridgeExtension } from '@10play/tentap-editor';
+import { BridgeExtension } from 'tentap-editor-heck';
 import CharacterCount from '@tiptap/extension-character-count';
 
 type CounterEditorState = {
@@ -8,7 +8,7 @@ type CounterEditorState = {
 
 type CounterEditorInstance = {};
 
-declare module '@10play/tentap-editor' {
+declare module 'tentap-editor-heck' {
   interface BridgeState extends CounterEditorState {}
   interface EditorBridge extends CounterEditorInstance {}
 }

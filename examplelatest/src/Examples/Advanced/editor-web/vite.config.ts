@@ -15,11 +15,11 @@ export default defineConfig({
   resolve: {
     alias: [
       {
-        find: '@10play/tentap-editor/web',
+        find: 'tentap-editor-heck/web',
         replacement: libWebPath,
       },
       {
-        find: '@10play/tentap-editor',
+        find: 'tentap-editor-heck',
         replacement: libWebPath,
       },
       // We alias tiptap view and state to use the internal version of tiptap to avoid this error https://github.com/ueberdosis/tiptap/issues/3869#issuecomment-2167931620

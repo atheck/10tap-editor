@@ -5,74 +5,6 @@ __metadata:
   version: 6
   cacheKey: 8
 
-"@10play/tentap-editor@workspace:.":
-  version: 0.0.0-use.local
-  resolution: "@10play/tentap-editor@workspace:."
-  dependencies:
-    "@babel/core": 7.29.0
-    "@babel/preset-env": 7.29.0
-    "@babel/runtime": 7.28.6
-    "@commitlint/config-conventional": 20.4.1
-    "@evilmartians/lefthook": 1.13.6
-    "@react-native/babel-preset": 0.82.1
-    "@react-native/eslint-config": 0.72.2
-    "@release-it/conventional-changelog": 5.1.1
-    "@tiptap/core": 3.19.0
-    "@tiptap/extension-blockquote": 3.19.0
-    "@tiptap/extension-bold": 3.19.0
-    "@tiptap/extension-code": 3.19.0
-    "@tiptap/extension-code-block": 3.19.0
-    "@tiptap/extension-color": 3.19.0
-    "@tiptap/extension-document": 3.19.0
-    "@tiptap/extension-hard-break": 3.19.0
-    "@tiptap/extension-heading": 3.19.0
-    "@tiptap/extension-highlight": 3.19.0
-    "@tiptap/extension-horizontal-rule": 3.19.0
-    "@tiptap/extension-image": 3.19.0
-    "@tiptap/extension-italic": 3.19.0
-    "@tiptap/extension-link": 3.19.0
-    "@tiptap/extension-list": 3.19.0
-    "@tiptap/extension-strike": 3.19.0
-    "@tiptap/extension-text-style": 3.19.0
-    "@tiptap/extension-underline": 3.19.0
-    "@tiptap/extensions": 3.19.0
-    "@tiptap/pm": 3.19.0
-    "@tiptap/react": 3.19.0
-    "@tiptap/starter-kit": 3.19.0
-    "@types/jest": 30.0.0
-    "@types/lodash": 4.17.23
-    "@types/react": 17.0.21
-    "@types/react-dom": 18.3.7
-    "@types/react-native": 0.70.0
-    "@vitejs/plugin-react": 5.1.4
-    commitlint: 20.4.1
-    del-cli: 5.1.0
-    eslint: 8.57.1
-    eslint-config-prettier: 8.10.2
-    eslint-plugin-ft-flow: 2.0.3
-    eslint-plugin-prettier: 5.2.1
-    jest: 30.2.0
-    lodash: 4.17.23
-    pod-install: 0.1.39
-    prettier: 3.8.1
-    react: 18.3.1
-    react-dom: 18.3.1
-    react-native: 0.73.11
-    react-native-builder-bob: 0.20.4
-    react-native-webview: 13.16.0
-    release-it: 15.11.0
-    rimraf: 5.0.10
-    turbo: 1.13.4
-    typescript: 5.9.3
-    vite: 7.3.1
-    vite-plugin-singlefile: 2.3.0
-  peerDependencies:
-    react: "*"
-    react-native: "*"
-    react-native-webview: "*"
-  languageName: unknown
-  linkType: soft
-
 "@aashutoshrathi/word-wrap@npm:^1.2.3":
   version: 1.2.6
   resolution: "@aashutoshrathi/word-wrap@npm:1.2.6"
@@ -24180,6 +24112,74 @@ __metadata:
   checksum: f35bed78565355dfdf95f730b7b489728bd6b7e35071bcc6497af7c827fb6c111fbe9063afc7b8cbc19522a072c278679f9a0ee81e684aa2c8617cc0f2e9c191
   languageName: node
   linkType: hard
+
+"tentap-editor-heck@workspace:.":
+  version: 0.0.0-use.local
+  resolution: "tentap-editor-heck@workspace:."
+  dependencies:
+    "@babel/core": 7.29.0
+    "@babel/preset-env": 7.29.0
+    "@babel/runtime": 7.28.6
+    "@commitlint/config-conventional": 20.4.1
+    "@evilmartians/lefthook": 1.13.6
+    "@react-native/babel-preset": 0.82.1
+    "@react-native/eslint-config": 0.72.2
+    "@release-it/conventional-changelog": 5.1.1
+    "@tiptap/core": 3.19.0
+    "@tiptap/extension-blockquote": 3.19.0
+    "@tiptap/extension-bold": 3.19.0
+    "@tiptap/extension-code": 3.19.0
+    "@tiptap/extension-code-block": 3.19.0
+    "@tiptap/extension-color": 3.19.0
+    "@tiptap/extension-document": 3.19.0
+    "@tiptap/extension-hard-break": 3.19.0
+    "@tiptap/extension-heading": 3.19.0
+    "@tiptap/extension-highlight": 3.19.0
+    "@tiptap/extension-horizontal-rule": 3.19.0
+    "@tiptap/extension-image": 3.19.0
+    "@tiptap/extension-italic": 3.19.0
+    "@tiptap/extension-link": 3.19.0
+    "@tiptap/extension-list": 3.19.0
+    "@tiptap/extension-strike": 3.19.0
+    "@tiptap/extension-text-style": 3.19.0
+    "@tiptap/extension-underline": 3.19.0
+    "@tiptap/extensions": 3.19.0
+    "@tiptap/pm": 3.19.0
+    "@tiptap/react": 3.19.0
+    "@tiptap/starter-kit": 3.19.0
+    "@types/jest": 30.0.0
+    "@types/lodash": 4.17.23
+    "@types/react": 17.0.21
+    "@types/react-dom": 18.3.7
+    "@types/react-native": 0.70.0
+    "@vitejs/plugin-react": 5.1.4
+    commitlint: 20.4.1
+    del-cli: 5.1.0
+    eslint: 8.57.1
+    eslint-config-prettier: 8.10.2
+    eslint-plugin-ft-flow: 2.0.3
+    eslint-plugin-prettier: 5.2.1
+    jest: 30.2.0
+    lodash: 4.17.23
+    pod-install: 0.1.39
+    prettier: 3.8.1
+    react: 18.3.1
+    react-dom: 18.3.1
+    react-native: 0.73.11
+    react-native-builder-bob: 0.20.4
+    react-native-webview: 13.16.0
+    release-it: 15.11.0
+    rimraf: 5.0.10
+    turbo: 1.13.4
+    typescript: 5.9.3
+    vite: 7.3.1
+    vite-plugin-singlefile: 2.3.0
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+    react-native-webview: "*"
+  languageName: unknown
+  linkType: soft
 
 "tentap-example-latest@workspace:examplelatest":
   version: 0.0.0-use.local

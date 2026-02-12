@@ -13,7 +13,7 @@ To customize the native theme you can use the `theme` prop on `useEditorBridge`
 If we simply want to add the existing dark mode theme you can just do
 
 ```tsx
-import { ..., darkEditorTheme } from '@10play/tentap-editor';
+import { ..., darkEditorTheme } from 'tentap-editor-heck';
 useEditorBridge({
    theme: darkEditorTheme
 });
@@ -22,7 +22,7 @@ useEditorBridge({
 Now we just need to update the web-side css with `extendCss`
 
 ```tsx
-import { darkEditorTheme, darkEditorCss } from '@10play/tentap-editor';
+import { darkEditorTheme, darkEditorCss } from 'tentap-editor-heck';
 useEditorBridge({
     ...
     bridgeExtensions: [
