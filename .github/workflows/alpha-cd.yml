@@ -2,10 +2,6 @@ name: ALPHA CD
 
 on:
   push:
-    paths:
-      - 'src/**'
-      - 'ios/**'
-      - 'android/**'
     branches:
       - alpha
 
@@ -13,8 +9,8 @@ jobs:
   release:
     runs-on: ubuntu-latest
     permissions:
-      contents: write      # Required for creating releases and pushing tags
-      id-token: write      # Required for npm trusted publishing (provenance)
+      contents: write # Required for creating releases and pushing tags
+      id-token: write # Required for npm trusted publishing (provenance)
     steps:
       - uses: actions/checkout@v2
         with:
