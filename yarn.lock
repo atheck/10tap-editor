@@ -7595,6 +7595,72 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@tiptap/extension-subscript@npm:3.19.0":
+  version: 3.19.0
+  resolution: "@tiptap/extension-subscript@npm:3.19.0"
+  peerDependencies:
+    "@tiptap/core": ^3.19.0
+    "@tiptap/pm": ^3.19.0
+  checksum: 72d90baeeaee6a7f0273d4bc02d654e45f9b123552dd577380b0d1e7d0685c442931bb3e525f53c54fa26468c0d80ab07cd7b8cf538ff7cb3964a779d6cb18f9
+  languageName: node
+  linkType: hard
+
+"@tiptap/extension-superscript@npm:3.19.0":
+  version: 3.19.0
+  resolution: "@tiptap/extension-superscript@npm:3.19.0"
+  peerDependencies:
+    "@tiptap/core": ^3.19.0
+    "@tiptap/pm": ^3.19.0
+  checksum: 5a41953db93695c77e213e0d9fe6028e1162ca2d81740306b4727e4a8b700f23bfcf0ceb7426c9b6e1dcd102a104f6aca986b74762278b4d40cd6545e6051486
+  languageName: node
+  linkType: hard
+
+"@tiptap/extension-table-cell@npm:3.19.0":
+  version: 3.19.0
+  resolution: "@tiptap/extension-table-cell@npm:3.19.0"
+  peerDependencies:
+    "@tiptap/extension-table": ^3.19.0
+  checksum: 9a55343d8a59e1056cb10dd233c6cee042da1df6c33a9f9f4904057d58e585ad434eeb67d6aa20d542f2d57ef132d81bcab74bbe232326e8b85e8c7b49951583
+  languageName: node
+  linkType: hard
+
+"@tiptap/extension-table-header@npm:3.19.0":
+  version: 3.19.0
+  resolution: "@tiptap/extension-table-header@npm:3.19.0"
+  peerDependencies:
+    "@tiptap/extension-table": ^3.19.0
+  checksum: afc2d789106cf59957a39e37e76e96727024508fd7a7980d5db0a0c829e13ec6e8735eb48cfe4b6e887d0f8c032e2fd3fa0c5f497d99d82ebc3ae3ee36777456
+  languageName: node
+  linkType: hard
+
+"@tiptap/extension-table-row@npm:3.19.0":
+  version: 3.19.0
+  resolution: "@tiptap/extension-table-row@npm:3.19.0"
+  peerDependencies:
+    "@tiptap/extension-table": ^3.19.0
+  checksum: 70e696cd8d61e0928999aa93c285ddda4fd162dd2f2673adcc226f200eda10405307b7a32055282d49825fbaf718173f6a8b2d3537b639ae0f1e1988107d5070
+  languageName: node
+  linkType: hard
+
+"@tiptap/extension-table@npm:3.19.0":
+  version: 3.19.0
+  resolution: "@tiptap/extension-table@npm:3.19.0"
+  peerDependencies:
+    "@tiptap/core": ^3.19.0
+    "@tiptap/pm": ^3.19.0
+  checksum: 023436f1acbdd52b3db7cf05514817f6d69484c2182efe40b0b0e10859ea48ff58d1732fbac0e32f15d1e167c7a964b39f04e051d54fc5e2989bbadad3c6db4a
+  languageName: node
+  linkType: hard
+
+"@tiptap/extension-text-align@npm:3.19.0":
+  version: 3.19.0
+  resolution: "@tiptap/extension-text-align@npm:3.19.0"
+  peerDependencies:
+    "@tiptap/core": ^3.19.0
+  checksum: 2265afe3433857c95d45db43588c5f1161fdad39363432da4a61721aa85837ef899eda73e41d36cfaeb3fcf8f8c6a913f64cf1d05ec1d9ae9d4790d3f56bd36e
+  languageName: node
+  linkType: hard
+
 "@tiptap/extension-text-style@npm:3.19.0":
   version: 3.19.0
   resolution: "@tiptap/extension-text-style@npm:3.19.0"
@@ -24141,6 +24207,13 @@ __metadata:
     "@tiptap/extension-link": 3.19.0
     "@tiptap/extension-list": 3.19.0
     "@tiptap/extension-strike": 3.19.0
+    "@tiptap/extension-subscript": 3.19.0
+    "@tiptap/extension-superscript": 3.19.0
+    "@tiptap/extension-table": 3.19.0
+    "@tiptap/extension-table-cell": 3.19.0
+    "@tiptap/extension-table-header": 3.19.0
+    "@tiptap/extension-table-row": 3.19.0
+    "@tiptap/extension-text-align": 3.19.0
     "@tiptap/extension-text-style": 3.19.0
     "@tiptap/extension-underline": 3.19.0
     "@tiptap/extensions": 3.19.0
