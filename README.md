@@ -34,7 +34,7 @@ After years of developing rich text editors for mobile, we realized that there i
 
 ## React Native
 
-1. `yarn add tentap-editor-heck react-native-webview`
+1. `npm install tentap-editor-heck react-native-webview`
 2. `cd ios && pod install`
 
 ## Expo

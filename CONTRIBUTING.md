@@ -8,18 +8,16 @@ Open issues for things to work on!
 
 ## Development workflow
 
-This project is a monorepo managed using [Yarn workspaces](https://yarnpkg.com/features/workspaces). It contains the following packages:
+This project is a monorepo managed using [npm workspaces](https://docs.npmjs.com/cli/using-npm/workspaces). It contains the following packages:
 
 - The library package in the root directory.
 - An example app in the `examplelatest/` directory.
 
-To get started with the project, run `yarn` in the root directory to install the required dependencies for each package:
+To get started with the project, install all dependencies in the root directory to install the required dependencies for each package:
 
 ```sh
-yarn
+npm install --legacy-peer-deps
 ```
-
-> Since the project relies on Yarn workspaces, you cannot use [`npm`](https://github.com/npm/cli) for development.
 
 The [example app](/examplelatest/) demonstrates usage of the library. You need to run it to test any changes you make.
 
@@ -35,12 +33,12 @@ Before running the examples you must build the editor
 To build the editor:
 
 ```sh
-yarn editor:build
+npm run editor:build
 ```
 
 If you are working on the web side of the editor and you want to have hot reload enabled you need to do the following
 
-1. run `yarn editor:dev`
+1. run `npm run editor:dev`
 2. inside `useEditorBridge` set `DEV: true`
 
 ```tsx
@@ -53,19 +51,19 @@ const editor = useEditorBridge({
 To start the packager:
 
 ```sh
-yarn examplelatest start
+npm -w tentap-example-latest run start
 ```
 
 To run the example app on Android:
 
 ```sh
-yarn examplelatest android
+npm -w tentap-example-latest run android
 ```
 
 To run the example app on iOS:
 
 ```sh
-yarn examplelatest ios
+npm -w tentap-example-latest run ios
 ```
 
 By default, the example is configured to build with the old architecture. To run the example with the new architecture, you can do the following:
@@ -73,20 +71,20 @@ By default, the example is configured to build with the old architecture. To run
 1. For Android, run:
 
    ```sh
-   ORG_GRADLE_PROJECT_newArchEnabled=true yarn examplelatest android
+   ORG_GRADLE_PROJECT_newArchEnabled=true npm -w tentap-example-latest run android
    ```
 
 2. For iOS, run:
 
    ```sh
-   RCT_NEW_ARCH_ENABLED=1 yarn pod-install examplelatest/ios
-   yarn examplelatest ios
+   RCT_NEW_ARCH_ENABLED=1 npx pod-install examplelatest/ios
+   npm -w tentap-example-latest run ios
    ```
 
 If you are building for a different architecture than your previous build, make sure to remove the build folders first. You can run the following command to cleanup all build folders:
 
 ```sh
-yarn clean
+npm run clean
 ```
 
 To confirm that the app is running with the new architecture, you can check the Metro logs for a message like this:
@@ -100,20 +98,20 @@ Note the `"fabric":true` and `"concurrentRoot":true` properties.
 Make sure your code passes TypeScript and ESLint. Run the following to verify:
 
 ```sh
-yarn typecheck
-yarn lint
+npm run typecheck
+npm run lint
 ```
 
 To fix formatting errors, run the following:
 
 ```sh
-yarn lint --fix
+npm run lint -- --fix
 ```
 
 Remember to add tests for your change if possible. Run the unit tests by:
 
 ```sh
-yarn test
+npm test
 ```
 
 ### Commit message convention
@@ -144,22 +142,22 @@ We use [release-it](https://github.com/release-it/release-it) to make it easier 
 To publish new versions, run the following:
 
 ```sh
-yarn release
+npm run release
 ```
 
 ### Scripts
 
 The `package.json` file contains various scripts for common tasks:
 
-- `yarn`: setup project by installing dependencies.
-- `yarn editor:build`: build the editor
-- `yarn editor:dev`: run the editor dev server
-- `yarn typecheck`: type-check files with TypeScript.
-- `yarn lint`: lint files with ESLint.
-- `yarn test`: run unit tests with Jest.
-- `yarn examplelatest start`: start the Metro server for the example app.
-- `yarn examplelatest android`: run the example app on Android.
-- `yarn examplelatest ios`: run the example app on iOS.
+- `npm install`: setup project by installing dependencies.
+- `npm run editor:build`: build the editor
+- `npm run editor:dev`: run the editor dev server
+- `npm run typecheck`: type-check files with TypeScript.
+- `npm run lint`: lint files with ESLint.
+- `npm test`: run unit tests with Jest.
+- `npm -w tentap-example-latest run start`: start the Metro server for the example app.
+- `npm -w tentap-example-latest run android`: run the example app on Android.
+- `npm -w tentap-example-latest run ios`: run the example app on iOS.
 
 ### Sending a pull request
 

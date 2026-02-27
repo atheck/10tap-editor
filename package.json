@@ -44,7 +44,7 @@
     "editor:dev": "vite",
     "editor:build": "vite build && node ./scripts/buildEditor.js ./src/simpleWebEditor/build/index.html",
     "editor:build-web-utils": "rimraf lib-web && vite build --config ./src/webEditorUtils/vite.config.ts && tsc --project ./src/webEditorUtils",
-    "examplelatest": "yarn workspace tentap-example-latest",
+    "examplelatest": "npm -w tentap-example-latest",
     "test": "jest",
     "typecheck": "tsc --noEmit",
     "lint": "eslint \"**/*.{js,ts,tsx}\"",
@@ -111,7 +111,7 @@
     "vite": "7.3.1",
     "vite-plugin-singlefile": "2.3.0"
   },
-  "resolutions": {
+  "overrides": {
     "@types/react": "17.0.21",
     "prosemirror-model": "1.25.4",
     "prosemirror-state": "1.4.3",
@@ -128,7 +128,6 @@
     "examplelatest",
     "website"
   ],
-  "packageManager": "yarn@3.6.1",
   "engines": {
     "node": ">= 22.12.0"
   },

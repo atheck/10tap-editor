@@ -3,10 +3,10 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "android": "react-native run-android && yarn reverse-android",
+    "android": "react-native run-android && npm run reverse-android",
     "reverse-android": "adb reverse tcp:3000 tcp:3000",
     "editor:dev": "vite --config ./src/Examples/Advanced/editor-web/vite.config.ts",
-    "editor:build": "vite --config ./src/Examples/Advanced/editor-web/vite.config.ts build && yarn editor:post-build",
+    "editor:build": "vite --config ./src/Examples/Advanced/editor-web/vite.config.ts build && npm run editor:post-build",
     "editor:post-build": "node ../scripts/buildEditor.js ./src/Examples/Advanced/editor-web/build/index.html",
     "ios": "react-native run-ios",
     "start": "react-native start",

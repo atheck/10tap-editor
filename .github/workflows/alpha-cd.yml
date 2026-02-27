@@ -27,14 +27,14 @@ jobs:
       - name: Setup
         uses: ./.github/actions/setup
       - name: Build simple editor bundle
-        run: yarn editor:build
+        run: npm run editor:build
       - name: Build web utils
-        run: yarn editor:build-web-utils
+        run: npm run editor:build-web-utils
       - name: Bump version for alpha release
         run: npm version prerelease --preid=alpha
       - name: Build package
-        run: yarn prepare
+        run: npm run prepare
       - name: Publish to npm with provenance
-        run: yarn release
+        run: npm run release
         env:
           GITHUB_TOKEN: ${{ secrets.GH_PAT }}
