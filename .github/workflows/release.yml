@@ -2,10 +2,6 @@ name: Release
 
 on:
   push:
-    paths:
-      - 'src/**'
-      - 'ios/**'
-      - 'android/**'
     branches:
       - main
       - alpha
@@ -14,10 +10,10 @@ jobs:
   release:
     runs-on: ubuntu-latest
     permissions:
-      contents: write        # push tags, commits, create GitHub releases
-      id-token: write        # npm OIDC trusted publishing (provenance)
-      issues: write          # semantic-release GitHub plugin
-      pull-requests: write   # semantic-release GitHub plugin
+      contents: write # push tags, commits, create GitHub releases
+      id-token: write # npm OIDC trusted publishing (provenance)
+      issues: write # semantic-release GitHub plugin
+      pull-requests: write # semantic-release GitHub plugin
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -35,7 +31,7 @@ jobs:
         run: npm run editor:build-web-utils
 
       - name: Build package
-        run: npm run prepare
+        run: npm run prepack
 
       - name: Release
         run: npx semantic-release
