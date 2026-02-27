@@ -1,3 +1,15 @@
+# [1.1.0-alpha.1](https://github.com/atheck/10tap-editor/compare/v1.0.0...v1.1.0-alpha.1) (2026-02-27)
+
+
+### Bug Fixes
+
+* handle linting issues ([f0916c7](https://github.com/atheck/10tap-editor/commit/f0916c76e2e459f726f3e48bdb1f46a053db7a52))
+
+
+### Features
+
+* add more tiptap extensions ([918e4d7](https://github.com/atheck/10tap-editor/commit/918e4d7453493273cfd8d32a6c3587dce24b57d4))
+
 # 1.0.0 (2026-02-27)
 
 
