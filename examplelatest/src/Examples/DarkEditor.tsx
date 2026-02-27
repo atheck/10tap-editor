@@ -1,4 +1,5 @@
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { extendMarkRange } from '@tiptap/core';
 import React from 'react';
 import {
   View,
@@ -36,18 +37,9 @@ export const DarkEditor = ({}: NativeStackScreenProps<any, any, any>) => {
 
   return (
     <SafeAreaView
-      style={{
-        ...exampleStyles.fullScreen,
-        backgroundColor: EDITOR_BACKGROUND_COLOR,
-      }}
+      style={[exampleStyles.fullScreen, exampleStyles.container]}
     >
-      <View
-        style={{
-          ...exampleStyles.fullScreen,
-          paddingHorizontal: 12,
-          backgroundColor: EDITOR_BACKGROUND_COLOR,
-        }}
-      >
+      <View style={[exampleStyles.fullScreen, exampleStyles.editorContent]}>
         <RichText editor={editor} />
       </View>
       <KeyboardAvoidingView
@@ -82,6 +74,13 @@ const ToolbarWithColor = ({ editor }: ToolbarWithColorProps) => {
 const exampleStyles = StyleSheet.create({
   fullScreen: {
     flex: 1,
+  },
+  container: {
+    backgroundColor: EDITOR_BACKGROUND_COLOR
+  },
+  editorContent: {
+    paddingHorizontal: 12,
+    backgroundColor: EDITOR_BACKGROUND_COLOR,
   },
   keyboardAvoidingView: {
     position: 'absolute',
