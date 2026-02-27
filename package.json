@@ -44,13 +44,14 @@
     "editor:dev": "vite",
     "editor:build": "vite build && node ./scripts/buildEditor.js ./src/simpleWebEditor/build/index.html",
     "editor:build-web-utils": "rimraf lib-web && vite build --config ./src/webEditorUtils/vite.config.ts && tsc --project ./src/webEditorUtils",
-    "examplelatest": "yarn workspace tentap-example-latest",
+    "examplelatest": "npm -w tentap-example-latest",
     "test": "jest",
     "typecheck": "tsc --noEmit",
     "lint": "eslint \"**/*.{js,ts,tsx}\"",
     "clean": "del-cli android/build examplelatest/android/build examplelatest/android/app/build examplelatest/ios/build example76/android/build example76/android/app/build example76/ios/build lib",
-    "prepare": "bob build",
-    "release": "release-it"
+    "prepack": "bob build",
+    "release": "semantic-release",
+    "update": "npx -y npm-check-updates -i --install never && npx -y npm-check-updates -i --target minor --install never && npx -y npm-check-updates -i --target patch --install never && npm update --legacy-peer-deps && npm audit signatures"
   },
   "keywords": [
     "rich text",
@@ -84,7 +85,8 @@
     "@evilmartians/lefthook": "1.13.6",
     "@react-native/babel-preset": "0.82.1",
     "@react-native/eslint-config": "0.72.2",
-    "@release-it/conventional-changelog": "5.1.1",
+    "@semantic-release/changelog": "6.0.3",
+    "@semantic-release/git": "10.0.1",
     "@types/jest": "30.0.0",
     "@types/lodash": "4.17.23",
     "@types/react": "17.0.21",
@@ -104,14 +106,14 @@
     "react-native": "0.73.11",
     "react-native-builder-bob": "0.20.4",
     "react-native-webview": "13.16.0",
-    "release-it": "15.11.0",
     "rimraf": "5.0.10",
+    "semantic-release": "25.0.3",
     "turbo": "1.13.4",
     "typescript": "5.9.3",
     "vite": "7.3.1",
     "vite-plugin-singlefile": "2.3.0"
   },
-  "resolutions": {
+  "overrides": {
     "@types/react": "17.0.21",
     "prosemirror-model": "1.25.4",
     "prosemirror-state": "1.4.3",
@@ -128,7 +130,6 @@
     "examplelatest",
     "website"
   ],
-  "packageManager": "yarn@3.6.1",
   "engines": {
     "node": ">= 22.12.0"
   },
@@ -144,30 +145,6 @@
     "extends": [
       "@commitlint/config-conventional"
     ]
-  },
-  "release-it": {
-    "git": {
-      "commitMessage": "chore: release ${version} [skip ci]",
-      "tagName": "v${version}"
-    },
-    "npm": {
-      "publish": true,
-      "publishArgs": [
-        "--provenance",
-        "--access",
-        "public"
-      ],
-      "skipChecks": true,
-      "timeout": 60
-    },
-    "github": {
-      "release": true
-    },
-    "plugins": {
-      "@release-it/conventional-changelog": {
-        "preset": "conventionalcommits"
-      }
-    }
   },
   "eslintConfig": {
     "root": true,
@@ -212,7 +189,8 @@
       [
         "typescript",
         {
-          "project": "tsconfig.build.json"
+          "project": "tsconfig.build.json",
+          "tsc": "./node_modules/.bin/tsc"
         }
       ]
     ]
