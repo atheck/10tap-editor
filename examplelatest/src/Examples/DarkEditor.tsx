@@ -1,5 +1,4 @@
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { extendMarkRange } from '@tiptap/core';
 import React from 'react';
 import {
   View,
