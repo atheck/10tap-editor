@@ -51,9 +51,10 @@ export const HorizontalRuleBridge = new BridgeExtension<
   },
   extendCSS: `
   hr {
-    border: none;
-    border-top: 2px solid rgba(0, 0, 0, 0.1);
-    margin: 2rem 0;
+    border-width: 0;
+    border-top-width: thin;
+    border-style: solid;
+    border-color: rgba(0, 0, 0, 0.6);
   }
   `,
 });

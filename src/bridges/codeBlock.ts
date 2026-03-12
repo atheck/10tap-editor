@@ -82,69 +82,21 @@ export const CodeBlockBridge = new BridgeExtension<
   },
   extendCSS: `
   pre {
-    background: #0d0d0d;
-    color: #fff;
-    font-family: 'JetBrainsMono', 'Courier New', monospace;
-    padding: 0.75rem 1rem;
-    border-radius: 0.5rem;
+    margin-top: 4px;
+    margin-bottom: 4px;
+    padding: 8px;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    border-radius: 4px;
+    background: rgba(0, 0, 0, 0.04);
+    line-height: 1.4;
+    overflow-x: auto;
+    white-space: pre !important;
   }
 
   pre code {
     color: inherit;
     padding: 0;
     background: none;
-    font-size: 0.875rem;
-  }
-
-  pre .hljs-comment,
-  pre .hljs-quote {
-    color: #616161;
-  }
-
-  pre .hljs-variable,
-  pre .hljs-template-variable,
-  pre .hljs-attribute,
-  pre .hljs-tag,
-  pre .hljs-name,
-  pre .hljs-regexp,
-  pre .hljs-link,
-  pre .hljs-selector-id,
-  pre .hljs-selector-class {
-    color: #f98181;
-  }
-
-  pre .hljs-number,
-  pre .hljs-meta,
-  pre .hljs-built_in,
-  pre .hljs-builtin-name,
-  pre .hljs-literal,
-  pre .hljs-type,
-  pre .hljs-params {
-    color: #fbbc88;
-  }
-
-  pre .hljs-string,
-  pre .hljs-symbol,
-  pre .hljs-bullet {
-    color: #b9f18d;
-  }
-
-  pre .hljs-title,
-  pre .hljs-section {
-    color: #faf594;
-  }
-
-  pre .hljs-keyword,
-  pre .hljs-selector-tag {
-    color: #70cff8;
-  }
-
-  pre .hljs-emphasis {
-    font-style: italic;
-  }
-
-  pre .hljs-strong {
-    font-weight: 700;
   }
   `,
 });

@@ -228,25 +228,31 @@ export const TableBridge = new BridgeExtension<
   table {
     border-collapse: collapse;
     table-layout: fixed;
-    width: 100%;
     margin: 0;
-    overflow: hidden;
+    overflow-y: hidden;
+    overflow-x: auto;
+    display: block;
   }
 
   table td,
   table th {
     min-width: 1em;
-    border: 2px solid #ced4da;
+    border: 1px solid #bdbdbd;
     padding: 3px 5px;
     vertical-align: top;
     box-sizing: border-box;
     position: relative;
   }
 
+  table td > *,
+  table th > * {
+    margin-bottom: 0;
+  }
+
   table th {
-    font-weight: bold;
+    font-weight: 500;
     text-align: left;
-    background-color: #f1f3f5;
+    background-color: rgba(0, 0, 0, 0.08);
   }
 
   table .selectedCell {
