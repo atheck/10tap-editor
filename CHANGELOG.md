@@ -1,3 +1,10 @@
+# [1.1.0-alpha.3](https://github.com/atheck/10tap-editor/compare/v1.1.0-alpha.2...v1.1.0-alpha.3) (2026-03-12)
+
+
+### Bug Fixes
+
+* update CSS of code-block, horizontal-rule, and table extensions ([4dd80e3](https://github.com/atheck/10tap-editor/commit/4dd80e3d6342e4fce9414ff81de1deee04f7f799))
+
 # [1.1.0-alpha.2](https://github.com/atheck/10tap-editor/compare/v1.1.0-alpha.1...v1.1.0-alpha.2) (2026-03-12)
 
 
