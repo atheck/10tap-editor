@@ -1,3 +1,10 @@
+# [1.1.0-alpha.2](https://github.com/atheck/10tap-editor/compare/v1.1.0-alpha.1...v1.1.0-alpha.2) (2026-03-12)
+
+
+### Features
+
+* add all newly added extensions to the starter kit ([27f9395](https://github.com/atheck/10tap-editor/commit/27f93952fdebbba76ea3b5e6a711dfd215f473e1))
+
 # [1.1.0-alpha.1](https://github.com/atheck/10tap-editor/compare/v1.0.0...v1.1.0-alpha.1) (2026-02-27)
 
 
