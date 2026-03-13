@@ -1,3 +1,10 @@
+# [1.1.0-alpha.4](https://github.com/atheck/10tap-editor/compare/v1.1.0-alpha.3...v1.1.0-alpha.4) (2026-03-13)
+
+
+### Bug Fixes
+
+* update dark theme for code block ([9931848](https://github.com/atheck/10tap-editor/commit/993184830e38735bb5bfa34b62fdc3fe614d37be))
+
 # [1.1.0-alpha.3](https://github.com/atheck/10tap-editor/compare/v1.1.0-alpha.2...v1.1.0-alpha.3) (2026-03-12)
 
 
