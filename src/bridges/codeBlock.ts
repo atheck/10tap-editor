@@ -85,7 +85,9 @@ export const CodeBlockBridge = new BridgeExtension<
     margin-top: 4px;
     margin-bottom: 4px;
     padding: 8px;
-    border: 1px solid rgba(0, 0, 0, 0.12);
+    border-width: 1px;
+    border-style: solid;
+    border-color: rgba(0, 0, 0, 0.12);
     border-radius: 4px;
     background: rgba(0, 0, 0, 0.04);
     line-height: 1.4;
