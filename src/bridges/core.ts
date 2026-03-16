@@ -359,4 +359,9 @@ export const CoreBridge = new BridgeExtension<
       empty: editor.isEmpty,
     };
   },
+  extendCSS: `
+  p {
+    margin-block-start: 0;
+    margin-block-end: 0;
+  }`,
 });
