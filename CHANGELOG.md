@@ -1,3 +1,10 @@
+# [1.1.0-alpha.7](https://github.com/atheck/10tap-editor/compare/v1.1.0-alpha.6...v1.1.0-alpha.7) (2026-03-16)
+
+
+### Features
+
+* `configureCSS` can be called multiple times for an extension bridge ([bd32fba](https://github.com/atheck/10tap-editor/commit/bd32fba602aa0e020d787bfc84f8aa4fb3255fed))
+
 # [1.1.0-alpha.6](https://github.com/atheck/10tap-editor/compare/v1.1.0-alpha.5...v1.1.0-alpha.6) (2026-03-16)
 
 
