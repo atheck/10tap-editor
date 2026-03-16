@@ -1,10 +1,10 @@
-import Image from '@tiptap/extension-image';
+import Image, { type SetImageOptions } from '@tiptap/extension-image';
 import BridgeExtension from './base';
 
 type ImageEditorState = {};
 
 type ImageEditorInstance = {
-  setImage: (src: string) => void;
+  setImage: (options: SetImageOptions) => void;
 };
 
 declare module '../types/EditorBridge' {
@@ -18,7 +18,7 @@ export enum ImageEditorActionType {
 
 type ImageMessage = {
   type: ImageEditorActionType.SetImage;
-  payload: string;
+  payload: SetImageOptions;
 };
 
 export const ImageBridge = new BridgeExtension<
@@ -34,7 +34,7 @@ export const ImageBridge = new BridgeExtension<
       editor
         .chain()
         .focus()
-        .setImage({ src: message.payload })
+        .setImage(message.payload)
         .setTextSelection(editor.state.selection.to + 1)
         .run();
     }
@@ -43,10 +43,10 @@ export const ImageBridge = new BridgeExtension<
   },
   extendEditorInstance: (sendBridgeMessage) => {
     return {
-      setImage: (src: string) =>
+      setImage: (options: SetImageOptions) =>
         sendBridgeMessage({
           type: ImageEditorActionType.SetImage,
-          payload: src,
+          payload: options,
         }),
     };
   },
