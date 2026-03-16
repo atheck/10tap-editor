@@ -1,3 +1,10 @@
+# [1.1.0-alpha.6](https://github.com/atheck/10tap-editor/compare/v1.1.0-alpha.5...v1.1.0-alpha.6) (2026-03-16)
+
+
+### Bug Fixes
+
+* remove block margins around `p` elements ([6574efb](https://github.com/atheck/10tap-editor/commit/6574efbff47c6702f8d175587813586110497011))
+
 # [1.1.0-alpha.5](https://github.com/atheck/10tap-editor/compare/v1.1.0-alpha.4...v1.1.0-alpha.5) (2026-03-16)
 
 
