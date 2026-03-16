@@ -1,3 +1,10 @@
+# [1.1.0-alpha.9](https://github.com/atheck/10tap-editor/compare/v1.1.0-alpha.8...v1.1.0-alpha.9) (2026-03-16)
+
+
+### Bug Fixes
+
+* insert new line after image (fix) ([965031a](https://github.com/atheck/10tap-editor/commit/965031aac12eb7343525dc84148f4e2bac07724f))
+
 # [1.1.0-alpha.8](https://github.com/atheck/10tap-editor/compare/v1.1.0-alpha.7...v1.1.0-alpha.8) (2026-03-16)
 
 
