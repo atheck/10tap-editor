@@ -87,7 +87,7 @@ class BridgeExtension<T = any, E = any, M = any> {
 
   configureCSS(css: string) {
     const cloned = this.clone();
-    cloned.extendCSS = css;
+    cloned.extendCSS = this.extendCSS ? this.extendCSS + css : css;
     return cloned;
   }
 
