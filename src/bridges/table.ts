@@ -18,6 +18,9 @@ type TableEditorState = {
   canSplitCell: boolean;
   canGoToNextCell: boolean;
   canGoToPreviousCell: boolean;
+  canToggleHeaderRow: boolean;
+  canToggleHeaderColumn: boolean;
+  canToggleHeaderCell: boolean;
 };
 
 type TableEditorInstance = {
@@ -38,6 +41,9 @@ type TableEditorInstance = {
   goToNextCell: () => void;
   goToPreviousCell: () => void;
   fixTables: () => void;
+  toggleHeaderRow: () => void;
+  toggleHeaderColumn: () => void;
+  toggleHeaderCell: () => void;
 };
 
 declare module '../types/EditorBridge' {
@@ -59,6 +65,9 @@ export enum TableEditorActionType {
   GoToNextCell = 'go-to-next-cell',
   GoToPreviousCell = 'go-to-previous-cell',
   FixTables = 'fix-tables',
+  ToggleHeaderRow = 'toggle-header-row',
+  ToggleHeaderColumn = 'toggle-header-column',
+  ToggleHeaderCell = 'toggle-header-cell',
 }
 
 type TableMessage =
@@ -112,6 +121,18 @@ type TableMessage =
     }
   | {
       type: TableEditorActionType.FixTables;
+      payload?: undefined;
+    }
+  | {
+      type: TableEditorActionType.ToggleHeaderRow;
+      payload?: undefined;
+    }
+  | {
+      type: TableEditorActionType.ToggleHeaderColumn;
+      payload?: undefined;
+    }
+  | {
+      type: TableEditorActionType.ToggleHeaderCell;
       payload?: undefined;
     };
 
@@ -171,6 +192,15 @@ export const TableBridge = new BridgeExtension<
       case TableEditorActionType.FixTables:
         editor.chain().focus().fixTables().run();
         break;
+      case TableEditorActionType.ToggleHeaderRow:
+        editor.chain().focus().toggleHeaderRow().run();
+        break;
+      case TableEditorActionType.ToggleHeaderColumn:
+        editor.chain().focus().toggleHeaderColumn().run();
+        break;
+      case TableEditorActionType.ToggleHeaderCell:
+        editor.chain().focus().toggleHeaderCell().run();
+        break;
     }
     return false;
   },
@@ -205,6 +235,12 @@ export const TableBridge = new BridgeExtension<
         sendBridgeMessage({ type: TableEditorActionType.GoToPreviousCell }),
       fixTables: () =>
         sendBridgeMessage({ type: TableEditorActionType.FixTables }),
+      toggleHeaderRow: () =>
+        sendBridgeMessage({ type: TableEditorActionType.ToggleHeaderRow }),
+      toggleHeaderColumn: () =>
+        sendBridgeMessage({ type: TableEditorActionType.ToggleHeaderColumn }),
+      toggleHeaderCell: () =>
+        sendBridgeMessage({ type: TableEditorActionType.ToggleHeaderCell }),
     };
   },
   extendEditorState: (editor) => {
@@ -222,6 +258,9 @@ export const TableBridge = new BridgeExtension<
       canSplitCell: editor.can().splitCell(),
       canGoToNextCell: editor.can().goToNextCell(),
       canGoToPreviousCell: editor.can().goToPreviousCell(),
+      canToggleHeaderRow: editor.can().toggleHeaderRow(),
+      canToggleHeaderColumn: editor.can().toggleHeaderColumn(),
+      canToggleHeaderCell: editor.can().toggleHeaderCell(),
     };
   },
   extendCSS: `
