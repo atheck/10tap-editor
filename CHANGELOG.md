@@ -1,3 +1,10 @@
+# [1.1.0-alpha.11](https://github.com/atheck/10tap-editor/compare/v1.1.0-alpha.10...v1.1.0-alpha.11) (2026-03-16)
+
+
+### Bug Fixes
+
+* use trailing node extension as is ([5688a7b](https://github.com/atheck/10tap-editor/commit/5688a7b4d3962bba1bc8f96359db3ce165343c0e))
+
 # [1.1.0-alpha.10](https://github.com/atheck/10tap-editor/compare/v1.1.0-alpha.9...v1.1.0-alpha.10) (2026-03-16)
 
 
