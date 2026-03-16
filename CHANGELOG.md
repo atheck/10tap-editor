@@ -1,3 +1,10 @@
+# [1.1.0-alpha.5](https://github.com/atheck/10tap-editor/compare/v1.1.0-alpha.4...v1.1.0-alpha.5) (2026-03-16)
+
+
+### Features
+
+* support image options when adding an image ([ae6d7f2](https://github.com/atheck/10tap-editor/commit/ae6d7f2f7e69a98ddeee4bc26ba011a1e9d80541))
+
 # [1.1.0-alpha.4](https://github.com/atheck/10tap-editor/compare/v1.1.0-alpha.3...v1.1.0-alpha.4) (2026-03-13)
 
 
