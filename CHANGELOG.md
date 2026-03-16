@@ -1,3 +1,15 @@
+# [1.1.0-alpha.8](https://github.com/atheck/10tap-editor/compare/v1.1.0-alpha.7...v1.1.0-alpha.8) (2026-03-16)
+
+
+### Bug Fixes
+
+* add new paragraph under a new image ([4594341](https://github.com/atheck/10tap-editor/commit/4594341cfe12cd744178bf5cb1f8e87a9373cd37))
+
+
+### Features
+
+* add table actions to toggle header columns, rows, and cells ([2484b9e](https://github.com/atheck/10tap-editor/commit/2484b9ef8cbea0d972bc2d4ae2acb9f4e675a995))
+
 # [1.1.0-alpha.7](https://github.com/atheck/10tap-editor/compare/v1.1.0-alpha.6...v1.1.0-alpha.7) (2026-03-16)
 
 
