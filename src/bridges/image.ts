@@ -36,7 +36,6 @@ export const ImageBridge = new BridgeExtension<
         .focus()
         .setImage(message.payload)
         .setTextSelection(editor.state.selection.to + 1)
-        .insertContent('<p></p>')
         .run();
     }
 
