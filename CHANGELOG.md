@@ -1,3 +1,29 @@
+# [1.1.0](https://github.com/atheck/10tap-editor/compare/v1.0.0...v1.1.0) (2026-03-17)
+
+
+### Bug Fixes
+
+* add font family and font size extension bridges to the starter kit to make them work ([5b3f3b6](https://github.com/atheck/10tap-editor/commit/5b3f3b67c75cc41138e95a13233f847e99590591))
+* add new paragraph under a new image ([4594341](https://github.com/atheck/10tap-editor/commit/4594341cfe12cd744178bf5cb1f8e87a9373cd37))
+* handle linting issues ([f0916c7](https://github.com/atheck/10tap-editor/commit/f0916c76e2e459f726f3e48bdb1f46a053db7a52))
+* insert new line after image (fix) ([965031a](https://github.com/atheck/10tap-editor/commit/965031aac12eb7343525dc84148f4e2bac07724f))
+* remove block margins around `p` elements ([6574efb](https://github.com/atheck/10tap-editor/commit/6574efbff47c6702f8d175587813586110497011))
+* update CSS of code-block, horizontal-rule, and table extensions ([4dd80e3](https://github.com/atheck/10tap-editor/commit/4dd80e3d6342e4fce9414ff81de1deee04f7f799))
+* update dark theme for code block ([9931848](https://github.com/atheck/10tap-editor/commit/993184830e38735bb5bfa34b62fdc3fe614d37be))
+* use trailing node extension as is ([5688a7b](https://github.com/atheck/10tap-editor/commit/5688a7b4d3962bba1bc8f96359db3ce165343c0e))
+
+
+### Features
+
+* `configureCSS` can be called multiple times for an extension bridge ([bd32fba](https://github.com/atheck/10tap-editor/commit/bd32fba602aa0e020d787bfc84f8aa4fb3255fed))
+* add all newly added extensions to the starter kit ([27f9395](https://github.com/atheck/10tap-editor/commit/27f93952fdebbba76ea3b5e6a711dfd215f473e1))
+* add extensions for font family and font size ([201cbba](https://github.com/atheck/10tap-editor/commit/201cbbad0e44b8758271668cca7e11de9acbd909))
+* add more tiptap extensions ([918e4d7](https://github.com/atheck/10tap-editor/commit/918e4d7453493273cfd8d32a6c3587dce24b57d4))
+* add new trailing node extension ([406b08d](https://github.com/atheck/10tap-editor/commit/406b08df6b0da69338bbd8288f9599136fcd0f75))
+* add table actions to toggle header columns, rows, and cells ([2484b9e](https://github.com/atheck/10tap-editor/commit/2484b9ef8cbea0d972bc2d4ae2acb9f4e675a995))
+* allow to configure all table extensions and add types for config options ([dcfc6f4](https://github.com/atheck/10tap-editor/commit/dcfc6f444375d7e68c7edba4619232ddfbed5c8e))
+* support image options when adding an image ([ae6d7f2](https://github.com/atheck/10tap-editor/commit/ae6d7f2f7e69a98ddeee4bc26ba011a1e9d80541))
+
 # [1.1.0-alpha.13](https://github.com/atheck/10tap-editor/compare/v1.1.0-alpha.12...v1.1.0-alpha.13) (2026-03-17)
 
 
