@@ -206,6 +206,7 @@
     "@tiptap/extension-heading": "3.20.1",
     "@tiptap/extension-highlight": "3.20.1",
     "@tiptap/extension-horizontal-rule": "3.20.1",
+    "@tiptap/extension-font-family": "3.20.1",
     "@tiptap/extension-image": "3.20.1",
     "@tiptap/extension-italic": "3.20.1",
     "@tiptap/extension-link": "3.20.1",

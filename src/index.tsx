@@ -28,6 +28,8 @@ export * from './bridges/superscript';
 export * from './bridges/table';
 export * from './bridges/codeBlock';
 export * from './bridges/horizontalRule';
+export * from './bridges/fontFamily';
+export * from './bridges/fontSize';
 export * from './bridges/trailingNode';
 export * from './types';
 export * from './utils';
