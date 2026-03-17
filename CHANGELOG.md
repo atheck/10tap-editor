@@ -1,3 +1,10 @@
+# [1.1.0-alpha.12](https://github.com/atheck/10tap-editor/compare/v1.1.0-alpha.11...v1.1.0-alpha.12) (2026-03-17)
+
+
+### Features
+
+* add extensions for font family and font size ([201cbba](https://github.com/atheck/10tap-editor/commit/201cbbad0e44b8758271668cca7e11de9acbd909))
+
 # [1.1.0-alpha.11](https://github.com/atheck/10tap-editor/compare/v1.1.0-alpha.10...v1.1.0-alpha.11) (2026-03-16)
 
 
