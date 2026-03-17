@@ -1,4 +1,4 @@
-import Italic from '@tiptap/extension-italic';
+import Italic, { type ItalicOptions } from '@tiptap/extension-italic';
 import BridgeExtension from './base';
 
 type ItalicEditorState = {
@@ -27,7 +27,8 @@ type ItalicMessage = {
 export const ItalicBridge = new BridgeExtension<
   ItalicEditorState,
   ItalicEditorInstance,
-  ItalicMessage
+  ItalicMessage,
+  ItalicOptions
 >({
   tiptapExtension: Italic,
   onBridgeMessage: (editor, message) => {

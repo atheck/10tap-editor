@@ -1,4 +1,4 @@
-import Link from '@tiptap/extension-link';
+import Link, { type LinkOptions } from '@tiptap/extension-link';
 import BridgeExtension from './base';
 
 type LinkEditorState = {
@@ -28,7 +28,8 @@ type LinkMessage = {
 export const LinkBridge = new BridgeExtension<
   LinkEditorState,
   LinkEditorInstance,
-  LinkMessage
+  LinkMessage,
+  LinkOptions
 >({
   tiptapExtension: Link.configure({
     openOnClick: false,

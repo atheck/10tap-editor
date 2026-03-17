@@ -1,4 +1,4 @@
-import Bold from '@tiptap/extension-bold';
+import Bold, { type BoldOptions } from '@tiptap/extension-bold';
 import BridgeExtension from './base';
 
 type BoldEditorState = {
@@ -27,7 +27,8 @@ type BoldMessage = {
 export const BoldBridge = new BridgeExtension<
   BoldEditorState,
   BoldEditorInstance,
-  BoldMessage
+  BoldMessage,
+  BoldOptions
 >({
   tiptapExtension: Bold,
   onBridgeMessage: (editor, message) => {

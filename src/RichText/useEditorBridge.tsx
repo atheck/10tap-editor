@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef } from 'react';
+import { useEffect, useMemo, useRef, type RefObject } from 'react';
 import WebView from 'react-native-webview';
 import cloneDeep from 'lodash/cloneDeep';
 import {
@@ -162,7 +162,7 @@ export const useEditorBridge = (options?: {
       acc,
       cur.extendEditorInstance(
         sendAction,
-        webviewRef,
+        webviewRef as RefObject<WebView<{}>>,
         editorStateRef,
         _updateEditorState,
         Platform.OS

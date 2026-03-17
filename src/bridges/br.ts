@@ -1,4 +1,4 @@
-import HardBreak from '@tiptap/extension-hard-break';
+import HardBreak, { type HardBreakOptions } from '@tiptap/extension-hard-break';
 import BridgeExtension from './base';
 
 type HardBreakState = {};
@@ -24,7 +24,8 @@ type HardBreakMessage = {
 export const HardBreakBridge = new BridgeExtension<
   HardBreakState,
   HardBreakEditorInstance,
-  HardBreakMessage
+  HardBreakMessage,
+  HardBreakOptions
 >({
   tiptapExtension: HardBreak,
   onBridgeMessage: (editor, message) => {

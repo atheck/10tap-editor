@@ -1,4 +1,4 @@
-import Code from '@tiptap/extension-code';
+import Code, { type CodeOptions } from '@tiptap/extension-code';
 import BridgeExtension from './base';
 
 type CodeEditorState = {
@@ -27,7 +27,8 @@ type CodeMessage = {
 export const CodeBridge = new BridgeExtension<
   CodeEditorState,
   CodeEditorInstance,
-  CodeMessage
+  CodeMessage,
+  CodeOptions
 >({
   tiptapExtension: Code,
   //   tiptapExtensionDeps: [CodeBlock],

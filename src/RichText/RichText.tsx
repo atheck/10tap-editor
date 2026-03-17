@@ -127,7 +127,7 @@ export const RichText = ({
         key={key}
         style={[
           RichTextStyles.fullScreen,
-          { display: loaded ? 'flex' : 'none' },
+          loaded ? RichTextStyles.webviewVisible : RichTextStyles.webviewHidden,
           editor.theme.webview,
         ]}
         containerStyle={[
@@ -163,5 +163,11 @@ export const RichText = ({
 const RichTextStyles = StyleSheet.create({
   fullScreen: {
     flex: 1,
+  },
+  webviewVisible: {
+    display: 'flex',
+  },
+  webviewHidden: {
+    display: 'none',
   },
 });

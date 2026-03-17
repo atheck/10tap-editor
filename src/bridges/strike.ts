@@ -1,4 +1,4 @@
-import Strike from '@tiptap/extension-strike';
+import Strike, { type StrikeOptions } from '@tiptap/extension-strike';
 import BridgeExtension from './base';
 
 type StrikeEditorState = {
@@ -27,7 +27,8 @@ type StrikeMessage = {
 export const StrikeBridge = new BridgeExtension<
   StrikeEditorState,
   StrikeEditorInstance,
-  StrikeMessage
+  StrikeMessage,
+  StrikeOptions
 >({
   tiptapExtension: Strike,
   onBridgeMessage: (editor, message) => {

@@ -41,6 +41,9 @@ const exampleStyles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  scrollContent: {
+    paddingBottom: 120,
+  },
 });
 
 const defaultMessages = [{ text: 'Hello World!', date: Date.now() }];
@@ -75,7 +78,7 @@ export const EditorStickToKeyboardExample = ({}: NativeStackScreenProps<
       <ScrollView
         automaticallyAdjustKeyboardInsets={true}
         ref={MessagesScrollViewRef}
-        contentContainerStyle={{ paddingBottom: 120 }}
+        contentContainerStyle={exampleStyles.scrollContent}
       >
         {messages.map((message) => (
           <View style={exampleStyles.messageBox}>

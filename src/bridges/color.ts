@@ -1,5 +1,5 @@
 import { TextStyle } from '@tiptap/extension-text-style';
-import { Color } from '@tiptap/extension-color';
+import { Color, type ColorOptions } from '@tiptap/extension-color';
 import BridgeExtension from './base';
 
 type ColorEditorState = {
@@ -34,7 +34,8 @@ type ColorMessage = SetColorMessage | UnsetColorMessage;
 export const ColorBridge = new BridgeExtension<
   ColorEditorState,
   ColorEditorInstance,
-  ColorMessage
+  ColorMessage,
+  ColorOptions
 >({
   tiptapExtension: Color,
   tiptapExtensionDeps: [TextStyle],

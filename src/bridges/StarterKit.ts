@@ -18,6 +18,16 @@ import { ImageBridge } from './image';
 import { PlaceholderBridge } from './placeholder';
 import { DropCursorBridge } from './dropcursor';
 import { HardBreakBridge } from './br';
+import { TextStyleBridge } from './textStyle';
+import { TextAlignBridge } from './textAlign';
+import { SubscriptBridge } from './subscript';
+import { SuperscriptBridge } from './superscript';
+import { TableBridge } from './table';
+import { CodeBlockBridge } from './codeBlock';
+import { HorizontalRuleBridge } from './horizontalRule';
+import { FontFamilyBridge } from './fontFamily';
+import { FontSizeBridge } from './fontSize';
+import { TrailingNodeBridge } from './trailingNode';
 
 export const TenTapStartKit = [
   BoldBridge,
@@ -40,4 +50,14 @@ export const TenTapStartKit = [
   ListItemBridge,
   DropCursorBridge,
   HardBreakBridge,
+  TextStyleBridge,
+  TextAlignBridge,
+  SubscriptBridge,
+  SuperscriptBridge,
+  TableBridge,
+  CodeBlockBridge,
+  HorizontalRuleBridge,
+  FontFamilyBridge,
+  FontSizeBridge,
+  TrailingNodeBridge,
 ];

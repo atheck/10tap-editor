@@ -35,6 +35,7 @@ type CoreEditorInstance = {
 };
 
 declare module '../types/EditorBridge' {
+  // eslint-disable-next-line @typescript-eslint/no-shadow
   interface BridgeState extends CoreEditorState {}
   interface EditorBridge extends CoreEditorInstance {}
 }
@@ -358,4 +359,9 @@ export const CoreBridge = new BridgeExtension<
       empty: editor.isEmpty,
     };
   },
+  extendCSS: `
+  p {
+    margin-block-start: 0;
+    margin-block-end: 0;
+  }`,
 });

@@ -1,5 +1,5 @@
 import React from 'react';
-import { View } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import type { EditorBridge } from '../../types';
 import type { ToolbarItem } from './actions';
 import { ToolbarItemComp } from './ToolbarItemComp';
@@ -10,6 +10,7 @@ interface WebToolbarProps {
   items: ToolbarItem[];
   hidden?: boolean;
 }
+
 export const WebToolbar = ({
   args,
   editor,
@@ -19,10 +20,16 @@ export const WebToolbar = ({
   if (hidden) return null;
 
   return (
-    <View style={{ flexDirection: 'row' }}>
+    <View style={styles.container}>
       {items?.map((item, i) => (
         <ToolbarItemComp {...item} args={args} editor={editor} key={i} />
       ))}
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flexDirection: 'row',
+  },
+});
