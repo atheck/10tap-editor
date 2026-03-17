@@ -1,4 +1,7 @@
-import Image, { type SetImageOptions } from '@tiptap/extension-image';
+import Image, {
+  type ImageOptions,
+  type SetImageOptions,
+} from '@tiptap/extension-image';
 import BridgeExtension from './base';
 
 type ImageEditorState = {};
@@ -24,7 +27,8 @@ type ImageMessage = {
 export const ImageBridge = new BridgeExtension<
   ImageEditorState,
   ImageEditorInstance,
-  ImageMessage
+  ImageMessage,
+  ImageOptions
 >({
   tiptapExtension: Image.configure({
     allowBase64: true,

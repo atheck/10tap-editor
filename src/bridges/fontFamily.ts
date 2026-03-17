@@ -1,5 +1,7 @@
 import { TextStyle } from '@tiptap/extension-text-style';
-import FontFamily from '@tiptap/extension-font-family';
+import FontFamily, {
+  type FontFamilyOptions,
+} from '@tiptap/extension-font-family';
 import BridgeExtension from './base';
 
 type FontFamilyEditorState = {
@@ -34,7 +36,8 @@ type FontFamilyMessage =
 export const FontFamilyBridge = new BridgeExtension<
   FontFamilyEditorState,
   FontFamilyEditorInstance,
-  FontFamilyMessage
+  FontFamilyMessage,
+  FontFamilyOptions
 >({
   tiptapExtension: FontFamily,
   tiptapExtensionDeps: [TextStyle],

@@ -1,4 +1,6 @@
-import Blockquote from '@tiptap/extension-blockquote';
+import Blockquote, {
+  type BlockquoteOptions,
+} from '@tiptap/extension-blockquote';
 import BridgeExtension from './base';
 
 type BlockquoteEditorState = {
@@ -27,7 +29,8 @@ type BlockquoteMessage = {
 export const BlockquoteBridge = new BridgeExtension<
   BlockquoteEditorState,
   BlockquoteEditorInstance,
-  BlockquoteMessage
+  BlockquoteMessage,
+  BlockquoteOptions
 >({
   tiptapExtension: Blockquote,
   onBridgeMessage: (editor, message) => {

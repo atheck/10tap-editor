@@ -1,4 +1,4 @@
-import { ListItem } from '@tiptap/extension-list';
+import { ListItem, type ListItemOptions } from '@tiptap/extension-list';
 import BridgeExtension from './base';
 
 type ListItemEditorState = {
@@ -34,7 +34,8 @@ export interface ListItemMessage {
 export const ListItemBridge = new BridgeExtension<
   ListItemEditorState,
   ListItemEditorInstance,
-  ListItemMessage
+  ListItemMessage,
+  ListItemOptions
 >({
   tiptapExtension: ListItem,
   onBridgeMessage: (editor, message) => {

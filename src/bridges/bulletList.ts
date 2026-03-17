@@ -1,4 +1,8 @@
-import { BulletList, ListItem } from '@tiptap/extension-list';
+import {
+  BulletList,
+  type BulletListOptions,
+  ListItem,
+} from '@tiptap/extension-list';
 import BridgeExtension from './base';
 
 type BulletListEditorState = {
@@ -27,7 +31,8 @@ type BulletListMessage = {
 export const BulletListBridge = new BridgeExtension<
   BulletListEditorState,
   BulletListEditorInstance,
-  BulletListMessage
+  BulletListMessage,
+  BulletListOptions
 >({
   tiptapExtension: BulletList,
   tiptapExtensionDeps: [ListItem],

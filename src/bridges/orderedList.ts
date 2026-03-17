@@ -1,4 +1,8 @@
-import { OrderedList, ListItem } from '@tiptap/extension-list';
+import {
+  OrderedList,
+  type OrderedListOptions,
+  ListItem,
+} from '@tiptap/extension-list';
 import BridgeExtension from './base';
 
 type OrderedListEditorState = {
@@ -27,7 +31,8 @@ type OrderedListMessage = {
 export const OrderedListBridge = new BridgeExtension<
   OrderedListEditorState,
   OrderedListEditorInstance,
-  OrderedListMessage
+  OrderedListMessage,
+  OrderedListOptions
 >({
   tiptapExtension: OrderedList,
   tiptapExtensionDeps: [ListItem],

@@ -1,4 +1,4 @@
-import { TextStyle } from '@tiptap/extension-text-style';
+import { TextStyle, type TextStyleOptions } from '@tiptap/extension-text-style';
 import BridgeExtension from './base';
 
 type TextStyleEditorState = {};
@@ -17,7 +17,8 @@ type TextStyleMessage = never;
 export const TextStyleBridge = new BridgeExtension<
   TextStyleEditorState,
   TextStyleEditorInstance,
-  TextStyleMessage
+  TextStyleMessage,
+  TextStyleOptions
 >({
   tiptapExtension: TextStyle,
   onBridgeMessage: () => {

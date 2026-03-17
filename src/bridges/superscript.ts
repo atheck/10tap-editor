@@ -1,4 +1,6 @@
-import Superscript from '@tiptap/extension-superscript';
+import Superscript, {
+  type SuperscriptExtensionOptions,
+} from '@tiptap/extension-superscript';
 import BridgeExtension from './base';
 
 type SuperscriptEditorState = {
@@ -27,7 +29,8 @@ type SuperscriptMessage = {
 export const SuperscriptBridge = new BridgeExtension<
   SuperscriptEditorState,
   SuperscriptEditorInstance,
-  SuperscriptMessage
+  SuperscriptMessage,
+  SuperscriptExtensionOptions
 >({
   tiptapExtension: Superscript,
   onBridgeMessage: (editor, message) => {

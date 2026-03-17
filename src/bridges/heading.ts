@@ -1,4 +1,7 @@
-import Heading, { type Level } from '@tiptap/extension-heading';
+import Heading, {
+  type HeadingOptions,
+  type Level,
+} from '@tiptap/extension-heading';
 import BridgeExtension from './base';
 
 type HeadingEditorState = {
@@ -27,7 +30,8 @@ type HeadingMessage = {
 export const HeadingBridge = new BridgeExtension<
   HeadingEditorState,
   HeadingEditorInstance,
-  HeadingMessage
+  HeadingMessage,
+  HeadingOptions
 >({
   tiptapExtension: Heading,
   onBridgeMessage: (editor, message) => {

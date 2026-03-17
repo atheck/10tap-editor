@@ -1,8 +1,21 @@
-import { Table } from '@tiptap/extension-table';
-import { TableRow } from '@tiptap/extension-table-row';
-import { TableCell } from '@tiptap/extension-table-cell';
-import { TableHeader } from '@tiptap/extension-table-header';
+import {
+  Table,
+  type TableOptions,
+  TableRow,
+  type TableRowOptions,
+  TableCell,
+  type TableCellOptions,
+  TableHeader,
+  type TableHeaderOptions,
+} from '@tiptap/extension-table';
 import BridgeExtension from './base';
+
+type TableConfig = {
+  table?: Partial<TableOptions>;
+  tableRow?: Partial<TableRowOptions>;
+  tableCell?: Partial<TableCellOptions>;
+  tableHeader?: Partial<TableHeaderOptions>;
+};
 
 type TableEditorState = {
   isTableActive: boolean;
@@ -139,7 +152,8 @@ type TableMessage =
 export const TableBridge = new BridgeExtension<
   TableEditorState,
   TableEditorInstance,
-  TableMessage
+  TableMessage,
+  TableConfig
 >({
   tiptapExtension: Table,
   tiptapExtensionDeps: [TableRow, TableCell, TableHeader],

@@ -1,5 +1,5 @@
 import { TextStyle } from '@tiptap/extension-text-style';
-import { Highlight } from '@tiptap/extension-highlight';
+import { Highlight, type HighlightOptions } from '@tiptap/extension-highlight';
 import BridgeExtension from './base';
 
 type HighlightEditorState = {
@@ -44,7 +44,8 @@ type HighlightMessage =
 export const HighlightBridge = new BridgeExtension<
   HighlightEditorState,
   HighlightEditorInstance,
-  HighlightMessage
+  HighlightMessage,
+  HighlightOptions
 >({
   tiptapExtension: Highlight.configure({ multicolor: true }),
   tiptapExtensionDeps: [TextStyle],

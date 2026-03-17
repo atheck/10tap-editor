@@ -1,4 +1,6 @@
-import HorizontalRule from '@tiptap/extension-horizontal-rule';
+import HorizontalRule, {
+  type HorizontalRuleOptions,
+} from '@tiptap/extension-horizontal-rule';
 import BridgeExtension from './base';
 
 type HorizontalRuleEditorState = {
@@ -26,7 +28,8 @@ type HorizontalRuleMessage = {
 export const HorizontalRuleBridge = new BridgeExtension<
   HorizontalRuleEditorState,
   HorizontalRuleEditorInstance,
-  HorizontalRuleMessage
+  HorizontalRuleMessage,
+  HorizontalRuleOptions
 >({
   tiptapExtension: HorizontalRule,
   onBridgeMessage: (editor, message) => {

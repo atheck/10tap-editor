@@ -1,4 +1,4 @@
-import Underline from '@tiptap/extension-underline';
+import Underline, { type UnderlineOptions } from '@tiptap/extension-underline';
 import BridgeExtension from './base';
 
 type UnderlineEditorState = {
@@ -27,7 +27,8 @@ type UnderlineMessage = {
 export const UnderlineBridge = new BridgeExtension<
   UnderlineEditorState,
   UnderlineEditorInstance,
-  UnderlineMessage
+  UnderlineMessage,
+  UnderlineOptions
 >({
   tiptapExtension: Underline,
   onBridgeMessage: (editor, message) => {

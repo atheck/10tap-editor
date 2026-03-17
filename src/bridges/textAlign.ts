@@ -1,4 +1,4 @@
-import TextAlign from '@tiptap/extension-text-align';
+import TextAlign, { type TextAlignOptions } from '@tiptap/extension-text-align';
 import BridgeExtension from './base';
 
 type TextAlignEditorState = {
@@ -36,7 +36,8 @@ type TextAlignMessage = SetTextAlignMessage | UnsetTextAlignMessage;
 export const TextAlignBridge = new BridgeExtension<
   TextAlignEditorState,
   TextAlignEditorInstance,
-  TextAlignMessage
+  TextAlignMessage,
+  TextAlignOptions
 >({
   tiptapExtension: TextAlign.configure({
     types: ['heading', 'paragraph'],

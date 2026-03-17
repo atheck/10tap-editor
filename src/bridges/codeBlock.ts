@@ -1,4 +1,4 @@
-import CodeBlock from '@tiptap/extension-code-block';
+import CodeBlock, { type CodeBlockOptions } from '@tiptap/extension-code-block';
 import BridgeExtension from './base';
 
 type CodeBlockEditorState = {
@@ -37,7 +37,8 @@ type CodeBlockMessage = ToggleCodeBlockMessage | SetCodeBlockMessage;
 export const CodeBlockBridge = new BridgeExtension<
   CodeBlockEditorState,
   CodeBlockEditorInstance,
-  CodeBlockMessage
+  CodeBlockMessage,
+  CodeBlockOptions
 >({
   tiptapExtension: CodeBlock,
   onBridgeMessage: (editor, { type, payload }) => {

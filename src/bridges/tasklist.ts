@@ -1,4 +1,8 @@
-import { TaskList, TaskItem } from '@tiptap/extension-list';
+import {
+  TaskList,
+  type TaskListOptions,
+  TaskItem,
+} from '@tiptap/extension-list';
 import BridgeExtension from './base';
 
 type TaskListEditorState = {
@@ -42,7 +46,8 @@ type TaskListMessage =
 export const TaskListBridge = new BridgeExtension<
   TaskListEditorState,
   TaskListEditorInstance,
-  TaskListMessage
+  TaskListMessage,
+  TaskListOptions
 >({
   tiptapExtension: TaskList,
   tiptapExtensionDeps: [TaskItem.configure({ nested: true })],

@@ -1,4 +1,6 @@
-import Subscript from '@tiptap/extension-subscript';
+import Subscript, {
+  type SubscriptExtensionOptions,
+} from '@tiptap/extension-subscript';
 import BridgeExtension from './base';
 
 type SubscriptEditorState = {
@@ -27,7 +29,8 @@ type SubscriptMessage = {
 export const SubscriptBridge = new BridgeExtension<
   SubscriptEditorState,
   SubscriptEditorInstance,
-  SubscriptMessage
+  SubscriptMessage,
+  SubscriptExtensionOptions
 >({
   tiptapExtension: Subscript,
   onBridgeMessage: (editor, message) => {

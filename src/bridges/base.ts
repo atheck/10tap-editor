@@ -3,7 +3,7 @@ import type { EditorBridge, BridgeState } from '../types';
 import type WebView from 'react-native-webview';
 import type { RefObject } from 'react';
 
-interface BridgeExtension<T = any, E = any, M = any> {
+interface BridgeExtension<T = any, E = any, M = any, TConfig = unknown> {
   name: string;
   tiptapExtension?: AnyExtension;
   tiptapExtensionDeps?: AnyExtension[];
@@ -22,12 +22,17 @@ interface BridgeExtension<T = any, E = any, M = any> {
     platform?: string
   ) => E;
   extendCSS?: string | undefined;
-  config?: any;
+  config?: TConfig;
   extendConfig?: any;
 }
 
-type CreateTenTapBridgeArgs<T = any, E = any, M = any> = Omit<
-  BridgeExtension<T, E, M> & { forceName?: string },
+type CreateTenTapBridgeArgs<
+  T = any,
+  E = any,
+  M = any,
+  TConfig = unknown,
+> = Omit<
+  BridgeExtension<T, E, M, TConfig> & { forceName?: string },
   | 'name'
   | 'sendMessage'
   | 'configureExtension'
@@ -37,7 +42,7 @@ type CreateTenTapBridgeArgs<T = any, E = any, M = any> = Omit<
   | 'clone'
 >;
 
-class BridgeExtension<T = any, E = any, M = any> {
+class BridgeExtension<T = any, E = any, M = any, TConfig = unknown> {
   constructor({
     forceName,
     tiptapExtension,
@@ -49,7 +54,7 @@ class BridgeExtension<T = any, E = any, M = any> {
     extendCSS,
     config,
     extendConfig,
-  }: CreateTenTapBridgeArgs<T, E, M>) {
+  }: CreateTenTapBridgeArgs<T, E, M, TConfig>) {
     if (!tiptapExtension) {
       this.name = forceName || 'BridgeExtension';
     } else {
@@ -71,15 +76,15 @@ class BridgeExtension<T = any, E = any, M = any> {
 
   // we can use clone, so that extension's can be configures without modifying
   // the values for each extension
-  clone(): BridgeExtension<T, E, M> {
-    return new BridgeExtension<T, E, M>({
+  clone(): BridgeExtension<T, E, M, TConfig> {
+    return new BridgeExtension<T, E, M, TConfig>({
       ...this,
       forceName: this.name,
     });
   }
 
   // runs on native
-  configureExtension(config: any) {
+  configureExtension(config: TConfig) {
     const cloned = this.clone();
     cloned.config = config;
     return cloned;
@@ -99,16 +104,22 @@ class BridgeExtension<T = any, E = any, M = any> {
 
   // runs on web
   configureTiptapExtensionsOnRunTime(config: any, extendConfig: any) {
-    // Configure extension
     if (this.tiptapExtension) {
-      if (config) {
-        this.tiptapExtension = this.tiptapExtension?.configure(config);
+      // If config has a key matching the extension name, use that slice (e.g. TableConfig);
+      // otherwise fall back to the whole config object for backwards compatibility.
+      const mainConfig = config?.[this.tiptapExtension.name] ?? config;
+      if (mainConfig) {
+        this.tiptapExtension = this.tiptapExtension.configure(mainConfig);
       }
       if (extendConfig) {
-        this.tiptapExtension = this.tiptapExtension?.extend(extendConfig);
+        this.tiptapExtension = this.tiptapExtension.extend(extendConfig);
       }
     }
-    return [this.tiptapExtension, ...(this.tiptapExtensionDeps || [])];
+    const deps = (this.tiptapExtensionDeps || []).map((dep) => {
+      const depConfig = config?.[dep.name];
+      return depConfig ? dep.configure(depConfig) : dep;
+    });
+    return [this.tiptapExtension, ...deps];
   }
 }
 export default BridgeExtension;
