@@ -1,3 +1,10 @@
+# [1.1.0-alpha.13](https://github.com/atheck/10tap-editor/compare/v1.1.0-alpha.12...v1.1.0-alpha.13) (2026-03-17)
+
+
+### Bug Fixes
+
+* add font family and font size extension bridges to the starter kit to make them work ([5b3f3b6](https://github.com/atheck/10tap-editor/commit/5b3f3b67c75cc41138e95a13233f847e99590591))
+
 # [1.1.0-alpha.12](https://github.com/atheck/10tap-editor/compare/v1.1.0-alpha.11...v1.1.0-alpha.12) (2026-03-17)
 
 
