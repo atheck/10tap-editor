@@ -25,6 +25,8 @@ import { SuperscriptBridge } from './superscript';
 import { TableBridge } from './table';
 import { CodeBlockBridge } from './codeBlock';
 import { HorizontalRuleBridge } from './horizontalRule';
+import { FontFamilyBridge } from './fontFamily';
+import { FontSizeBridge } from './fontSize';
 import { TrailingNodeBridge } from './trailingNode';
 
 export const TenTapStartKit = [
@@ -55,5 +57,7 @@ export const TenTapStartKit = [
   TableBridge,
   CodeBlockBridge,
   HorizontalRuleBridge,
+  FontFamilyBridge,
+  FontSizeBridge,
   TrailingNodeBridge,
 ];
