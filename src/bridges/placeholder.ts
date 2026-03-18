@@ -1,33 +1,28 @@
-import { Placeholder } from '@tiptap/extensions';
-import BridgeExtension from './base';
+import { Placeholder } from "@tiptap/extensions";
+import { BridgeExtension } from "./base";
 
-type PlaceholderEditorState = {};
+type PlaceholderEditorState = Record<string, never>;
 
-type PlaceholderEditorInstance = {
-  setPlaceholder: (newPlaceholder: string) => void;
-};
-
-declare module '../types/EditorBridge' {
-  interface BridgeState extends PlaceholderEditorState {}
-  interface EditorBridge extends PlaceholderEditorInstance {}
+interface PlaceholderEditorInstance {
+	setPlaceholder: (newPlaceholder: string) => void;
 }
 
-export enum PlaceholderEditorActionType {
-  setPlaceholder = 'set-placeholder',
+declare module "../types/EditorBridge" {
+	interface EditorBridge extends PlaceholderEditorInstance {}
 }
 
-export interface PlaceholderMessage {
-  type: PlaceholderEditorActionType.setPlaceholder;
-  payload: string;
+interface PlaceholderMessage {
+	type: "set-placeholder";
+	payload: string;
 }
 
-export const PlaceholderBridge = new BridgeExtension<
-  PlaceholderEditorState,
-  PlaceholderEditorInstance,
-  PlaceholderMessage
->({
-  tiptapExtension: Placeholder,
-  extendCSS: `
+const PlaceholderEditorActionType = {
+	setPlaceholder: "set-placeholder",
+} as const;
+
+const PlaceholderBridge = new BridgeExtension<PlaceholderEditorState, PlaceholderEditorInstance, PlaceholderMessage>({
+	tiptapExtension: Placeholder,
+	extendCss: `
     .is-editor-empty:first-child::before {
         color: #adb5bd;
         content: attr(data-placeholder);
@@ -36,32 +31,39 @@ export const PlaceholderBridge = new BridgeExtension<
         pointer-events: none;
     }
   `,
-  onBridgeMessage: (editor, message) => {
-    switch (message.type) {
-      case PlaceholderEditorActionType.setPlaceholder:
-        const currentExtensions = editor.extensionManager.extensions;
-        currentExtensions.forEach((extension) => {
-          if (extension.name === 'placeholder') {
-            extension.options.placeholder = message.payload;
-          }
-        });
+	onBridgeMessage: (editor, message) => {
+		switch (message.type) {
+			// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- The only message for now.
+			case PlaceholderEditorActionType.setPlaceholder: {
+				const currentExtensions = editor.extensionManager.extensions;
 
-        // TODO: find better way to update the editor
-        editor.setOptions();
-        break;
-    }
+				for (const extension of currentExtensions) {
+					if (extension.name === "placeholder") {
+						// eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+						extension.options.placeholder = message.payload;
+					}
+				}
 
-    return false;
-  },
-  extendEditorInstance: (sendBridgeMessage) => {
-    const setPlaceholder = (newPlaceholder: string) =>
-      sendBridgeMessage({
-        type: PlaceholderEditorActionType.setPlaceholder,
-        payload: newPlaceholder,
-      });
+				// TODO: find better way to update the editor
+				editor.setOptions();
+				break;
+			}
+		}
 
-    return {
-      setPlaceholder,
-    };
-  },
+		return false;
+	},
+	extendEditorInstance: (sendBridgeMessage) => {
+		const setPlaceholder = (newPlaceholder: string): void => {
+			sendBridgeMessage({
+				type: PlaceholderEditorActionType.setPlaceholder,
+				payload: newPlaceholder,
+			});
+		};
+
+		return {
+			setPlaceholder,
+		};
+	},
 });
+
+export { PlaceholderBridge, PlaceholderEditorActionType, type PlaceholderMessage };

@@ -1,36 +1,40 @@
 {
-  "compilerOptions": {
-    "rootDir": ".",
-    "paths": {
-      "tentap-editor-heck": ["./src/index"]
-    },
-    "allowUnreachableCode": false,
-    "allowUnusedLabels": false,
-    "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true,
-    "jsx": "react",
-    "lib": ["esnext"],
-    "module": "esnext",
-    "moduleResolution": "bundler",
-    "noFallthroughCasesInSwitch": true,
-    "noImplicitReturns": true,
-    "noImplicitUseStrict": false,
-    "noStrictGenericChecks": false,
-    "noUncheckedIndexedAccess": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "resolveJsonModule": true,
-    "skipLibCheck": true,
-    "strict": true,
-    "target": "esnext",
-    "verbatimModuleSyntax": true,
-  },
-  "exclude": [
-    "./src/simpleWebEditor",
-    "./website",
-    "examplelatest",
-    "examplelatest/src/Examples/Advanced/editor-web",
-    "./src/webEditorUtils",
-    "./src/webEditorUtils/vite.config.ts"
-  ]
+	"compilerOptions": {
+		"rootDir": ".",
+		"paths": {
+			"tentap-editor-heck": [
+				"./src/index"
+			]
+		},
+		"allowUnreachableCode": false,
+		"allowUnusedLabels": false,
+		"esModuleInterop": true,
+		"forceConsistentCasingInFileNames": true,
+		"jsx": "react-jsx",
+		"lib": [
+			"esnext"
+		],
+		"module": "esnext",
+		"moduleResolution": "bundler",
+		"noFallthroughCasesInSwitch": true,
+		"noImplicitReturns": true,
+		"noImplicitUseStrict": false,
+		"noStrictGenericChecks": false,
+		"noUncheckedIndexedAccess": true,
+		"noUnusedLocals": true,
+		"noUnusedParameters": true,
+		"resolveJsonModule": true,
+		"skipLibCheck": true,
+		"strict": true,
+		"target": "esnext",
+		"verbatimModuleSyntax": true,
+	},
+	"exclude": [
+		"./src/simpleWebEditor",
+		"./website",
+		"examplelatest",
+		"examplelatest/src/Examples/Advanced/editor-web",
+		"./src/webEditorUtils",
+		"./src/webEditorUtils/vite.config.ts"
+	]
 }

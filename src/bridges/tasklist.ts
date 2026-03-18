@@ -1,116 +1,93 @@
-import {
-  TaskList,
-  type TaskListOptions,
-  TaskItem,
-} from '@tiptap/extension-list';
-import BridgeExtension from './base';
+import { TaskItem, TaskList, type TaskListOptions } from "@tiptap/extension-list";
+import { BridgeExtension } from "./base";
 
-type TaskListEditorState = {
-  isTaskListActive: boolean;
-  canToggleTaskList: boolean;
-  canLiftTaskListItem: boolean;
-  canSinkTaskListItem: boolean;
-};
-
-type TaskListEditorInstance = {
-  toggleTaskList: () => void;
-  liftTaskListItem: () => void;
-  sinkTaskListItem: () => void;
-};
-
-declare module '../types/EditorBridge' {
-  interface BridgeState extends TaskListEditorState {}
-  interface EditorBridge extends TaskListEditorInstance {}
+interface TaskListEditorState {
+	isTaskListActive: boolean;
+	canToggleTaskList: boolean;
+	canLiftTaskListItem: boolean;
+	canSinkTaskListItem: boolean;
 }
 
-export enum TaskListEditorActionType {
-  ToggleTaskList = 'toggle-task-list',
-  LiftTaskListItem = 'lift-task-list-item',
-  SinkTaskListItem = 'sink-task-list-item',
+interface TaskListEditorInstance {
+	toggleTaskList: () => void;
+	liftTaskListItem: () => void;
+	sinkTaskListItem: () => void;
+}
+
+declare module "../types/EditorBridge" {
+	interface BridgeState extends TaskListEditorState {}
+	interface EditorBridge extends TaskListEditorInstance {}
 }
 
 type TaskListMessage =
-  | {
-      type: TaskListEditorActionType.ToggleTaskList;
-      payload?: undefined;
-    }
-  | {
-      type: TaskListEditorActionType.LiftTaskListItem;
-      payload?: undefined;
-    }
-  | {
-      type: TaskListEditorActionType.SinkTaskListItem;
-      payload?: undefined;
-    };
+	| {
+			type: "toggle-task-list";
+			payload?: undefined;
+	  }
+	| {
+			type: "lift-task-list-item";
+			payload?: undefined;
+	  }
+	| {
+			type: "sink-task-list-item";
+			payload?: undefined;
+	  };
 
-export const TaskListBridge = new BridgeExtension<
-  TaskListEditorState,
-  TaskListEditorInstance,
-  TaskListMessage,
-  TaskListOptions
->({
-  tiptapExtension: TaskList,
-  tiptapExtensionDeps: [TaskItem.configure({ nested: true })],
-  onBridgeMessage: (editor, message) => {
-    if (message.type === TaskListEditorActionType.ToggleTaskList) {
-      editor.chain().focus().toggleTaskList().run();
-    }
-    if (message.type === TaskListEditorActionType.LiftTaskListItem) {
-      editor
-        .chain()
-        .focus()
-        .liftListItem(editor.state.schema.nodes.taskItem!.name)
-        .run();
-    }
-    if (message.type === TaskListEditorActionType.SinkTaskListItem) {
-      editor
-        .chain()
-        .focus()
-        .sinkListItem(editor.state.schema.nodes.taskItem!.name)
-        .run();
-    }
-    return false;
-  },
-  extendEditorInstance: (sendBridgeMessage) => {
-    return {
-      toggleTaskList: () =>
-        sendBridgeMessage({ type: TaskListEditorActionType.ToggleTaskList }),
-      liftTaskListItem: () =>
-        sendBridgeMessage({ type: TaskListEditorActionType.LiftTaskListItem }),
-      sinkTaskListItem: () =>
-        sendBridgeMessage({ type: TaskListEditorActionType.SinkTaskListItem }),
-    };
-  },
-  extendEditorState: (editor) => {
-    return {
-      canToggleTaskList: editor.can().toggleTaskList(),
-      isTaskListActive: editor.isActive('taskList'),
-      canLiftTaskListItem: editor
-        .can()
-        .liftListItem(editor.state.schema.nodes.taskItem!.name),
-      canSinkTaskListItem: editor
-        .can()
-        .sinkListItem(editor.state.schema.nodes.taskItem!.name),
-    };
-  },
-  extendCSS: `
+const TaskListEditorActionType = {
+	toggleTaskList: "toggle-task-list",
+	liftTaskListItem: "lift-task-list-item",
+	sinkTaskListItem: "sink-task-list-item",
+} as const;
+
+const TaskListBridge = new BridgeExtension<TaskListEditorState, TaskListEditorInstance, TaskListMessage, TaskListOptions>({
+	tiptapExtension: TaskList,
+	tiptapExtensionDeps: [TaskItem.configure({ nested: true })],
+	onBridgeMessage: (editor, message) => {
+		if (message.type === TaskListEditorActionType.toggleTaskList) {
+			editor.chain().focus().toggleTaskList().run();
+		}
+		if (message.type === TaskListEditorActionType.liftTaskListItem) {
+			// biome-ignore lint/style/noNonNullAssertion: taskItem node is guaranteed to exist when this bridge is active
+			editor.chain().focus().liftListItem(editor.state.schema.nodes.taskItem!.name).run();
+		}
+		if (message.type === TaskListEditorActionType.sinkTaskListItem) {
+			// biome-ignore lint/style/noNonNullAssertion: taskItem node is guaranteed to exist when this bridge is active
+			editor.chain().focus().sinkListItem(editor.state.schema.nodes.taskItem!.name).run();
+		}
+
+		return false;
+	},
+	extendEditorInstance: (sendBridgeMessage) => ({
+		toggleTaskList: () => sendBridgeMessage({ type: TaskListEditorActionType.toggleTaskList }),
+		liftTaskListItem: () => sendBridgeMessage({ type: TaskListEditorActionType.liftTaskListItem }),
+		sinkTaskListItem: () => sendBridgeMessage({ type: TaskListEditorActionType.sinkTaskListItem }),
+	}),
+	extendEditorState: (editor) => ({
+		canToggleTaskList: editor.can().toggleTaskList(),
+		isTaskListActive: editor.isActive("taskList"),
+		// biome-ignore lint/style/noNonNullAssertion: taskItem node is guaranteed to exist when this bridge is active
+		canLiftTaskListItem: editor.can().liftListItem(editor.state.schema.nodes.taskItem!.name),
+		// biome-ignore lint/style/noNonNullAssertion: taskItem node is guaranteed to exist when this bridge is active
+		canSinkTaskListItem: editor.can().sinkListItem(editor.state.schema.nodes.taskItem!.name),
+	}),
+	extendCss: `
   ul[data-type="taskList"] {
     list-style: none;
     padding: 0;
   }
-  
+
   ul[data-type="taskList"] > li {
     display: flex;
   }
-  
+
   ul[data-type="taskList"] p {
     margin: 0;
   }
-  
+
   ul[data-type="taskList"] li {
     display: flex;
   }
-  
+
   ul[data-type="taskList"] li > label > input {
     font-size: inherit;
     font-family: inherit;
@@ -127,9 +104,11 @@ export const TaskListBridge = new BridgeExtension<
     margin-right: 0.5rem;
     user-select: none;
   }
-  
+
   ul[data-type="taskList"] li > div {
     flex: 1 1 auto;
-  }  
+  }
   `,
 });
+
+export { TaskListBridge, TaskListEditorActionType };

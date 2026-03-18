@@ -1,12 +1,16 @@
-import type { CoreMessages } from '../bridges/core';
-export enum EditorMessageType {
-  Action = 'action',
+import type { CoreMessages } from "../bridges/core";
+
+const EditorMessageType = {
+	action: "action",
+} as const;
+
+interface EditorActionMessage {
+	type: typeof EditorMessageType.action;
+	payload: unknown;
+	// Temporary, android new arch only
+	id?: string;
 }
 
-export interface EditorActionMessage {
-  type: EditorMessageType.Action;
-  payload: any;
-  id?: string; // Temporary, android new arch only
-}
+type EditorMessage = EditorActionMessage | CoreMessages;
 
-export type EditorMessage = EditorActionMessage | CoreMessages;
+export { type EditorActionMessage, type EditorMessage, EditorMessageType };

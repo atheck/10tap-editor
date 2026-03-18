@@ -1,24 +1,26 @@
-export enum EditorActionType {
-  ChangeHighlight = 'change-highlight',
-  ChangeColor = 'change-color',
-  Link = 'link',
-  ToggleUnderline = 'toggle-underline',
-  SetHardBreak = 'set-hard-break',
-  // start
-}
+const EditorActionType = {
+	changeHighlight: "change-highlight",
+	changeColor: "change-color",
+	link: "link",
+	toggleUnderline: "toggle-underline",
+	setHardBreak: "set-hard-break",
+} as const;
+
+const EditorUpdateSettings = {
+	focus: "focus",
+} as const;
+
 // Actions with no payload
 type RegularActions =
-  | EditorActionType.ChangeHighlight
-  | EditorActionType.ChangeColor
-  | EditorActionType.Link
-  | EditorActionType.ToggleUnderline
-  | EditorActionType.SetHardBreak;
+	| typeof EditorActionType.changeHighlight
+	| typeof EditorActionType.changeColor
+	| typeof EditorActionType.link
+	| typeof EditorActionType.toggleUnderline
+	| typeof EditorActionType.setHardBreak;
 
-export interface RegularAction {
-  type: RegularActions;
-  payload?: any;
+interface RegularAction {
+	type: RegularActions;
+	payload?: unknown;
 }
 
-export enum EditorUpdateSettings {
-  Focus = 'focus',
-}
+export { EditorActionType, EditorUpdateSettings, type RegularAction };

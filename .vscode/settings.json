@@ -1,0 +1,32 @@
+{
+	"[javascript][javascriptreact][typescript][typescriptreact][markdown][mermaid]": {
+		"files.eol": "\n",
+		"editor.insertSpaces": false,
+		"editor.detectIndentation": false
+	},
+	"[markdown][mermaid]": {
+		"editor.formatOnSave": false,
+	},
+	"[javascript][javascriptreact][typescript][typescriptreact]": {
+		"editor.defaultFormatter": "biomejs.biome"
+	},
+	"[json][jsonc]": {
+		"editor.defaultFormatter": "vscode.json-language-features"
+	},
+	"editor.codeActionsOnSave": {
+		"source.fixAll.biome": "explicit",
+		"source.removeUnusedImports": "explicit",
+		"source.organizeImports.biome": "explicit"
+	},
+	"markdownlint.config": {
+		"no-hard-tabs": false
+	},
+	"editor.formatOnSave": true,
+	"git.inputValidationLength": 100,
+	"git.inputValidationSubjectLength": 100,
+	"js/ts.format.enabled": false,
+	"js/ts.preferences.importModuleSpecifier": "project-relative",
+	"js/ts.preferences.jsxAttributeCompletionStyle": "braces",
+	"js/ts.preferences.preferTypeOnlyAutoImports": true,
+	"markdown.extension.toc.levels": "2..6",
+}

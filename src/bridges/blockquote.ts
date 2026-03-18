@@ -1,63 +1,60 @@
-import Blockquote, {
-  type BlockquoteOptions,
-} from '@tiptap/extension-blockquote';
-import BridgeExtension from './base';
+import { Blockquote, type BlockquoteOptions } from "@tiptap/extension-blockquote";
+import { BridgeExtension } from "./base";
 
-type BlockquoteEditorState = {
-  isBlockquoteActive: boolean;
-  canToggleBlockquote: boolean;
-};
-
-type BlockquoteEditorInstance = {
-  toggleBlockquote: () => void;
-};
-
-declare module '../types/EditorBridge' {
-  interface BridgeState extends BlockquoteEditorState {}
-  interface EditorBridge extends BlockquoteEditorInstance {}
+interface BlockquoteEditorState {
+	isBlockquoteActive: boolean;
+	canToggleBlockquote: boolean;
 }
 
-export enum BlockquoteEditorActionType {
-  ToggleBlockquote = 'toggle-blockquote',
+interface BlockquoteEditorInstance {
+	toggleBlockquote: () => void;
 }
 
-type BlockquoteMessage = {
-  type: BlockquoteEditorActionType.ToggleBlockquote;
-  payload?: undefined;
-};
+declare module "../types/EditorBridge" {
+	interface BridgeState extends BlockquoteEditorState {}
+	interface EditorBridge extends BlockquoteEditorInstance {}
+}
 
-export const BlockquoteBridge = new BridgeExtension<
-  BlockquoteEditorState,
-  BlockquoteEditorInstance,
-  BlockquoteMessage,
-  BlockquoteOptions
+interface BlockquoteMessage {
+	type: "toggle-blockquote";
+	payload?: undefined;
+}
+
+const BlockquoteEditorActionType = {
+	toggleBlockquote: "toggle-blockquote",
+} as const;
+
+const BlockquoteBridge = new BridgeExtension<
+	BlockquoteEditorState,
+	BlockquoteEditorInstance,
+	BlockquoteMessage,
+	BlockquoteOptions
 >({
-  tiptapExtension: Blockquote,
-  onBridgeMessage: (editor, message) => {
-    if (message.type === BlockquoteEditorActionType.ToggleBlockquote) {
-      editor.chain().focus().toggleBlockquote().run();
-    }
+	tiptapExtension: Blockquote,
+	onBridgeMessage: (editor, message) => {
+		// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- The only message for now.
+		if (message.type === BlockquoteEditorActionType.toggleBlockquote) {
+			editor.chain().focus().toggleBlockquote().run();
+		}
 
-    return false;
-  },
-  extendEditorInstance: (sendBridgeMessage) => {
-    return {
-      toggleBlockquote: () =>
-        sendBridgeMessage({
-          type: BlockquoteEditorActionType.ToggleBlockquote,
-        }),
-    };
-  },
-  extendEditorState: (editor) => {
-    return {
-      canToggleBlockquote: editor.can().toggleBlockquote(),
-      isBlockquoteActive: editor.isActive('blockquote'),
-    };
-  },
-  extendCSS: `
+		return false;
+	},
+	extendEditorInstance: (sendBridgeMessage) => ({
+		toggleBlockquote: () =>
+			sendBridgeMessage({
+				type: BlockquoteEditorActionType.toggleBlockquote,
+			}),
+	}),
+	extendEditorState: (editor) => ({
+		canToggleBlockquote: editor.can().toggleBlockquote(),
+		isBlockquoteActive: editor.isActive("blockquote"),
+	}),
+	extendCss: `
     blockquote {
         border-left: 3px solid #0d0d0d1a;
         padding-left: 1rem;
     }
   `,
 });
+
+export { BlockquoteBridge, BlockquoteEditorActionType };

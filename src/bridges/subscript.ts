@@ -1,55 +1,51 @@
-import Subscript, {
-  type SubscriptExtensionOptions,
-} from '@tiptap/extension-subscript';
-import BridgeExtension from './base';
+import { Subscript, type SubscriptExtensionOptions } from "@tiptap/extension-subscript";
+import { BridgeExtension } from "./base";
 
-type SubscriptEditorState = {
-  isSubscriptActive: boolean;
-  canToggleSubscript: boolean;
-};
-
-type SubscriptEditorInstance = {
-  toggleSubscript: () => void;
-};
-
-declare module '../types/EditorBridge' {
-  interface BridgeState extends SubscriptEditorState {}
-  interface EditorBridge extends SubscriptEditorInstance {}
+interface SubscriptEditorState {
+	isSubscriptActive: boolean;
+	canToggleSubscript: boolean;
 }
 
-export enum SubscriptEditorActionType {
-  ToggleSubscript = 'toggle-subscript',
+interface SubscriptEditorInstance {
+	toggleSubscript: () => void;
 }
 
-type SubscriptMessage = {
-  type: SubscriptEditorActionType.ToggleSubscript;
-  payload?: undefined;
-};
+declare module "../types/EditorBridge" {
+	interface BridgeState extends SubscriptEditorState {}
+	interface EditorBridge extends SubscriptEditorInstance {}
+}
 
-export const SubscriptBridge = new BridgeExtension<
-  SubscriptEditorState,
-  SubscriptEditorInstance,
-  SubscriptMessage,
-  SubscriptExtensionOptions
+interface SubscriptMessage {
+	type: "toggle-subscript";
+	payload?: undefined;
+}
+
+const SubscriptEditorActionType = {
+	toggleSubscript: "toggle-subscript",
+} as const;
+
+const SubscriptBridge = new BridgeExtension<
+	SubscriptEditorState,
+	SubscriptEditorInstance,
+	SubscriptMessage,
+	SubscriptExtensionOptions
 >({
-  tiptapExtension: Subscript,
-  onBridgeMessage: (editor, message) => {
-    if (message.type === SubscriptEditorActionType.ToggleSubscript) {
-      editor.chain().focus().toggleSubscript().run();
-    }
+	tiptapExtension: Subscript,
+	onBridgeMessage: (editor, message) => {
+		// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- The only message for now.
+		if (message.type === SubscriptEditorActionType.toggleSubscript) {
+			editor.chain().focus().toggleSubscript().run();
+		}
 
-    return false;
-  },
-  extendEditorInstance: (sendBridgeMessage) => {
-    return {
-      toggleSubscript: () =>
-        sendBridgeMessage({ type: SubscriptEditorActionType.ToggleSubscript }),
-    };
-  },
-  extendEditorState: (editor) => {
-    return {
-      canToggleSubscript: editor.can().toggleSubscript(),
-      isSubscriptActive: editor.isActive('subscript'),
-    };
-  },
+		return false;
+	},
+	extendEditorInstance: (sendBridgeMessage) => ({
+		toggleSubscript: () => sendBridgeMessage({ type: SubscriptEditorActionType.toggleSubscript }),
+	}),
+	extendEditorState: (editor) => ({
+		canToggleSubscript: editor.can().toggleSubscript(),
+		isSubscriptActive: editor.isActive("subscript"),
+	}),
 });
+
+export { SubscriptBridge, SubscriptEditorActionType };

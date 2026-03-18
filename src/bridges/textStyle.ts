@@ -1,33 +1,22 @@
-import { TextStyle, type TextStyleOptions } from '@tiptap/extension-text-style';
-import BridgeExtension from './base';
+import { TextStyle, type TextStyleOptions } from "@tiptap/extension-text-style";
+import { BridgeExtension } from "./base";
 
-type TextStyleEditorState = {};
+interface TextStyleEditorState {}
 
-type TextStyleEditorInstance = {};
+interface TextStyleEditorInstance {}
 
-declare module '../types/EditorBridge' {
-  interface BridgeState extends TextStyleEditorState {}
-  interface EditorBridge extends TextStyleEditorInstance {}
+declare module "../types/EditorBridge" {
+	interface BridgeState extends TextStyleEditorState {}
+	interface EditorBridge extends TextStyleEditorInstance {}
 }
-
-export enum TextStyleEditorActionType {}
 
 type TextStyleMessage = never;
 
-export const TextStyleBridge = new BridgeExtension<
-  TextStyleEditorState,
-  TextStyleEditorInstance,
-  TextStyleMessage,
-  TextStyleOptions
->({
-  tiptapExtension: TextStyle,
-  onBridgeMessage: () => {
-    return false;
-  },
-  extendEditorInstance: () => {
-    return {};
-  },
-  extendEditorState: () => {
-    return {};
-  },
+const TextStyleBridge = new BridgeExtension<TextStyleEditorState, TextStyleEditorInstance, TextStyleMessage, TextStyleOptions>({
+	tiptapExtension: TextStyle,
+	onBridgeMessage: () => false,
+	extendEditorInstance: () => ({}),
+	extendEditorState: () => ({}),
 });
+
+export { TextStyleBridge };

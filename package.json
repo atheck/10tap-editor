@@ -47,7 +47,8 @@
     "examplelatest": "npm -w tentap-example-latest",
     "test": "jest",
     "typecheck": "tsc --noEmit",
-    "lint": "eslint \"**/*.{js,ts,tsx}\"",
+    "format": "biome check --write src/",
+    "lint": "biome check src/ && eslint src/",
     "clean": "del-cli android/build examplelatest/android/build examplelatest/android/app/build examplelatest/ios/build example76/android/build example76/android/app/build example76/ios/build lib",
     "prepack": "bob build",
     "release": "semantic-release",
@@ -81,10 +82,10 @@
     "@babel/core": "7.29.0",
     "@babel/preset-env": "7.29.2",
     "@babel/runtime": "7.29.2",
+    "@biomejs/biome": "2.4.7",
     "@commitlint/config-conventional": "20.5.0",
     "@evilmartians/lefthook": "1.13.6",
     "@react-native/babel-preset": "0.82.1",
-    "@react-native/eslint-config": "0.72.2",
     "@semantic-release/changelog": "6.0.3",
     "@semantic-release/git": "10.0.1",
     "@types/jest": "30.0.0",
@@ -95,13 +96,10 @@
     "@vitejs/plugin-react": "5.2.0",
     "commitlint": "20.5.0",
     "del-cli": "5.1.0",
-    "eslint": "8.57.1",
-    "eslint-config-prettier": "8.10.2",
-    "eslint-plugin-ft-flow": "2.0.3",
-    "eslint-plugin-prettier": "5.5.5",
+    "eslint": "9.39.4",
+    "eslint-config-heck": "9.2.1",
     "jest": "30.3.0",
     "pod-install": "0.1.39",
-    "prettier": "3.8.1",
     "react": "19.2.4",
     "react-native": "0.73.11",
     "react-native-builder-bob": "0.20.4",
@@ -145,40 +143,6 @@
       "@commitlint/config-conventional"
     ]
   },
-  "eslintConfig": {
-    "root": true,
-    "extends": [
-      "@react-native",
-      "prettier"
-    ],
-    "rules": {
-      "prettier/prettier": [
-        "error",
-        {
-          "quoteProps": "consistent",
-          "singleQuote": true,
-          "tabWidth": 2,
-          "trailingComma": "es5",
-          "useTabs": false
-        }
-      ]
-    }
-  },
-  "eslintIgnore": [
-    "node_modules/",
-    "lib/",
-    "lib-web/",
-    "**/build/",
-    "**/android/build/",
-    "**/ios/build/"
-  ],
-  "prettier": {
-    "quoteProps": "consistent",
-    "singleQuote": true,
-    "tabWidth": 2,
-    "trailingComma": "es5",
-    "useTabs": false
-  },
   "react-native-builder-bob": {
     "source": "src",
     "output": "lib",
@@ -202,11 +166,11 @@
     "@tiptap/extension-code-block": "3.20.4",
     "@tiptap/extension-color": "3.20.4",
     "@tiptap/extension-document": "3.20.4",
+    "@tiptap/extension-font-family": "3.20.4",
     "@tiptap/extension-hard-break": "3.20.4",
     "@tiptap/extension-heading": "3.20.4",
     "@tiptap/extension-highlight": "3.20.4",
     "@tiptap/extension-horizontal-rule": "3.20.4",
-    "@tiptap/extension-font-family": "3.20.4",
     "@tiptap/extension-image": "3.20.4",
     "@tiptap/extension-italic": "3.20.4",
     "@tiptap/extension-link": "3.20.4",

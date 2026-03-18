@@ -1,60 +1,55 @@
-import {
-  BulletList,
-  type BulletListOptions,
-  ListItem,
-} from '@tiptap/extension-list';
-import BridgeExtension from './base';
+import { BulletList, type BulletListOptions, ListItem } from "@tiptap/extension-list";
+import { BridgeExtension } from "./base";
 
-type BulletListEditorState = {
-  isBulletListActive: boolean;
-  canToggleBulletList: boolean;
-};
-
-type BulletListEditorInstance = {
-  toggleBulletList: () => void;
-};
-
-declare module '../types/EditorBridge' {
-  interface BridgeState extends BulletListEditorState {}
-  interface EditorBridge extends BulletListEditorInstance {}
+interface BulletListEditorState {
+	isBulletListActive: boolean;
+	canToggleBulletList: boolean;
 }
 
-export enum BulletListEditorActionType {
-  ToggleBulletList = 'toggle-bulletList',
+interface BulletListEditorInstance {
+	toggleBulletList: () => void;
 }
 
-type BulletListMessage = {
-  type: BulletListEditorActionType.ToggleBulletList;
-  payload?: undefined;
-};
+declare module "../types/EditorBridge" {
+	interface BridgeState extends BulletListEditorState {}
+	interface EditorBridge extends BulletListEditorInstance {}
+}
 
-export const BulletListBridge = new BridgeExtension<
-  BulletListEditorState,
-  BulletListEditorInstance,
-  BulletListMessage,
-  BulletListOptions
+interface BulletListMessage {
+	type: "toggle-bulletList";
+	payload?: undefined;
+}
+
+const BulletListEditorActionType = {
+	toggleBulletList: "toggle-bulletList",
+} as const;
+
+const BulletListBridge = new BridgeExtension<
+	BulletListEditorState,
+	BulletListEditorInstance,
+	BulletListMessage,
+	BulletListOptions
 >({
-  tiptapExtension: BulletList,
-  tiptapExtensionDeps: [ListItem],
-  onBridgeMessage: (editor, message) => {
-    if (message.type === BulletListEditorActionType.ToggleBulletList) {
-      editor.chain().focus().toggleBulletList().run();
-    }
+	tiptapExtension: BulletList,
+	tiptapExtensionDeps: [ListItem],
+	onBridgeMessage: (editor, message) => {
+		// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- The only message for now.
+		if (message.type === BulletListEditorActionType.toggleBulletList) {
+			editor.chain().focus().toggleBulletList().run();
+		}
 
-    return false;
-  },
-  extendEditorInstance: (sendBridgeMessage) => {
-    return {
-      toggleBulletList: () =>
-        sendBridgeMessage({
-          type: BulletListEditorActionType.ToggleBulletList,
-        }),
-    };
-  },
-  extendEditorState: (editor) => {
-    return {
-      canToggleBulletList: editor.can().toggleBulletList(),
-      isBulletListActive: editor.isActive('bulletList'),
-    };
-  },
+		return false;
+	},
+	extendEditorInstance: (sendBridgeMessage) => ({
+		toggleBulletList: () =>
+			sendBridgeMessage({
+				type: BulletListEditorActionType.toggleBulletList,
+			}),
+	}),
+	extendEditorState: (editor) => ({
+		canToggleBulletList: editor.can().toggleBulletList(),
+		isBulletListActive: editor.isActive("bulletList"),
+	}),
 });
+
+export { BulletListBridge, BulletListEditorActionType };

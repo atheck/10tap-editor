@@ -1,50 +1,51 @@
-import { useState } from 'react';
-import type { EditorBridge } from '../types';
-import type { Subscription } from '../types/Subscription';
+import { useState } from "react";
+import type { EditorBridge } from "../types";
+import type { Subscription } from "../types/Subscription";
 
 class _EditorHelper {
-  editorLastInstance: EditorBridge | undefined;
-  cbs: ((editor: EditorBridge | undefined) => void)[] = [];
+	public editorLastInstance: EditorBridge | undefined;
+	public cbs: ((editor: EditorBridge | undefined) => void)[] = [];
 
-  constructor() {
-    this.editorLastInstance = undefined;
-  }
+	public constructor() {
+		this.editorLastInstance = undefined;
+	}
 
-  setEditorLastInstance(editorLastInstance: EditorBridge) {
-    this.editorLastInstance = editorLastInstance;
-    this.cbs.forEach((cb) => {
-      cb(editorLastInstance);
-    });
-  }
+	public setEditorLastInstance(editorLastInstance: EditorBridge): void {
+		this.editorLastInstance = editorLastInstance;
 
-  subscribe: Subscription<EditorBridge | undefined> = (cb) => {
-    this.cbs.push(cb);
-    return () => {
-      this.cbs = this.cbs.filter((sub) => sub !== cb);
-    };
-  };
+		for (const cb of this.cbs) {
+			cb(editorLastInstance);
+		}
+	}
+
+	public subscribe: Subscription<EditorBridge | undefined> = (cb) => {
+		this.cbs.push(cb);
+
+		return () => {
+			this.cbs = this.cbs.filter((sub) => sub !== cb);
+		};
+	};
 }
 
-export const EditorHelper = new _EditorHelper();
+const EditorHelper = new _EditorHelper();
 
-export const useRemoteEditorBridge = () => {
-  const [editor, _setEditor] = useState<EditorBridge | undefined>(
-    EditorHelper.editorLastInstance
-  );
+const useRemoteEditorBridge = (): EditorBridge | undefined => {
+	// eslint-disable-next-line react/hook-use-state -- setEditor is unused for now.
+	const [editor, _setEditor] = useState<EditorBridge | undefined>(EditorHelper.editorLastInstance);
 
-  // TODO -
-  // There is currently a bug on ios where the keyboard isn't unmounted RCTRootView isn't unmounted
-  // When removed from subview, because of this we can't rely on it to unsubscribe. Once this is fixed we can
-  // add this again make it be reactive
-  // useEffect(() => {
-  //   const unsubscribe = EditorHelper.subscribe((editor) => {
-  //     setEditor(editor);
-  //   });
+	// TODO: There is currently a bug on ios where the keyboard isn't unmounted when removed from subview
+	// Because of this we can't rely on it to unsubscribe. Once this is fixed we can add this again make it be reactive
+	// useEffect(() => {
+	//   const unsubscribe = EditorHelper.subscribe((editor) => {
+	//     setEditor(editor);
+	//   });
 
-  //   return () => {
-  //     unsubscribe();
-  //   };
-  // }, []);
+	//   return () => {
+	//     unsubscribe();
+	//   };
+	// }, []);
 
-  return editor;
+	return editor;
 };
+
+export { EditorHelper, useRemoteEditorBridge };

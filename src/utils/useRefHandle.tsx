@@ -1,15 +1,19 @@
-import { useEffect, useState, type RefObject } from 'react';
-import { findNodeHandle } from 'react-native';
+import { type RefObject, useEffect, useState } from "react";
+import { findNodeHandle, type HostComponent } from "react-native";
 
-export const useRefHandle = (compRef: RefObject<any>) => {
-  const [handle, setHandle] = useState<number | undefined>();
+const useRefHandle = (compRef: RefObject<HostComponent<unknown>>): number | undefined => {
+	const [handle, setHandle] = useState<number | undefined>();
 
-  useEffect(() => {
-    if (compRef.current) {
-      const reactTag = findNodeHandle(compRef.current);
-      setHandle(reactTag || undefined);
-    }
-  }, [compRef]);
+	useEffect(() => {
+		// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+		if (compRef.current) {
+			const reactTag = findNodeHandle(compRef.current);
 
-  return handle;
+			setHandle(reactTag || undefined);
+		}
+	}, [compRef]);
+
+	return handle;
 };
+
+export { useRefHandle };

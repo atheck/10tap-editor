@@ -1,60 +1,55 @@
-import {
-  OrderedList,
-  type OrderedListOptions,
-  ListItem,
-} from '@tiptap/extension-list';
-import BridgeExtension from './base';
+import { ListItem, OrderedList, type OrderedListOptions } from "@tiptap/extension-list";
+import { BridgeExtension } from "./base";
 
-type OrderedListEditorState = {
-  isOrderedListActive: boolean;
-  canToggleOrderedList: boolean;
-};
-
-type OrderedListEditorInstance = {
-  toggleOrderedList: () => void;
-};
-
-declare module '../types/EditorBridge' {
-  interface BridgeState extends OrderedListEditorState {}
-  interface EditorBridge extends OrderedListEditorInstance {}
+interface OrderedListEditorState {
+	isOrderedListActive: boolean;
+	canToggleOrderedList: boolean;
 }
 
-export enum OrderedListEditorActionType {
-  ToggleOrderedList = 'toggle-orderedList',
+interface OrderedListEditorInstance {
+	toggleOrderedList: () => void;
 }
 
-type OrderedListMessage = {
-  type: OrderedListEditorActionType.ToggleOrderedList;
-  payload?: undefined;
-};
+declare module "../types/EditorBridge" {
+	interface BridgeState extends OrderedListEditorState {}
+	interface EditorBridge extends OrderedListEditorInstance {}
+}
 
-export const OrderedListBridge = new BridgeExtension<
-  OrderedListEditorState,
-  OrderedListEditorInstance,
-  OrderedListMessage,
-  OrderedListOptions
+interface OrderedListMessage {
+	type: "toggle-orderedList";
+	payload?: undefined;
+}
+
+const OrderedListEditorActionType = {
+	toggleOrderedList: "toggle-orderedList",
+} as const;
+
+const OrderedListBridge = new BridgeExtension<
+	OrderedListEditorState,
+	OrderedListEditorInstance,
+	OrderedListMessage,
+	OrderedListOptions
 >({
-  tiptapExtension: OrderedList,
-  tiptapExtensionDeps: [ListItem],
-  onBridgeMessage: (editor, message) => {
-    if (message.type === OrderedListEditorActionType.ToggleOrderedList) {
-      editor.chain().focus().toggleOrderedList().run();
-    }
+	tiptapExtension: OrderedList,
+	tiptapExtensionDeps: [ListItem],
+	onBridgeMessage: (editor, message) => {
+		// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- The only message for now.
+		if (message.type === OrderedListEditorActionType.toggleOrderedList) {
+			editor.chain().focus().toggleOrderedList().run();
+		}
 
-    return false;
-  },
-  extendEditorInstance: (sendBridgeMessage) => {
-    return {
-      toggleOrderedList: () =>
-        sendBridgeMessage({
-          type: OrderedListEditorActionType.ToggleOrderedList,
-        }),
-    };
-  },
-  extendEditorState: (editor) => {
-    return {
-      canToggleOrderedList: editor.can().toggleOrderedList(),
-      isOrderedListActive: editor.isActive('orderedList'),
-    };
-  },
+		return false;
+	},
+	extendEditorInstance: (sendBridgeMessage) => ({
+		toggleOrderedList: () =>
+			sendBridgeMessage({
+				type: OrderedListEditorActionType.toggleOrderedList,
+			}),
+	}),
+	extendEditorState: (editor) => ({
+		canToggleOrderedList: editor.can().toggleOrderedList(),
+		isOrderedListActive: editor.isActive("orderedList"),
+	}),
 });
+
+export { OrderedListBridge, OrderedListEditorActionType };

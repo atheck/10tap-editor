@@ -1,63 +1,51 @@
-import Image, {
-  type ImageOptions,
-  type SetImageOptions,
-} from '@tiptap/extension-image';
-import BridgeExtension from './base';
+import { Image, type ImageOptions, type SetImageOptions } from "@tiptap/extension-image";
+import { BridgeExtension } from "./base";
 
-type ImageEditorState = {};
+type ImageEditorState = Record<string, never>;
 
-type ImageEditorInstance = {
-  setImage: (options: SetImageOptions) => void;
-};
-
-declare module '../types/EditorBridge' {
-  interface BridgeState extends ImageEditorState {}
-  interface EditorBridge extends ImageEditorInstance {}
+interface ImageEditorInstance {
+	setImage: (options: SetImageOptions) => void;
 }
 
-export enum ImageEditorActionType {
-  SetImage = 'set-image',
+declare module "../types/EditorBridge" {
+	interface EditorBridge extends ImageEditorInstance {}
 }
 
-type ImageMessage = {
-  type: ImageEditorActionType.SetImage;
-  payload: SetImageOptions;
-};
+interface ImageMessage {
+	type: "set-image";
+	payload: SetImageOptions;
+}
 
-export const ImageBridge = new BridgeExtension<
-  ImageEditorState,
-  ImageEditorInstance,
-  ImageMessage,
-  ImageOptions
->({
-  tiptapExtension: Image.configure({
-    allowBase64: true,
-  }),
-  onBridgeMessage: (editor, message) => {
-    if (message.type === ImageEditorActionType.SetImage) {
-      editor
-        .chain()
-        .focus()
-        .setImage(message.payload)
-        .setTextSelection(editor.state.selection.to + 1)
-        .run();
-    }
+const ImageEditorActionType = {
+	setImage: "set-image",
+} as const;
 
-    return false;
-  },
-  extendEditorInstance: (sendBridgeMessage) => {
-    return {
-      setImage: (options: SetImageOptions) =>
-        sendBridgeMessage({
-          type: ImageEditorActionType.SetImage,
-          payload: options,
-        }),
-    };
-  },
-  extendEditorState: () => {
-    return {};
-  },
-  extendCSS: `
+const ImageBridge = new BridgeExtension<ImageEditorState, ImageEditorInstance, ImageMessage, ImageOptions>({
+	tiptapExtension: Image.configure({
+		allowBase64: true,
+	}),
+	onBridgeMessage: (editor, message) => {
+		// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- The only message for now.
+		if (message.type === ImageEditorActionType.setImage) {
+			editor
+				.chain()
+				.focus()
+				.setImage(message.payload)
+				.setTextSelection(editor.state.selection.to + 1)
+				.run();
+		}
+
+		return false;
+	},
+	extendEditorInstance: (sendBridgeMessage) => ({
+		setImage: (options: SetImageOptions) =>
+			sendBridgeMessage({
+				type: ImageEditorActionType.setImage,
+				payload: options,
+			}),
+	}),
+	extendEditorState: () => ({}),
+	extendCss: `
   img {
     height: auto;
     max-width: 100%;
@@ -68,3 +56,5 @@ export const ImageBridge = new BridgeExtension<
   }
   `,
 });
+
+export { ImageBridge, ImageEditorActionType };

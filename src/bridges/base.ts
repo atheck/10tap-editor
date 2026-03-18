@@ -1,125 +1,128 @@
-import { Editor, type AnyExtension } from '@tiptap/core';
-import type { EditorBridge, BridgeState } from '../types';
-import type WebView from 'react-native-webview';
-import type { RefObject } from 'react';
+import type { AnyExtension, Editor } from "@tiptap/core";
+import type { RefObject } from "react";
+import type { WebView } from "react-native-webview";
+import type { BridgeState, EditorBridge } from "../types";
 
-interface BridgeExtension<T = any, E = any, M = any, TConfig = unknown> {
-  name: string;
-  tiptapExtension?: AnyExtension;
-  tiptapExtensionDeps?: AnyExtension[];
-  onBridgeMessage?: (
-    editor: Editor,
-    message: M,
-    sendMessageBack: (message: M) => void
-  ) => boolean;
-  onEditorMessage?: (message: M, editorBridge: EditorBridge) => boolean;
-  extendEditorState?: (editor: Editor) => T;
-  extendEditorInstance?: (
-    sendBridgeMessage: (message: M) => void,
-    webviewRef?: RefObject<WebView>,
-    editorState?: RefObject<BridgeState | {}>,
-    _setEditorState?: (editorState: BridgeState) => void,
-    platform?: string
-  ) => E;
-  extendCSS?: string | undefined;
-  config?: TConfig;
-  extendConfig?: any;
-}
-
-type CreateTenTapBridgeArgs<
-  T = any,
-  E = any,
-  M = any,
-  TConfig = unknown,
-> = Omit<
-  BridgeExtension<T, E, M, TConfig> & { forceName?: string },
-  | 'name'
-  | 'sendMessage'
-  | 'configureExtension'
-  | 'configureTiptapExtensionsOnRunTime'
-  | 'configureCSS'
-  | 'extendExtension'
-  | 'clone'
+type CreateTenTapBridgeArgs<TState = unknown, TEditorInstance = unknown, TMessage = unknown, TConfig = unknown> = Omit<
+	BridgeExtension<TState, TEditorInstance, TMessage, TConfig> & { forceName?: string },
+	| "name"
+	| "sendMessage"
+	| "configureExtension"
+	| "configureTiptapExtensionsOnRunTime"
+	| "configureCss"
+	| "extendExtension"
+	| "clone"
 >;
 
-class BridgeExtension<T = any, E = any, M = any, TConfig = unknown> {
-  constructor({
-    forceName,
-    tiptapExtension,
-    tiptapExtensionDeps,
-    onBridgeMessage,
-    onEditorMessage,
-    extendEditorState,
-    extendEditorInstance,
-    extendCSS,
-    config,
-    extendConfig,
-  }: CreateTenTapBridgeArgs<T, E, M, TConfig>) {
-    if (!tiptapExtension) {
-      this.name = forceName || 'BridgeExtension';
-    } else {
-      this.name = Array.isArray(tiptapExtension)
-        ? tiptapExtension.map((e) => e.name).join('+')
-        : tiptapExtension.name;
-    }
+class BridgeExtension<TState = unknown, TEditorInstance = unknown, TMessage = unknown, TConfig = unknown> {
+	public name: string;
+	public tiptapExtension?: AnyExtension;
+	public tiptapExtensionDeps?: AnyExtension[];
+	public onBridgeMessage?: (editor: Editor, message: TMessage, sendMessageBack: (response: TMessage) => void) => boolean;
+	public onEditorMessage?: (message: TMessage, editorBridge: EditorBridge) => boolean;
+	public extendEditorState?: (editor: Editor) => TState;
+	public extendEditorInstance?: (
+		sendBridgeMessage: (message: TMessage) => void,
+		webviewRef?: RefObject<WebView>,
+		editorState?: RefObject<BridgeState | Record<string, unknown>>,
+		setEditorState?: (newState: BridgeState) => void,
+		platform?: string,
+	) => TEditorInstance;
+	public extendCss?: string | undefined;
+	public config?: TConfig;
+	public extendConfig?: Record<string, unknown>;
 
-    this.tiptapExtension = tiptapExtension;
-    this.tiptapExtensionDeps = tiptapExtensionDeps;
-    this.onBridgeMessage = onBridgeMessage;
-    this.onEditorMessage = onEditorMessage;
-    this.extendEditorState = extendEditorState;
-    this.extendEditorInstance = extendEditorInstance;
-    this.extendCSS = extendCSS;
-    this.config = config;
-    this.extendConfig = extendConfig;
-  }
+	public constructor({
+		forceName,
+		tiptapExtension,
+		tiptapExtensionDeps,
+		onBridgeMessage,
+		onEditorMessage,
+		extendEditorState,
+		extendEditorInstance,
+		extendCss,
+		config,
+		extendConfig,
+	}: CreateTenTapBridgeArgs<TState, TEditorInstance, TMessage, TConfig>) {
+		if (tiptapExtension) {
+			// eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-member-access
+			this.name = Array.isArray(tiptapExtension) ? tiptapExtension.map((ext) => ext.name).join("+") : tiptapExtension.name;
+		} else {
+			this.name = forceName ?? "BridgeExtension";
+		}
 
-  // we can use clone, so that extension's can be configures without modifying
-  // the values for each extension
-  clone(): BridgeExtension<T, E, M, TConfig> {
-    return new BridgeExtension<T, E, M, TConfig>({
-      ...this,
-      forceName: this.name,
-    });
-  }
+		this.tiptapExtension = tiptapExtension;
+		this.tiptapExtensionDeps = tiptapExtensionDeps;
+		this.onBridgeMessage = onBridgeMessage;
+		this.onEditorMessage = onEditorMessage;
+		this.extendEditorState = extendEditorState;
+		this.extendEditorInstance = extendEditorInstance;
+		this.extendCss = extendCss;
+		this.config = config;
+		this.extendConfig = extendConfig;
+	}
 
-  // runs on native
-  configureExtension(config: TConfig) {
-    const cloned = this.clone();
-    cloned.config = config;
-    return cloned;
-  }
+	// we can use clone, so that extensions can be configured without modifying
+	// the values for each extension
+	public clone(): BridgeExtension<TState, TEditorInstance, TMessage, TConfig> {
+		return new BridgeExtension<TState, TEditorInstance, TMessage, TConfig>({
+			// eslint-disable-next-line @typescript-eslint/no-misused-spread
+			...this,
+			forceName: this.name,
+		});
+	}
 
-  configureCSS(css: string) {
-    const cloned = this.clone();
-    cloned.extendCSS = this.extendCSS ? this.extendCSS + css : css;
-    return cloned;
-  }
+	// runs on native
+	public configureExtension(config: TConfig): BridgeExtension<TState, TEditorInstance, TMessage, TConfig> {
+		const cloned = this.clone();
 
-  extendExtension(config: any) {
-    const cloned = this.clone();
-    cloned.extendConfig = config;
-    return cloned;
-  }
+		cloned.config = config;
 
-  // runs on web
-  configureTiptapExtensionsOnRunTime(config: any, extendConfig: any) {
-    if (this.tiptapExtension) {
-      // If config has a key matching the extension name, use that slice (e.g. TableConfig);
-      // otherwise fall back to the whole config object for backwards compatibility.
-      const mainConfig = config?.[this.tiptapExtension.name] ?? config;
-      if (mainConfig) {
-        this.tiptapExtension = this.tiptapExtension.configure(mainConfig);
-      }
-      if (extendConfig) {
-        this.tiptapExtension = this.tiptapExtension.extend(extendConfig);
-      }
-    }
-    const deps = (this.tiptapExtensionDeps || []).map((dep) => {
-      const depConfig = config?.[dep.name];
-      return depConfig ? dep.configure(depConfig) : dep;
-    });
-    return [this.tiptapExtension, ...deps];
-  }
+		return cloned;
+	}
+
+	public configureCss(css: string): BridgeExtension<TState, TEditorInstance, TMessage, TConfig> {
+		const cloned = this.clone();
+
+		cloned.extendCss = this.extendCss ? this.extendCss + css : css;
+
+		return cloned;
+	}
+
+	public extendExtension(config: Record<string, unknown>): BridgeExtension<TState, TEditorInstance, TMessage, TConfig> {
+		const cloned = this.clone();
+
+		cloned.extendConfig = config;
+
+		return cloned;
+	}
+
+	// runs on web
+	public configureTiptapExtensionsOnRunTime(
+		config: Record<string, unknown>,
+		extendConfig: Record<string, unknown>,
+	): (AnyExtension | undefined)[] {
+		if (this.tiptapExtension) {
+			// If config has a key matching the extension name, use that slice (e.g. TableConfig);
+			// otherwise fall back to the whole config object for backwards compatibility.
+			const mainConfig = config[this.tiptapExtension.name] ?? config;
+
+			this.tiptapExtension = this.tiptapExtension.configure(mainConfig);
+
+			// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+			if (extendConfig) {
+				this.tiptapExtension = this.tiptapExtension.extend(extendConfig);
+			}
+		}
+
+		const deps = (this.tiptapExtensionDeps ?? []).map((dep) => {
+			const depConfig = config[dep.name];
+
+			return depConfig ? dep.configure(depConfig) : dep;
+		});
+
+		return [this.tiptapExtension, ...deps];
+	}
 }
-export default BridgeExtension;
+
+export { BridgeExtension };
