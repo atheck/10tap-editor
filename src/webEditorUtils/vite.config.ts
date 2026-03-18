@@ -13,7 +13,7 @@ export default defineConfig({
 			// the proper extensions will be added
 			fileName: "index",
 		},
-		rollupOptions: {
+		rolldownOptions: {
 			// make sure to externalize deps that shouldn't be bundled
 			// into your library
 			external: ["react", "react/jsx-runtime", "react-dom"],
