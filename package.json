@@ -2,44 +2,8 @@
   "name": "tentap-editor-heck",
   "version": "1.1.0-alpha.13",
   "description": "React Native Rich Text Editor",
-  "main": "lib/commonjs/index.js",
-  "module": "lib/module/index.js",
-  "types": "lib/typescript/src/index.d.ts",
-  "react-native": "src/index.tsx",
-  "exports": {
-    ".": {
-      "import": "./lib/module/index.js",
-      "require": "./lib/commonjs/index.js",
-      "types": "./lib/typescript/src/index.d.ts"
-    },
-    "./web": {
-      "import": "./lib-web/index.mjs",
-      "require": "./lib-web/index.umd.cjs",
-      "types": "./lib-web/typescript/webEditorUtils/index.d.ts"
-    },
-    "./package.json": "./package.json"
-  },
-  "source": "src/index",
-  "files": [
-    "src",
-    "lib",
-    "lib-web",
-    "scripts",
-    "android",
-    "ios",
-    "cpp",
-    "*.podspec",
-    "!ios/build",
-    "!android/build",
-    "!android/gradle",
-    "!android/gradlew",
-    "!android/gradlew.bat",
-    "!android/local.properties",
-    "!**/__tests__",
-    "!**/__fixtures__",
-    "!**/__mocks__",
-    "!**/.*"
-  ],
+  "author": "atheck",
+  "license": "MIT",
   "scripts": {
     "editor:dev": "vite",
     "editor:build": "vite build && node ./scripts/buildEditor.js ./src/simpleWebEditor/build/index.html",
@@ -48,27 +12,15 @@
     "typecheck": "tsc --noEmit",
     "format": "biome check --write src/",
     "lint": "biome check src/ && eslint src/",
-    "clean": "del-cli android/build examplelatest/android/build examplelatest/android/app/build examplelatest/ios/build example76/android/build example76/android/app/build example76/ios/build lib",
+    "clean": "del-cli android/build examplelatest/android/build examplelatest/android/app/build examplelatest/ios/build lib",
     "prepack": "bob build",
     "release": "semantic-release",
     "update": "npx -y npm-check-updates -i --install never && npx -y npm-check-updates -i --target minor --install never && npx -y npm-check-updates -i --target patch --install never && npm update --legacy-peer-deps && npm audit signatures"
   },
-  "keywords": [
-    "rich text",
-    "rich text editor",
-    "editor",
-    "tiptap react-native",
-    "prosemirror react-native",
-    "react-native",
-    "ios",
-    "android"
-  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/atheck/10tap-editor.git"
   },
-  "author": "atheck",
-  "license": "MIT",
   "bugs": {
     "url": "https://github.com/atheck/10tap-editor/issues"
   },
@@ -77,76 +29,10 @@
     "registry": "https://registry.npmjs.org/",
     "access": "public"
   },
-  "devDependencies": {
-    "@babel/core": "7.29.0",
-    "@babel/preset-env": "7.29.2",
-    "@babel/runtime": "7.29.2",
-    "@biomejs/biome": "2.4.7",
-    "@commitlint/config-conventional": "20.5.0",
-    "@evilmartians/lefthook": "1.13.6",
-    "@react-native/babel-preset": "0.82.1",
-    "@semantic-release/changelog": "6.0.3",
-    "@semantic-release/git": "10.0.1",
-    "@types/lodash": "4.17.24",
-    "@types/react": "19.2.14",
-    "@types/react-dom": "19.2.3",
-    "@types/react-native": "0.70.19",
-    "@vitejs/plugin-react": "5.2.0",
-    "commitlint": "20.5.0",
-    "del-cli": "5.1.0",
-    "eslint": "9.39.4",
-    "eslint-config-heck": "9.2.1",
-    "pod-install": "0.1.39",
-    "react": "19.2.4",
-    "react-native": "0.73.11",
-    "react-native-builder-bob": "0.20.4",
-    "react-native-webview": "13.16.1",
-    "rimraf": "5.0.10",
-    "semantic-release": "25.0.3",
-    "turbo": "1.13.4",
-    "typescript": "5.9.3",
-    "vite": "7.3.1",
-    "vite-plugin-singlefile": "2.3.2"
-  },
-  "overrides": {
-    "prosemirror-model": "1.25.4",
-    "prosemirror-state": "1.4.3",
-    "prosemirror-view": "1.41.3",
-    "prosemirror-transform": "1.10.5"
-  },
-  "peerDependencies": {
-    "react": "*",
-    "react-native": "*",
-    "react-native-webview": "*"
-  },
   "workspaces": [
-    "example76",
     "examplelatest",
     "website"
   ],
-  "engines": {
-    "node": ">= 22.12.0"
-  },
-  "commitlint": {
-    "extends": [
-      "@commitlint/config-conventional"
-    ]
-  },
-  "react-native-builder-bob": {
-    "source": "src",
-    "output": "lib",
-    "targets": [
-      "commonjs",
-      "module",
-      [
-        "typescript",
-        {
-          "project": "tsconfig.build.json",
-          "tsc": "./node_modules/.bin/tsc"
-        }
-      ]
-    ]
-  },
   "dependencies": {
     "@tiptap/core": "3.20.4",
     "@tiptap/extension-blockquote": "3.20.4",
@@ -180,5 +66,109 @@
     "@tiptap/starter-kit": "3.20.4",
     "lodash": "4.17.23",
     "react-dom": "19.2.4"
+  },
+  "devDependencies": {
+    "@babel/core": "7.29.0",
+    "@babel/preset-env": "7.29.2",
+    "@babel/runtime": "7.29.2",
+    "@biomejs/biome": "2.4.7",
+    "@commitlint/config-conventional": "20.5.0",
+    "@evilmartians/lefthook": "1.13.6",
+    "@react-native/babel-preset": "0.82.1",
+    "@semantic-release/changelog": "6.0.3",
+    "@semantic-release/git": "10.0.1",
+    "@types/lodash": "4.17.24",
+    "@types/react": "19.2.14",
+    "@types/react-dom": "19.2.3",
+    "@types/react-native": "0.70.19",
+    "@vitejs/plugin-react": "5.2.0",
+    "commitlint": "20.5.0",
+    "del-cli": "5.1.0",
+    "eslint": "9.39.4",
+    "eslint-config-heck": "9.2.1",
+    "pod-install": "0.1.39",
+    "react": "19.2.4",
+    "react-native": "0.73.11",
+    "react-native-builder-bob": "0.20.4",
+    "react-native-webview": "13.16.1",
+    "rimraf": "5.0.10",
+    "semantic-release": "25.0.3",
+    "turbo": "1.13.4",
+    "typescript": "5.9.3",
+    "vite": "7.3.1",
+    "vite-plugin-singlefile": "2.3.2"
+  },
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*",
+    "react-native-webview": "*"
+  },
+  "engines": {
+    "node": ">= 24.14.0"
+  },
+  "keywords": [
+    "rich text",
+    "rich text editor",
+    "editor",
+    "tiptap react-native",
+    "prosemirror react-native",
+    "react-native",
+    "ios",
+    "android"
+  ],
+  "main": "lib/commonjs/index.js",
+  "module": "lib/module/index.js",
+  "types": "lib/typescript/src/index.d.ts",
+  "react-native": "src/index.tsx",
+  "exports": {
+    ".": {
+      "import": "./lib/module/index.js",
+      "require": "./lib/commonjs/index.js",
+      "types": "./lib/typescript/src/index.d.ts"
+    },
+    "./web": {
+      "import": "./lib-web/index.mjs",
+      "require": "./lib-web/index.umd.cjs",
+      "types": "./lib-web/typescript/webEditorUtils/index.d.ts"
+    },
+    "./package.json": "./package.json"
+  },
+  "source": "src/index",
+  "files": [
+    "src",
+    "lib",
+    "lib-web",
+    "scripts",
+    "android",
+    "ios",
+    "cpp",
+    "*.podspec",
+    "!ios/build",
+    "!android/build",
+    "!android/gradle",
+    "!android/gradlew",
+    "!android/gradlew.bat",
+    "!android/local.properties",
+    "!**/.*"
+  ],
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      "commonjs",
+      "module",
+      [
+        "typescript",
+        {
+          "project": "tsconfig.build.json",
+          "tsc": "./node_modules/.bin/tsc"
+        }
+      ]
+    ]
   }
 }

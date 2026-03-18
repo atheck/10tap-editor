@@ -6,7 +6,6 @@
 		"./examplelatest/src/Examples/Advanced/editor-web",
 		"./src/webEditorUtils",
 		"examplelatest",
-		"example76",
 		"./src/webEditorUtils/vite.config.ts",
 		"./vite.config.ts"
 	]
