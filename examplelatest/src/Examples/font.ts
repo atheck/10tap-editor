@@ -124,7 +124,4 @@ export const customFont = `
     font-style: normal;
     font-display: swap;
 }
-
-
-
 `;

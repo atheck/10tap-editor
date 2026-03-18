@@ -10,7 +10,8 @@
       "!**/*.json",
       "!lib/",
       "!lib-web/",
-      "!**/build/"
+      "!**/build/",
+      "!examplelatest/src/Examples/font.ts"
     ]
   },
   "assist": {

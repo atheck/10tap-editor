@@ -3,10 +3,8 @@ import { isExpo } from "../utils/misc";
 // Type guard to check if we're in a browser/webview context
 const hasDocument = (): boolean => {
 	return (
-		// @ts-expect-error
 		// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
 		window !== undefined &&
-		// @ts-expect-error
 		// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
 		window.document !== undefined
 	);
@@ -18,7 +16,6 @@ class FocusListener {
 	public constructor() {
 		// Only add event listeners if we're in a webview context where document exists
 		if (hasDocument()) {
-			// @ts-expect-error
 			window.document.addEventListener(
 				"focus",
 				() => {
@@ -26,7 +23,6 @@ class FocusListener {
 				},
 				true,
 			);
-			// @ts-expect-error
 			window.document.addEventListener(
 				"blur",
 				() => {

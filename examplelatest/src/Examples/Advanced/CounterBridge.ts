@@ -1,30 +1,26 @@
-import { BridgeExtension } from 'tentap-editor-heck';
-import CharacterCount from '@tiptap/extension-character-count';
+import { CharacterCount } from "@tiptap/extension-character-count";
+import { BridgeExtension } from "tentap-editor-heck";
 
-type CounterEditorState = {
-  wordCount: number;
-  characterCount: number;
-};
-
-type CounterEditorInstance = {};
-
-declare module 'tentap-editor-heck' {
-  interface BridgeState extends CounterEditorState {}
-  interface EditorBridge extends CounterEditorInstance {}
+interface CounterEditorState {
+	wordCount: number;
+	characterCount: number;
 }
 
-export const CounterBridge = new BridgeExtension<
-  CounterEditorState,
-  CounterEditorInstance,
-  unknown
->({
-  tiptapExtension: CharacterCount.configure({
-    limit: 240,
-  }),
-  extendEditorState: (editor) => {
-    return {
-      wordCount: editor.storage.characterCount.characters(),
-      characterCount: editor.storage.characterCount.words(),
-    };
-  },
+interface CounterEditorInstance {}
+
+declare module "tentap-editor-heck" {
+	interface BridgeState extends CounterEditorState {}
+	interface EditorBridge extends CounterEditorInstance {}
+}
+
+const CounterBridge = new BridgeExtension<CounterEditorState, CounterEditorInstance>({
+	tiptapExtension: CharacterCount.configure({
+		limit: 240,
+	}),
+	extendEditorState: (editor) => ({
+		wordCount: editor.storage.characterCount.characters(),
+		characterCount: editor.storage.characterCount.words(),
+	}),
 });
+
+export { CounterBridge };

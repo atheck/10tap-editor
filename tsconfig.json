@@ -1,18 +1,14 @@
 {
 	"compilerOptions": {
 		"rootDir": ".",
-		"paths": {
-			"tentap-editor-heck": [
-				"./src/index"
-			]
-		},
 		"allowUnreachableCode": false,
 		"allowUnusedLabels": false,
 		"esModuleInterop": true,
 		"forceConsistentCasingInFileNames": true,
 		"jsx": "react-jsx",
 		"lib": [
-			"esnext"
+			"esnext",
+			"DOM"
 		],
 		"module": "esnext",
 		"moduleResolution": "bundler",
@@ -31,10 +27,7 @@
 	},
 	"exclude": [
 		"./src/simpleWebEditor",
-		"./website",
 		"examplelatest",
-		"examplelatest/src/Examples/Advanced/editor-web",
 		"./src/webEditorUtils",
-		"./src/webEditorUtils/vite.config.ts"
 	]
 }

@@ -13,8 +13,6 @@ export default [
 			"**/build/",
 			"**/android/build/",
 			"**/ios/build/",
-			"examplelatest/",
-			"website/",
 			"src/simpleWebEditor/index.d.ts",
 		],
 	},
