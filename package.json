@@ -30,8 +30,7 @@
     "access": "public"
   },
   "workspaces": [
-    "examplelatest",
-    "website"
+    "examplelatest"
   ],
   "dependencies": {
     "@tiptap/core": "3.20.4",

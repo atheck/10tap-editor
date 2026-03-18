@@ -37,7 +37,7 @@ export const ConfigureExtensions = () => {
             editor.setContent(
               hideContent
                 ? ''
-                : `<a href="https://10play.github.io/10tap-editor">Link To TenTap!</a>
+                : `<a href="https://github.com/atheck/10tap-editor">Link To TenTap!</a>
             <p>Try to drag around the image. While you drag, the editor should show a decoration under your cursor. The so called dropcursor.</p></br>
             <img src="https://source.unsplash.com/8xznAGy4HcY/800x400" /></br>
             <p>Drag Me Here</p></br></br></br></br></br><p>Or Here</p>`

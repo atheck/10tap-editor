@@ -48,14 +48,14 @@ export const CustomAndStaticToolbar = ({
             <TextInput
               style={exampleStyles.textPrimary}
               autoFocus
-              placeholder="tentap@10play.dev"
+              placeholder="tentap@example.com"
             />
           </View>
           <View style={exampleStyles.recipientField}>
             <Text style={exampleStyles.textSecondary}>From</Text>
             <TextInput
               style={exampleStyles.textPrimary}
-              placeholder="you@10play.dev"
+              placeholder="you@example.com"
             />
           </View>
           <TextInput
@@ -132,4 +132,4 @@ const exampleStyles = StyleSheet.create({
   },
 });
 
-const MAIL_INITIAL_CONTENT = `<p><br><br><br><br><a target="_blank" rel="noopener noreferrer nofollow" href="https://www.10play.dev">Sent With Tentap!</a></p>`;
+const MAIL_INITIAL_CONTENT = `<p><br><br><br><br><a target="_blank" rel="noopener noreferrer nofollow" href="https://github.com/atheck/10tap-editor">Sent With Tentap!</a></p>`;
