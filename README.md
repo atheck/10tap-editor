@@ -157,8 +157,22 @@ The interface returned by `useEditorBridge`. All methods below are available whe
 | `toggleBulletList` | `() => void` | Toggle bullet list |
 | `toggleOrderedList` | `() => void` | Toggle ordered list |
 | `toggleTaskList` | `() => void` | Toggle task list |
+| `liftTaskListItem` | `() => void` | Lift task list item |
+| `sinkTaskListItem` | `() => void` | Sink task list item |
 | `lift` | `() => void` | Lift list item |
 | `sink` | `() => void` | Sink list item |
+| `toggleCodeBlock` | `(language?: string) => void` | Toggle code block |
+| `setCodeBlock` | `(language?: string) => void` | Set code block |
+| `setTextAlign` | `('left' \| 'center' \| 'right' \| 'justify') => void` | Set text alignment |
+| `unsetTextAlign` | `() => void` | Remove text alignment |
+| `toggleSubscript` | `() => void` | Toggle subscript |
+| `toggleSuperscript` | `() => void` | Toggle superscript |
+| `setFontFamily` | `(fontFamily: string) => void` | Set font family |
+| `unsetFontFamily` | `() => void` | Remove font family |
+| `setFontSize` | `(fontSize: string) => void` | Set font size |
+| `unsetFontSize` | `() => void` | Remove font size |
+| `setHardBreak` | `() => void` | Insert a hard line break |
+| `setHorizontalRule` | `() => void` | Insert a horizontal rule |
 | `undo` | `() => void` | Undo last change |
 | `redo` | `() => void` | Redo last undone change |
 | `setColor` | `(color: string) => void` | Set text color |
@@ -169,6 +183,22 @@ The interface returned by `useEditorBridge`. All methods below are available whe
 | `setImage` | `(src: string) => void` | Insert an image by URL |
 | `setLink` | `(link: string \| null) => void` | Set or remove a link |
 | `setPlaceholder` | `(placeholder: string) => void` | Update placeholder text at runtime |
+| `insertTable` | `() => void` | Insert a table |
+| `deleteTable` | `() => void` | Delete the current table |
+| `addColumnBefore` | `() => void` | Add a column before the current one |
+| `addColumnAfter` | `() => void` | Add a column after the current one |
+| `deleteColumn` | `() => void` | Delete the current column |
+| `addRowBefore` | `() => void` | Add a row before the current one |
+| `addRowAfter` | `() => void` | Add a row after the current one |
+| `deleteRow` | `() => void` | Delete the current row |
+| `mergeCells` | `() => void` | Merge selected cells |
+| `splitCell` | `() => void` | Split the current cell |
+| `goToNextCell` | `() => void` | Move focus to the next cell |
+| `goToPreviousCell` | `() => void` | Move focus to the previous cell |
+| `fixTables` | `() => void` | Normalize table structure |
+| `toggleHeaderRow` | `() => void` | Toggle the header row |
+| `toggleHeaderColumn` | `() => void` | Toggle the header column |
+| `toggleHeaderCell` | `() => void` | Toggle the current cell as a header |
 
 ---
 
@@ -203,17 +233,33 @@ Subscribes to `BridgeState` changes and re-renders on every update.
 | `isUnderlineActive` / `canToggleUnderline` | `boolean` | Underline status |
 | `isStrikeActive` / `canToggleStrike` | `boolean` | Strikethrough status |
 | `isCodeActive` / `canToggleCode` | `boolean` | Inline code status |
+| `isCodeBlockActive` / `canToggleCodeBlock` | `boolean` | Code block status |
+| `codeBlockLanguage` | `string \| undefined` | Active code block language |
 | `isBlockquoteActive` / `canToggleBlockquote` | `boolean` | Blockquote status |
 | `isBulletListActive` / `canToggleBulletList` | `boolean` | Bullet list status |
 | `isOrderedListActive` / `canToggleOrderedList` | `boolean` | Ordered list status |
 | `isTaskListActive` / `canToggleTaskList` | `boolean` | Task list status |
+| `canLiftTaskListItem` / `canSinkTaskListItem` | `boolean` | Task list item indent status |
 | `headingLevel` | `number \| undefined` | Active heading level, or `undefined` |
 | `canToggleHeading` | `boolean` | Whether heading can be toggled |
 | `canLift` / `canSink` | `boolean` | Whether list item can be lifted/sunk |
+| `activeTextAlign` | `'left' \| 'center' \| 'right' \| 'justify' \| undefined` | Active text alignment |
+| `canSetTextAlign` | `boolean` | Whether text alignment can be set |
+| `isSubscriptActive` / `canToggleSubscript` | `boolean` | Subscript status |
+| `isSuperscriptActive` / `canToggleSuperscript` | `boolean` | Superscript status |
+| `activeFontFamily` | `string \| undefined` | Active font family |
+| `activeFontSize` | `string \| undefined` | Active font size |
+| `canSetHorizontalRule` | `boolean` | Whether a horizontal rule can be inserted |
 | `canUndo` / `canRedo` | `boolean` | Undo/redo availability |
 | `activeColor` | `string \| undefined` | Active text color |
 | `activeHighlight` | `string \| undefined` | Active highlight color |
 | `isLinkActive` / `canSetLink` / `activeLink` | `boolean \| string \| undefined` | Link status |
+| `isTableActive` / `canInsertTable` / `canDeleteTable` | `boolean` | Table presence status |
+| `canAddColumnBefore` / `canAddColumnAfter` / `canDeleteColumn` | `boolean` | Table column operations |
+| `canAddRowBefore` / `canAddRowAfter` / `canDeleteRow` | `boolean` | Table row operations |
+| `canMergeCells` / `canSplitCell` | `boolean` | Table cell merge/split availability |
+| `canGoToNextCell` / `canGoToPreviousCell` | `boolean` | Table cell navigation |
+| `canToggleHeaderRow` / `canToggleHeaderColumn` / `canToggleHeaderCell` | `boolean` | Table header toggles |
 
 ---
 
@@ -292,24 +338,36 @@ All extensions below are included in `TenTapStarterKit`. Each can be configured 
 | `CoreExtension` | `@tiptap/extension-document`, `@tiptap/extension-paragraph`, `@tiptap/extension-text` | — |
 | `BlockquoteBridge` | `@tiptap/extension-blockquote` | [docs](https://tiptap.dev/docs/editor/api/nodes/blockquote#settings) |
 | `BoldBridge` | `@tiptap/extension-bold` | [docs](https://tiptap.dev/docs/editor/api/marks/bold#settings) |
-| `BulletListBridge` | `@tiptap/extension-bullet-list`, `@tiptap/extension-list-item` | [docs](https://tiptap.dev/docs/editor/api/nodes/bullet-list#settings) |
+| `BulletListBridge` | `@tiptap/extension-list` | [docs](https://tiptap.dev/docs/editor/api/nodes/bullet-list#settings) |
 | `CodeBridge` | `@tiptap/extension-code` | [docs](https://tiptap.dev/docs/editor/api/marks/code#settings) |
-| `ColorBridge` | `@tiptap/extension-color`, `@tiptap/extension-text-style` | — |
-| `DropCursorBridge` | `@tiptap/extension-dropcursor` | [docs](https://tiptap.dev/docs/editor/api/extensions/dropcursor#settings) |
+| `CodeBlockBridge` | `@tiptap/extension-code-block` | [docs](https://tiptap.dev/docs/editor/api/nodes/code-block#settings) |
+| `ColorBridge` | `@tiptap/extension-color` | — |
+| `DropCursorBridge` | `@tiptap/extensions` | — |
+| `FontFamilyBridge` | `@tiptap/extension-font-family` | [docs](https://tiptap.dev/docs/editor/api/extensions/font-family#settings) |
+| `FontSizeBridge` | custom extension (extends `@tiptap/core`) | — |
+| `HardBreakBridge` | `@tiptap/extension-hard-break` | [docs](https://tiptap.dev/docs/editor/api/nodes/hard-break#settings) |
 | `HeadingBridge` | `@tiptap/extension-heading` | [docs](https://tiptap.dev/docs/editor/api/nodes/heading#settings) |
-| `HighlightBridge` | `@tiptap/extension-highlight`, `@tiptap/extension-text-style` | — |
-| `HistoryBridge` | `@tiptap/extension-history` | [docs](https://tiptap.dev/docs/editor/api/extensions/history#settings) |
+| `HighlightBridge` | `@tiptap/extension-highlight` | — |
+| `HistoryBridge` | `@tiptap/extensions` | — |
+| `HorizontalRuleBridge` | `@tiptap/extension-horizontal-rule` | [docs](https://tiptap.dev/docs/editor/api/nodes/horizontal-rule#settings) |
 | `ImageBridge` | `@tiptap/extension-image` | [docs](https://tiptap.dev/docs/editor/api/nodes/image#settings) |
 | `ItalicBridge` | `@tiptap/extension-italic` | [docs](https://tiptap.dev/docs/editor/api/marks/italic#settings) |
 | `LinkBridge` | `@tiptap/extension-link` | [docs](https://tiptap.dev/docs/editor/api/marks/link#settings) |
-| `ListItemBridge` | `@tiptap/extension-list-item` | [docs](https://tiptap.dev/docs/editor/api/nodes/list-item#settings) |
-| `OrderedListBridge` | `@tiptap/extension-ordered-list`, `@tiptap/extension-list-item` | [docs](https://tiptap.dev/docs/editor/api/nodes/ordered-list#settings) |
-| `PlaceholderBridge` | `@tiptap/extension-placeholder` | [docs](https://tiptap.dev/docs/editor/api/extensions/placeholder#settings) |
+| `ListItemBridge` | `@tiptap/extension-list` | [docs](https://tiptap.dev/docs/editor/api/nodes/list-item#settings) |
+| `OrderedListBridge` | `@tiptap/extension-list` | [docs](https://tiptap.dev/docs/editor/api/nodes/ordered-list#settings) |
+| `PlaceholderBridge` | `@tiptap/extensions` | [docs](https://tiptap.dev/docs/editor/api/extensions/placeholder#settings) |
 | `StrikeBridge` | `@tiptap/extension-strike` | [docs](https://tiptap.dev/docs/editor/api/marks/strike#settings) |
-| `TaskListBridge` | `@tiptap/extension-task-list`, `@tiptap/extension-list-item` | [docs](https://tiptap.dev/docs/editor/api/nodes/task-list#settings) |
+| `SubscriptBridge` | `@tiptap/extension-subscript` | [docs](https://tiptap.dev/docs/editor/api/marks/subscript#settings) |
+| `SuperscriptBridge` | `@tiptap/extension-superscript` | [docs](https://tiptap.dev/docs/editor/api/marks/superscript#settings) |
+| `TableBridge` | `@tiptap/extension-table`, `@tiptap/extension-table-row`, `@tiptap/extension-table-cell`, `@tiptap/extension-table-header` | [docs](https://tiptap.dev/docs/editor/api/nodes/table#settings) |
+| `TaskListBridge` | `@tiptap/extension-list` | [docs](https://tiptap.dev/docs/editor/api/nodes/task-list#settings) |
+| `TextAlignBridge` | `@tiptap/extension-text-align` | [docs](https://tiptap.dev/docs/editor/api/extensions/text-align#settings) |
+| `TextStyleBridge` | `@tiptap/extension-text-style` | [docs](https://tiptap.dev/docs/editor/api/marks/text-style#settings) |
+| `TrailingNodeBridge` | `@tiptap/extensions` | — |
 | `UnderlineBridge` | `@tiptap/extension-underline` | [docs](https://tiptap.dev/docs/editor/api/marks/underline#settings) |
 
 > **Note:** `ListItemBridge` is only needed if you want to control list item `lift`/`sink`. Otherwise `BulletListBridge` or `OrderedListBridge` alone is sufficient.
+> `FontFamilyBridge`, `FontSizeBridge`, `ColorBridge`, `HighlightBridge`, and `TextAlignBridge` require `TextStyleBridge` to be present in `bridgeExtensions`.
 
 ---
 
