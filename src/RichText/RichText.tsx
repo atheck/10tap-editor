@@ -89,9 +89,9 @@ function RichText({ editor, onMessage, exclusivelyUseCustomOnMessage = true, ...
 			// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
 			if (editor.webviewRef.current) {
 				editor.webviewRef.current.injectJavaScript(`
-          doc = document.querySelector('.ProseMirror');
-          if(doc) doc.style.paddingBottom = '${height}px';
-        `);
+					doc = document.querySelector('.ProseMirror');
+					if(doc) doc.style.paddingBottom = '${height}px';
+				`);
 			}
 		};
 

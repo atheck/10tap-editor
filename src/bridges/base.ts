@@ -3,7 +3,8 @@ import type { RefObject } from "react";
 import type { WebView } from "react-native-webview";
 import type { BridgeState, EditorBridge } from "../types";
 
-type CreateTenTapBridgeArgs<TState = unknown, TEditorInstance = unknown, TMessage = unknown, TConfig = unknown> = Omit<
+// biome-ignore lint/suspicious/noExplicitAny: We need any here.
+type CreateTenTapBridgeArgs<TState = any, TEditorInstance = any, TMessage = any, TConfig = any> = Omit<
 	BridgeExtension<TState, TEditorInstance, TMessage, TConfig> & { forceName?: string },
 	| "name"
 	| "sendMessage"
@@ -14,7 +15,8 @@ type CreateTenTapBridgeArgs<TState = unknown, TEditorInstance = unknown, TMessag
 	| "clone"
 >;
 
-class BridgeExtension<TState = unknown, TEditorInstance = unknown, TMessage = unknown, TConfig = unknown> {
+// biome-ignore lint/suspicious/noExplicitAny: We need any here.
+class BridgeExtension<TState = any, TEditorInstance = any, TMessage = any, TConfig = any> {
 	public name: string;
 	public tiptapExtension?: AnyExtension;
 	public tiptapExtensionDeps?: AnyExtension[];

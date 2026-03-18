@@ -43,7 +43,7 @@ function CustomCss(): JSX.Element {
 		autofocus: true,
 		avoidIosKeyboard: true,
 		initialContent,
-		bridgeExtensions: [...TenTapStartKit, CoreBridge.configureCSS(customFont), CodeBridge.configureCSS(customCodeBlockCss)],
+		bridgeExtensions: [...TenTapStartKit, CoreBridge.configureCss(customFont), CodeBridge.configureCss(customCodeBlockCss)],
 	});
 
 	return (

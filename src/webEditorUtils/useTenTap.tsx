@@ -90,6 +90,7 @@ const useTenTap = (options?: UseTenTapArgs): ReturnType<typeof useEditor> => {
 				return acc;
 			}
 
+			// eslint-disable-next-line @typescript-eslint/no-unsafe-return
 			return Object.assign(acc, ext.extendEditorState(tiptapEditor));
 		}, payload) as BridgeState;
 
@@ -118,7 +119,7 @@ const useTenTap = (options?: UseTenTapArgs): ReturnType<typeof useEditor> => {
 		},
 		onSelectionUpdate: (onUpdate) => sendStateUpdate(onUpdate.editor),
 		onTransaction: (onUpdate) => sendStateUpdate(onUpdate.editor),
-		editable: window.editable,
+		editable: Boolean(window.editable),
 		shouldRerenderOnTransaction: true,
 		...tiptapOptionsWithExtensions,
 	});

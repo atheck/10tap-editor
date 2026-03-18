@@ -54,7 +54,7 @@ function DarkEditor(): JSX.Element {
 		autofocus: true,
 		avoidIosKeyboard: true,
 		initialContent,
-		bridgeExtensions: [...TenTapStartKit, CoreBridge.configureCSS(darkEditorCss)],
+		bridgeExtensions: [...TenTapStartKit, CoreBridge.configureCss(darkEditorCss)],
 		theme: darkEditorTheme,
 	});
 
