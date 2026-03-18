@@ -45,7 +45,6 @@
     "editor:build": "vite build && node ./scripts/buildEditor.js ./src/simpleWebEditor/build/index.html",
     "editor:build-web-utils": "rimraf lib-web && vite build --config ./src/webEditorUtils/vite.config.ts && tsc --project ./src/webEditorUtils",
     "examplelatest": "npm -w tentap-example-latest",
-    "test": "jest",
     "typecheck": "tsc --noEmit",
     "format": "biome check --write src/",
     "lint": "biome check src/ && eslint src/",
@@ -88,7 +87,6 @@
     "@react-native/babel-preset": "0.82.1",
     "@semantic-release/changelog": "6.0.3",
     "@semantic-release/git": "10.0.1",
-    "@types/jest": "30.0.0",
     "@types/lodash": "4.17.24",
     "@types/react": "19.2.14",
     "@types/react-dom": "19.2.3",
@@ -98,7 +96,6 @@
     "del-cli": "5.1.0",
     "eslint": "9.39.4",
     "eslint-config-heck": "9.2.1",
-    "jest": "30.3.0",
     "pod-install": "0.1.39",
     "react": "19.2.4",
     "react-native": "0.73.11",
@@ -129,14 +126,6 @@
   ],
   "engines": {
     "node": ">= 22.12.0"
-  },
-  "jest": {
-    "preset": "react-native",
-    "modulePathIgnorePatterns": [
-      "<rootDir>/example76",
-      "<rootDir>/examplelatest",
-      "<rootDir>/lib/"
-    ]
   },
   "commitlint": {
     "extends": [
