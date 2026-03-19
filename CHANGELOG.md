@@ -1,3 +1,15 @@
+# [1.2.0-alpha.1](https://github.com/atheck/10tap-editor/compare/v1.1.0...v1.2.0-alpha.1) (2026-03-19)
+
+
+### Bug Fixes
+
+* fix some issues ([95c8305](https://github.com/atheck/10tap-editor/commit/95c830524019cb71a807a1ba085d0c38d088fc01))
+
+
+### Features
+
+* add `ClearFormattingBridge` to reset all formatting ([ba4a8cb](https://github.com/atheck/10tap-editor/commit/ba4a8cb60e3e3ee95b16a8d927f9e6ff97472fa5))
+
 # [1.1.0-alpha.14](https://github.com/atheck/10tap-editor/compare/v1.1.0-alpha.13...v1.1.0-alpha.14) (2026-03-19)
 
 
