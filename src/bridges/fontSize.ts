@@ -30,12 +30,7 @@ const FontSize = Extension.create({
 					fontSize: {
 						default: null,
 						// biome-ignore lint/style/useNamingConvention: tiptap API name
-						parseHTML: (element) => {
-							// eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion
-							const el = element as { style: { fontSize: string } };
-
-							return el.style.fontSize.replaceAll(/['"]+/gu, "");
-						},
+						parseHTML: (element) => (element as { style: { fontSize: string } }).style.fontSize.replaceAll(/['"]+/gu, ""),
 						// biome-ignore lint/style/useNamingConvention: tiptap API name
 						renderHTML: (attributes) => {
 							if (!attributes.fontSize) {
