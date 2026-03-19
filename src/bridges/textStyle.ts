@@ -10,7 +10,7 @@ declare module "../types/EditorBridge" {
 	interface EditorBridge extends TextStyleEditorInstance {}
 }
 
-type TextStyleMessage = never;
+interface TextStyleMessage {}
 
 const TextStyleBridge = new BridgeExtension<TextStyleEditorState, TextStyleEditorInstance, TextStyleMessage, TextStyleOptions>({
 	tiptapExtension: TextStyle,

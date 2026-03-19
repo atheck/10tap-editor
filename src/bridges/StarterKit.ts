@@ -1,3 +1,4 @@
+import type { BridgeExtension } from "./base";
 import { BlockquoteBridge } from "./blockquote";
 import { BoldBridge } from "./bold";
 import { HardBreakBridge } from "./br";
@@ -30,7 +31,7 @@ import { TextStyleBridge } from "./textStyle";
 import { TrailingNodeBridge } from "./trailingNode";
 import { UnderlineBridge } from "./underline";
 
-export const TenTapStartKit = [
+export const TenTapStartKit: BridgeExtension[] = [
 	BoldBridge,
 	HistoryBridge,
 	CodeBridge,

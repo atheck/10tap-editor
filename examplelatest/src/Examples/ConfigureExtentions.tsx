@@ -21,7 +21,7 @@ function ConfigureExtensions(): JSX.Element {
 			PlaceholderBridge.configureExtension({
 				placeholder: "Hey there! Start typing...",
 			}),
-			LinkBridge.configureExtension({ openOnClick: false }),
+			LinkBridge,
 			DropCursorBridge.configureExtension({
 				color: DROP_CURSOR_COLOR,
 				width: 2,
