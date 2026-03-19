@@ -101,15 +101,17 @@ class BridgeExtension<TState = any, TEditorInstance = any, TMessage = any, TConf
 
 	// runs on web
 	public configureTiptapExtensionsOnRunTime(
-		config: Record<string, unknown>,
-		extendConfig: Record<string, unknown>,
-	): (AnyExtension | undefined)[] {
+		config: Record<string, unknown> | undefined,
+		extendConfig: Record<string, unknown> | undefined,
+	): AnyExtension[] {
 		if (this.tiptapExtension) {
 			// If config has a key matching the extension name, use that slice (e.g. TableConfig);
 			// otherwise fall back to the whole config object for backwards compatibility.
-			const mainConfig = config[this.tiptapExtension.name] ?? config;
+			const mainConfig = config?.[this.tiptapExtension.name] ?? config;
 
-			this.tiptapExtension = this.tiptapExtension.configure(mainConfig);
+			if (mainConfig) {
+				this.tiptapExtension = this.tiptapExtension.configure(mainConfig);
+			}
 
 			// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
 			if (extendConfig) {
@@ -118,12 +120,12 @@ class BridgeExtension<TState = any, TEditorInstance = any, TMessage = any, TConf
 		}
 
 		const deps = (this.tiptapExtensionDeps ?? []).map((dep) => {
-			const depConfig = config[dep.name];
+			const depConfig = config?.[dep.name];
 
 			return depConfig ? dep.configure(depConfig) : dep;
 		});
 
-		return [this.tiptapExtension, ...deps];
+		return [this.tiptapExtension, ...deps].filter((ext): ext is AnyExtension => ext !== undefined);
 	}
 }
 
