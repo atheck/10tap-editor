@@ -117,7 +117,7 @@ const useEditorBridge = (options?: {
 		// On the new arch on Android, messages are sent twice, so if we toggle bold it immediately toggles back
 		// We workaround this by adding a random id to the message and not handling it twice on the web side
 		if (isFabric() && Platform.OS === "android") {
-			message.id = Math.random().toString(36).substring(7);
+			message.id = Math.random().toString(36).slice(7);
 		}
 
 		// eslint-disable-next-line unicorn/require-post-message-target-origin

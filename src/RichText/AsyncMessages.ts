@@ -35,7 +35,7 @@ class AsyncMessages {
 
 	// biome-ignore lint/suspicious/useAwait: Return a new Promise is ok.
 	public async sendAsyncMessage<TResult>(message: AsyncMessage, postMessage: (msg: AsyncMessage) => void): Promise<TResult> {
-		const messageId = Math.random().toString(36).substring(7);
+		const messageId = Math.random().toString(36).slice(7);
 
 		message.payload ??= {};
 		message.payload.messageId = messageId;
