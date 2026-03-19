@@ -2,6 +2,7 @@ import { BlockquoteBridge } from "./blockquote";
 import { BoldBridge } from "./bold";
 import { HardBreakBridge } from "./br";
 import { BulletListBridge } from "./bulletList";
+import { ClearFormattingBridge } from "./clearFormatting";
 import { CodeBridge } from "./code";
 import { CodeBlockBridge } from "./codeBlock";
 import { ColorBridge } from "./color";
@@ -60,4 +61,5 @@ export const TenTapStartKit = [
 	FontFamilyBridge,
 	FontSizeBridge,
 	TrailingNodeBridge,
+	ClearFormattingBridge,
 ];

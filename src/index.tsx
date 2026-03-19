@@ -6,6 +6,7 @@ export * from "./bridges/blockquote";
 export * from "./bridges/bold";
 export * from "./bridges/br";
 export * from "./bridges/bulletList";
+export * from "./bridges/clearFormatting";
 export * from "./bridges/code";
 export * from "./bridges/codeBlock";
 export * from "./bridges/color";
