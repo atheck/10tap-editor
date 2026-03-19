@@ -4,6 +4,7 @@
   "description": "React Native Rich Text Editor",
   "author": "atheck",
   "license": "MIT",
+  "packageManager": "npm@11.11.1",
   "scripts": {
     "editor:dev": "vite",
     "editor:build": "vite build && node ./scripts/buildEditor.js ./src/simpleWebEditor/build/index.html",
