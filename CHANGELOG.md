@@ -1,3 +1,10 @@
+# [1.2.0-alpha.2](https://github.com/atheck/10tap-editor/compare/v1.2.0-alpha.1...v1.2.0-alpha.2) (2026-03-19)
+
+
+### Bug Fixes
+
+* set extension configs correctly and install correct react-dom package ([c8e0bfe](https://github.com/atheck/10tap-editor/commit/c8e0bfe87d29db8ae427aeab4086161ce6f44657))
+
 # [1.2.0-alpha.1](https://github.com/atheck/10tap-editor/compare/v1.1.0...v1.2.0-alpha.1) (2026-03-19)
 
 
