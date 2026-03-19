@@ -1,1 +1,3 @@
-export type Subscription<T> = (cb: (val: T) => void) => () => void;
+type Subscription<TValue> = (cb: (val: TValue) => void) => () => void;
+
+export type { Subscription };

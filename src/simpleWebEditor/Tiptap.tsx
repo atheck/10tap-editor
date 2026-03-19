@@ -1,21 +1,17 @@
-import React from 'react';
-import { EditorContent } from '@tiptap/react';
-import { useTenTap } from '../webEditorUtils';
-import { TenTapStartKit } from '../bridges/StarterKit';
+import { EditorContent } from "@tiptap/react";
+import type { JSX } from "react";
+import { TenTapStartKit } from "../bridges/StarterKit";
+import { useTenTap } from "../webEditorUtils";
 
-let tenTapExtensions = TenTapStartKit.filter(
-  (e) =>
-    !window.whiteListBridgeExtensions ||
-    window.whiteListBridgeExtensions.includes(e.name)
+const tenTapExtensions = TenTapStartKit.filter(
+	// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+	(ext) => !window.whiteListBridgeExtensions || window.whiteListBridgeExtensions.includes(ext.name),
 );
 
-export default function Tiptap() {
-  const editor = useTenTap({ bridges: tenTapExtensions });
+function Tiptap(): JSX.Element {
+	const editor = useTenTap({ bridges: tenTapExtensions });
 
-  return (
-    <EditorContent
-      editor={editor}
-      className={window.dynamicHeight ? 'dynamic-height' : undefined}
-    />
-  );
+	return <EditorContent editor={editor} className={window.dynamicHeight ? "dynamic-height" : undefined} />;
 }
+
+export { Tiptap };

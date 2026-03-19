@@ -1,6 +1,8 @@
-import { TrailingNode } from '@tiptap/extensions';
-import BridgeExtension from './base';
+import { TrailingNode } from "@tiptap/extensions";
+import { BridgeExtension } from "./base";
 
-export const TrailingNodeBridge = new BridgeExtension({
-  tiptapExtension: TrailingNode,
+const TrailingNodeBridge = new BridgeExtension({
+	tiptapExtension: TrailingNode,
 });
+
+export { TrailingNodeBridge };

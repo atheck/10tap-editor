@@ -1,82 +1,69 @@
-import { ListItem, type ListItemOptions } from '@tiptap/extension-list';
-import BridgeExtension from './base';
+import { ListItem, type ListItemOptions } from "@tiptap/extension-list";
+import { BridgeExtension } from "./base";
 
-type ListItemEditorState = {
-  canLift: boolean;
-  canSink: boolean;
-};
-
-type ListItemEditorInstance = {
-  lift: () => void;
-  sink: () => void;
-};
-
-declare module '../types/EditorBridge' {
-  interface BridgeState extends ListItemEditorState {}
-  interface EditorBridge extends ListItemEditorInstance {}
+interface ListItemEditorState {
+	canLift: boolean;
+	canSink: boolean;
 }
 
-export enum ListItemEditorActionType {
-  Lift = 'lift',
-  Sink = 'sink',
+interface ListItemEditorInstance {
+	lift: () => void;
+	sink: () => void;
+}
+
+declare module "../types/EditorBridge" {
+	interface BridgeState extends ListItemEditorState {}
+	interface EditorBridge extends ListItemEditorInstance {}
 }
 
 // Actions with no payload
-type ToggleActionTypes =
-  | ListItemEditorActionType.Lift
-  | ListItemEditorActionType.Sink;
+type ToggleActionTypes = "lift" | "sink";
 
-export interface ListItemMessage {
-  type: ToggleActionTypes;
-  payload?: undefined;
+interface ListItemMessage {
+	type: ToggleActionTypes;
+	payload?: undefined;
 }
 
-export const ListItemBridge = new BridgeExtension<
-  ListItemEditorState,
-  ListItemEditorInstance,
-  ListItemMessage,
-  ListItemOptions
->({
-  tiptapExtension: ListItem,
-  onBridgeMessage: (editor, message) => {
-    switch (message.type) {
-      case ListItemEditorActionType.Lift:
-        editor
-          .chain()
-          .focus()
-          .liftListItem(editor.schema.nodes.listItem!.name)
-          .run();
-        break;
-      case ListItemEditorActionType.Sink:
-        editor
-          .chain()
-          .focus()
-          .sinkListItem(editor.schema.nodes.listItem!.name)
-          .run();
-        break;
-    }
+const ListItemEditorActionType = {
+	lift: "lift",
+	sink: "sink",
+} as const;
 
-    return false;
-  },
-  extendEditorInstance: (sendBridgeMessage) => {
-    const lift = () =>
-      sendBridgeMessage({ type: ListItemEditorActionType.Lift });
-    const sink = () =>
-      sendBridgeMessage({ type: ListItemEditorActionType.Sink });
+const ListItemBridge = new BridgeExtension<ListItemEditorState, ListItemEditorInstance, ListItemMessage, ListItemOptions>({
+	tiptapExtension: ListItem,
+	onBridgeMessage: (editor, message) => {
+		switch (message.type) {
+			case ListItemEditorActionType.lift:
+				// biome-ignore lint/style/noNonNullAssertion: listItem node is guaranteed to exist when this bridge is active
+				editor.chain().focus().liftListItem(editor.schema.nodes.listItem!.name).run();
+				break;
+			case ListItemEditorActionType.sink:
+				// biome-ignore lint/style/noNonNullAssertion: listItem node is guaranteed to exist when this bridge is active
+				editor.chain().focus().sinkListItem(editor.schema.nodes.listItem!.name).run();
+				break;
+		}
 
-    return {
-      lift,
-      sink,
-    };
-  },
-  extendEditorState: (editor) => {
-    return {
-      canLift: editor
-        .can()
-        .liftListItem(editor.state.schema.nodes.listItem!.name),
-      canSink: editor
-        .can()
-        .sinkListItem(editor.state.schema.nodes.listItem!.name),
-    };
-  },
+		return false;
+	},
+	extendEditorInstance: (sendBridgeMessage) => {
+		const lift = (): void => {
+			sendBridgeMessage({ type: ListItemEditorActionType.lift });
+		};
+		const sink = (): void => {
+			sendBridgeMessage({ type: ListItemEditorActionType.sink });
+		};
+
+		return {
+			lift,
+			sink,
+		};
+	},
+	extendEditorState: (editor) => ({
+		// biome-ignore lint/style/noNonNullAssertion: listItem node is guaranteed to exist when this bridge is active
+		canLift: editor.can().liftListItem(editor.state.schema.nodes.listItem!.name),
+		// biome-ignore lint/style/noNonNullAssertion: listItem node is guaranteed to exist when this bridge is active
+		canSink: editor.can().sinkListItem(editor.state.schema.nodes.listItem!.name),
+	}),
 });
+
+export { ListItemBridge, ListItemEditorActionType, type ListItemMessage };

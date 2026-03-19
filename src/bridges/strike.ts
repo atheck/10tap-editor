@@ -1,53 +1,46 @@
-import Strike, { type StrikeOptions } from '@tiptap/extension-strike';
-import BridgeExtension from './base';
+import { Strike, type StrikeOptions } from "@tiptap/extension-strike";
+import { BridgeExtension } from "./base";
 
-type StrikeEditorState = {
-  isStrikeActive: boolean;
-  canToggleStrike: boolean;
-};
-
-type StrikeEditorInstance = {
-  toggleStrike: () => void;
-};
-
-declare module '../types/EditorBridge' {
-  interface BridgeState extends StrikeEditorState {}
-  interface EditorBridge extends StrikeEditorInstance {}
+interface StrikeEditorState {
+	isStrikeActive: boolean;
+	canToggleStrike: boolean;
 }
 
-export enum StrikeEditorActionType {
-  ToggleStrike = 'toggle-strike',
+interface StrikeEditorInstance {
+	toggleStrike: () => void;
 }
 
-type StrikeMessage = {
-  type: StrikeEditorActionType.ToggleStrike;
-  payload?: undefined;
-};
+declare module "../types/EditorBridge" {
+	interface BridgeState extends StrikeEditorState {}
+	interface EditorBridge extends StrikeEditorInstance {}
+}
 
-export const StrikeBridge = new BridgeExtension<
-  StrikeEditorState,
-  StrikeEditorInstance,
-  StrikeMessage,
-  StrikeOptions
->({
-  tiptapExtension: Strike,
-  onBridgeMessage: (editor, message) => {
-    if (message.type === StrikeEditorActionType.ToggleStrike) {
-      editor.chain().focus().toggleStrike().run();
-    }
+interface StrikeMessage {
+	type: "toggle-strike";
+	payload?: undefined;
+}
 
-    return false;
-  },
-  extendEditorInstance: (sendBridgeMessage) => {
-    return {
-      toggleStrike: () =>
-        sendBridgeMessage({ type: StrikeEditorActionType.ToggleStrike }),
-    };
-  },
-  extendEditorState: (editor) => {
-    return {
-      canToggleStrike: editor.can().toggleStrike(),
-      isStrikeActive: editor.isActive('strike'),
-    };
-  },
+const StrikeEditorActionType = {
+	toggleStrike: "toggle-strike",
+} as const;
+
+const StrikeBridge = new BridgeExtension<StrikeEditorState, StrikeEditorInstance, StrikeMessage, StrikeOptions>({
+	tiptapExtension: Strike,
+	onBridgeMessage: (editor, message) => {
+		// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- The only message for now.
+		if (message.type === StrikeEditorActionType.toggleStrike) {
+			editor.chain().focus().toggleStrike().run();
+		}
+
+		return false;
+	},
+	extendEditorInstance: (sendBridgeMessage) => ({
+		toggleStrike: () => sendBridgeMessage({ type: StrikeEditorActionType.toggleStrike }),
+	}),
+	extendEditorState: (editor) => ({
+		canToggleStrike: editor.can().toggleStrike(),
+		isStrikeActive: editor.isActive("strike"),
+	}),
 });
+
+export { StrikeBridge, StrikeEditorActionType };

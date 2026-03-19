@@ -1,90 +1,85 @@
-import { TextStyle } from '@tiptap/extension-text-style';
-import { Highlight, type HighlightOptions } from '@tiptap/extension-highlight';
-import BridgeExtension from './base';
+import { Highlight, type HighlightOptions } from "@tiptap/extension-highlight";
+import { TextStyle } from "@tiptap/extension-text-style";
+import { BridgeExtension } from "./base";
 
-type HighlightEditorState = {
-  activeHighlight: string | undefined;
-};
-
-type HighlightEditorInstance = {
-  setHighlight: (color: string) => void;
-  toggleHighlight: (color: string) => void;
-  unsetHighlight: () => void;
-};
-
-declare module '../types/EditorBridge' {
-  interface BridgeState extends HighlightEditorState {}
-  interface EditorBridge extends HighlightEditorInstance {}
+interface HighlightEditorState {
+	activeHighlight: string | undefined;
 }
 
-export enum HighlightEditorActionType {
-  SetHighlight = 'set-highlight',
-  ToggleHighlight = 'toggle-highlight',
-  UnsetHighlight = 'unset-highlight',
+interface HighlightEditorInstance {
+	setHighlight: (color: string) => void;
+	toggleHighlight: (color: string) => void;
+	unsetHighlight: () => void;
 }
 
-type SetHighlightMessage = {
-  type: HighlightEditorActionType.SetHighlight;
-  payload: string;
-};
-type ToggleHighlightMessage = {
-  type: HighlightEditorActionType.ToggleHighlight;
-  payload: string;
-};
-type UnsetHighlightMessage = {
-  type: HighlightEditorActionType.UnsetHighlight;
-  payload: undefined;
-};
+declare module "../types/EditorBridge" {
+	interface BridgeState extends HighlightEditorState {}
+	interface EditorBridge extends HighlightEditorInstance {}
+}
 
-type HighlightMessage =
-  | SetHighlightMessage
-  | ToggleHighlightMessage
-  | UnsetHighlightMessage;
+interface SetHighlightMessage {
+	type: "set-highlight";
+	payload: string;
+}
+interface ToggleHighlightMessage {
+	type: "toggle-highlight";
+	payload: string;
+}
+interface UnsetHighlightMessage {
+	type: "unset-highlight";
+	payload: undefined;
+}
 
-export const HighlightBridge = new BridgeExtension<
-  HighlightEditorState,
-  HighlightEditorInstance,
-  HighlightMessage,
-  HighlightOptions
->({
-  tiptapExtension: Highlight.configure({ multicolor: true }),
-  tiptapExtensionDeps: [TextStyle],
-  onBridgeMessage: (editor, { type, payload }) => {
-    switch (type) {
-      case HighlightEditorActionType.SetHighlight:
-        editor.chain().focus().setHighlight({ color: payload }).run();
-        break;
-      case HighlightEditorActionType.ToggleHighlight:
-        editor.chain().focus().toggleHighlight({ color: payload }).run();
-        break;
-      case HighlightEditorActionType.UnsetHighlight:
-        editor.chain().focus().unsetHighlight().run();
-        break;
-    }
-    return false;
-  },
-  extendEditorInstance: (sendBridgeMessage) => {
-    return {
-      setHighlight: (color) =>
-        sendBridgeMessage({
-          type: HighlightEditorActionType.SetHighlight,
-          payload: color,
-        }),
-      toggleHighlight: (color) =>
-        sendBridgeMessage({
-          type: HighlightEditorActionType.ToggleHighlight,
-          payload: color,
-        }),
-      unsetHighlight: () =>
-        sendBridgeMessage({
-          type: HighlightEditorActionType.UnsetHighlight,
-          payload: undefined,
-        }),
-    };
-  },
-  extendEditorState: (editor) => {
-    return {
-      activeHighlight: editor.getAttributes('highlight').color,
-    };
-  },
+type HighlightMessage = SetHighlightMessage | ToggleHighlightMessage | UnsetHighlightMessage;
+
+const HighlightEditorActionType = {
+	setHighlight: "set-highlight",
+	toggleHighlight: "toggle-highlight",
+	unsetHighlight: "unset-highlight",
+} as const;
+
+const HighlightBridge = new BridgeExtension<HighlightEditorState, HighlightEditorInstance, HighlightMessage, HighlightOptions>({
+	tiptapExtension: Highlight.configure({ multicolor: true }),
+	tiptapExtensionDeps: [TextStyle],
+	onBridgeMessage: (editor, { type, payload }) => {
+		switch (type) {
+			case HighlightEditorActionType.setHighlight:
+				editor.chain().focus().setHighlight({ color: payload }).run();
+
+				break;
+			case HighlightEditorActionType.toggleHighlight:
+				editor.chain().focus().toggleHighlight({ color: payload }).run();
+
+				break;
+			case HighlightEditorActionType.unsetHighlight:
+				editor.chain().focus().unsetHighlight().run();
+
+				break;
+		}
+
+		return false;
+	},
+	extendEditorInstance: (sendBridgeMessage) => ({
+		setHighlight: (color) =>
+			sendBridgeMessage({
+				type: HighlightEditorActionType.setHighlight,
+				payload: color,
+			}),
+		toggleHighlight: (color) =>
+			sendBridgeMessage({
+				type: HighlightEditorActionType.toggleHighlight,
+				payload: color,
+			}),
+		unsetHighlight: () =>
+			sendBridgeMessage({
+				type: HighlightEditorActionType.unsetHighlight,
+				payload: undefined,
+			}),
+	}),
+	extendEditorState: (editor) => ({
+		// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+		activeHighlight: editor.getAttributes("highlight").color,
+	}),
 });
+
+export { HighlightBridge, HighlightEditorActionType };

@@ -1,72 +1,70 @@
-import { TextStyle } from '@tiptap/extension-text-style';
-import { Color, type ColorOptions } from '@tiptap/extension-color';
-import BridgeExtension from './base';
+import { Color, type ColorOptions } from "@tiptap/extension-color";
+import { TextStyle } from "@tiptap/extension-text-style";
+import { BridgeExtension } from "./base";
 
-type ColorEditorState = {
-  activeColor: string | undefined;
-};
-
-type ColorEditorInstance = {
-  setColor: (color: string) => void;
-  unsetColor: () => void;
-};
-
-declare module '../types/EditorBridge' {
-  interface BridgeState extends ColorEditorState {}
-  interface EditorBridge extends ColorEditorInstance {}
+interface ColorEditorState {
+	activeColor: string | undefined;
 }
 
-export enum ColorEditorActionType {
-  SetColor = 'set-color',
-  UnsetColor = 'unset-color',
+interface ColorEditorInstance {
+	setColor: (color: string) => void;
+	unsetColor: () => void;
 }
-type SetColorMessage = {
-  type: ColorEditorActionType.SetColor;
-  payload: string;
-};
-type UnsetColorMessage = {
-  type: ColorEditorActionType.UnsetColor;
-  payload: undefined;
-};
+
+declare module "../types/EditorBridge" {
+	interface BridgeState extends ColorEditorState {}
+	interface EditorBridge extends ColorEditorInstance {}
+}
+
+interface SetColorMessage {
+	type: "set-color";
+	payload: string;
+}
+interface UnsetColorMessage {
+	type: "unset-color";
+	payload: undefined;
+}
 
 type ColorMessage = SetColorMessage | UnsetColorMessage;
 
-export const ColorBridge = new BridgeExtension<
-  ColorEditorState,
-  ColorEditorInstance,
-  ColorMessage,
-  ColorOptions
->({
-  tiptapExtension: Color,
-  tiptapExtensionDeps: [TextStyle],
-  onBridgeMessage: (editor, { type, payload }) => {
-    switch (type) {
-      case ColorEditorActionType.SetColor:
-        editor.chain().focus().setColor(payload).run();
-        break;
-      case ColorEditorActionType.UnsetColor:
-        editor.chain().focus().unsetColor().run();
-        break;
-    }
-    return false;
-  },
-  extendEditorInstance: (sendBridgeMessage) => {
-    return {
-      setColor: (color) =>
-        sendBridgeMessage({
-          type: ColorEditorActionType.SetColor,
-          payload: color,
-        }),
-      unsetColor: () =>
-        sendBridgeMessage({
-          type: ColorEditorActionType.UnsetColor,
-          payload: undefined,
-        }),
-    };
-  },
-  extendEditorState: (editor) => {
-    return {
-      activeColor: editor.getAttributes('textStyle').color,
-    };
-  },
+const ColorEditorActionType = {
+	setColor: "set-color",
+	unsetColor: "unset-color",
+} as const;
+
+const ColorBridge = new BridgeExtension<ColorEditorState, ColorEditorInstance, ColorMessage, ColorOptions>({
+	tiptapExtension: Color,
+	tiptapExtensionDeps: [TextStyle],
+	onBridgeMessage: (editor, { type, payload }) => {
+		switch (type) {
+			case ColorEditorActionType.setColor:
+				editor.chain().focus().setColor(payload).run();
+
+				break;
+			case ColorEditorActionType.unsetColor:
+				editor.chain().focus().unsetColor().run();
+
+				break;
+		}
+
+		return false;
+	},
+	extendEditorInstance: (sendBridgeMessage) => ({
+		setColor: (color) =>
+			sendBridgeMessage({
+				type: ColorEditorActionType.setColor,
+				payload: color,
+			}),
+		unsetColor: () =>
+			sendBridgeMessage({
+				type: ColorEditorActionType.unsetColor,
+				payload: undefined,
+			}),
+	}),
+	extendEditorState: (editor) => ({
+		// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+		activeColor: editor.getAttributes("textStyle").color,
+	}),
 });
+
+export { ColorBridge, ColorEditorActionType };

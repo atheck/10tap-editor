@@ -1,0 +1,37 @@
+{
+  "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
+  "extends": [
+    "eslint-config-heck/biomeJsTs",
+    "eslint-config-heck/biomeJson"
+  ],
+  "files": {
+    "includes": [
+      "**",
+      "!**/*.json",
+      "!lib/",
+      "!lib-web/",
+      "!**/build/",
+      "!examplelatest/src/Examples/font.ts"
+    ]
+  },
+  "assist": {
+    "actions": {
+      "source": {
+        "organizeImports": "on"
+      }
+    }
+  },
+  "formatter": {
+    "lineWidth": 130
+  },
+  "json": {
+    "parser": {
+      "allowComments": true
+    }
+  },
+  "vcs": {
+    "enabled": true,
+    "clientKind": "git",
+    "useIgnoreFile": true
+  }
+}

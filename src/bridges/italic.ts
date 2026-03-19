@@ -1,53 +1,46 @@
-import Italic, { type ItalicOptions } from '@tiptap/extension-italic';
-import BridgeExtension from './base';
+import { Italic, type ItalicOptions } from "@tiptap/extension-italic";
+import { BridgeExtension } from "./base";
 
-type ItalicEditorState = {
-  isItalicActive: boolean;
-  canToggleItalic: boolean;
-};
-
-type ItalicEditorInstance = {
-  toggleItalic: () => void;
-};
-
-declare module '../types/EditorBridge' {
-  interface BridgeState extends ItalicEditorState {}
-  interface EditorBridge extends ItalicEditorInstance {}
+interface ItalicEditorState {
+	isItalicActive: boolean;
+	canToggleItalic: boolean;
 }
 
-export enum ItalicEditorActionType {
-  ToggleItalic = 'toggle-italic',
+interface ItalicEditorInstance {
+	toggleItalic: () => void;
 }
 
-type ItalicMessage = {
-  type: ItalicEditorActionType.ToggleItalic;
-  payload?: undefined;
-};
+declare module "../types/EditorBridge" {
+	interface BridgeState extends ItalicEditorState {}
+	interface EditorBridge extends ItalicEditorInstance {}
+}
 
-export const ItalicBridge = new BridgeExtension<
-  ItalicEditorState,
-  ItalicEditorInstance,
-  ItalicMessage,
-  ItalicOptions
->({
-  tiptapExtension: Italic,
-  onBridgeMessage: (editor, message) => {
-    if (message.type === ItalicEditorActionType.ToggleItalic) {
-      editor.chain().focus().toggleItalic().run();
-    }
+interface ItalicMessage {
+	type: "toggle-italic";
+	payload?: undefined;
+}
 
-    return false;
-  },
-  extendEditorInstance: (sendBridgeMessage) => {
-    return {
-      toggleItalic: () =>
-        sendBridgeMessage({ type: ItalicEditorActionType.ToggleItalic }),
-    };
-  },
-  extendEditorState: (editor) => {
-    return {
-      canToggleItalic: editor.can().toggleItalic(),
-      isItalicActive: editor.isActive('italic'),
-    };
-  },
+const ItalicEditorActionType = {
+	toggleItalic: "toggle-italic",
+} as const;
+
+const ItalicBridge = new BridgeExtension<ItalicEditorState, ItalicEditorInstance, ItalicMessage, ItalicOptions>({
+	tiptapExtension: Italic,
+	onBridgeMessage: (editor, message) => {
+		// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- The only message for now.
+		if (message.type === ItalicEditorActionType.toggleItalic) {
+			editor.chain().focus().toggleItalic().run();
+		}
+
+		return false;
+	},
+	extendEditorInstance: (sendBridgeMessage) => ({
+		toggleItalic: () => sendBridgeMessage({ type: ItalicEditorActionType.toggleItalic }),
+	}),
+	extendEditorState: (editor) => ({
+		canToggleItalic: editor.can().toggleItalic(),
+		isItalicActive: editor.isActive("italic"),
+	}),
 });
+
+export { ItalicBridge, ItalicEditorActionType };

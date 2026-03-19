@@ -1,48 +1,39 @@
-import HardBreak, { type HardBreakOptions } from '@tiptap/extension-hard-break';
-import BridgeExtension from './base';
+import { HardBreak, type HardBreakOptions } from "@tiptap/extension-hard-break";
+import { BridgeExtension } from "./base";
 
-type HardBreakState = {};
+type HardBreakState = Record<string, never>;
 
-type HardBreakEditorInstance = {
-  setHardBreak: () => void;
-};
-
-declare module '../types/EditorBridge' {
-  interface BridgeState extends HardBreakState {}
-  interface EditorBridge extends HardBreakEditorInstance {}
+interface HardBreakEditorInstance {
+	setHardBreak: () => void;
 }
 
-export enum HardBreakEditorActionType {
-  setHardBreak = 'set-hard-break',
+declare module "../types/EditorBridge" {
+	interface EditorBridge extends HardBreakEditorInstance {}
 }
 
-type HardBreakMessage = {
-  type: HardBreakEditorActionType.setHardBreak;
-  payload?: undefined;
-};
+interface HardBreakMessage {
+	type: "set-hard-break";
+	payload?: undefined;
+}
 
-export const HardBreakBridge = new BridgeExtension<
-  HardBreakState,
-  HardBreakEditorInstance,
-  HardBreakMessage,
-  HardBreakOptions
->({
-  tiptapExtension: HardBreak,
-  onBridgeMessage: (editor, message) => {
-    if (message.type === HardBreakEditorActionType.setHardBreak) {
-      console.log('setting hard break');
-      editor.chain().focus().setHardBreak().run();
-    }
+const HardBreakEditorActionType = {
+	setHardBreak: "set-hard-break",
+} as const;
 
-    return false;
-  },
-  extendEditorInstance: (sendBridgeMessage) => {
-    return {
-      setHardBreak: () =>
-        sendBridgeMessage({ type: HardBreakEditorActionType.setHardBreak }),
-    };
-  },
-  extendEditorState: () => {
-    return {};
-  },
+const HardBreakBridge = new BridgeExtension<HardBreakState, HardBreakEditorInstance, HardBreakMessage, HardBreakOptions>({
+	tiptapExtension: HardBreak,
+	onBridgeMessage: (editor, message) => {
+		// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- The only message for now.
+		if (message.type === HardBreakEditorActionType.setHardBreak) {
+			editor.chain().focus().setHardBreak().run();
+		}
+
+		return false;
+	},
+	extendEditorInstance: (sendBridgeMessage) => ({
+		setHardBreak: () => sendBridgeMessage({ type: HardBreakEditorActionType.setHardBreak }),
+	}),
+	extendEditorState: () => ({}),
 });
+
+export { HardBreakBridge, HardBreakEditorActionType };

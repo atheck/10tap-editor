@@ -1,57 +1,54 @@
-import Superscript, {
-  type SuperscriptExtensionOptions,
-} from '@tiptap/extension-superscript';
-import BridgeExtension from './base';
+import { Superscript, type SuperscriptExtensionOptions } from "@tiptap/extension-superscript";
+import { BridgeExtension } from "./base";
 
-type SuperscriptEditorState = {
-  isSuperscriptActive: boolean;
-  canToggleSuperscript: boolean;
-};
-
-type SuperscriptEditorInstance = {
-  toggleSuperscript: () => void;
-};
-
-declare module '../types/EditorBridge' {
-  interface BridgeState extends SuperscriptEditorState {}
-  interface EditorBridge extends SuperscriptEditorInstance {}
+interface SuperscriptEditorState {
+	isSuperscriptActive: boolean;
+	canToggleSuperscript: boolean;
 }
 
-export enum SuperscriptEditorActionType {
-  ToggleSuperscript = 'toggle-superscript',
+interface SuperscriptEditorInstance {
+	toggleSuperscript: () => void;
 }
 
-type SuperscriptMessage = {
-  type: SuperscriptEditorActionType.ToggleSuperscript;
-  payload?: undefined;
-};
+declare module "../types/EditorBridge" {
+	interface BridgeState extends SuperscriptEditorState {}
+	interface EditorBridge extends SuperscriptEditorInstance {}
+}
 
-export const SuperscriptBridge = new BridgeExtension<
-  SuperscriptEditorState,
-  SuperscriptEditorInstance,
-  SuperscriptMessage,
-  SuperscriptExtensionOptions
+interface SuperscriptMessage {
+	type: "toggle-superscript";
+	payload?: undefined;
+}
+
+const SuperscriptEditorActionType = {
+	toggleSuperscript: "toggle-superscript",
+} as const;
+
+const SuperscriptBridge = new BridgeExtension<
+	SuperscriptEditorState,
+	SuperscriptEditorInstance,
+	SuperscriptMessage,
+	SuperscriptExtensionOptions
 >({
-  tiptapExtension: Superscript,
-  onBridgeMessage: (editor, message) => {
-    if (message.type === SuperscriptEditorActionType.ToggleSuperscript) {
-      editor.chain().focus().toggleSuperscript().run();
-    }
+	tiptapExtension: Superscript,
+	onBridgeMessage: (editor, message) => {
+		// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- The only message for now.
+		if (message.type === SuperscriptEditorActionType.toggleSuperscript) {
+			editor.chain().focus().toggleSuperscript().run();
+		}
 
-    return false;
-  },
-  extendEditorInstance: (sendBridgeMessage) => {
-    return {
-      toggleSuperscript: () =>
-        sendBridgeMessage({
-          type: SuperscriptEditorActionType.ToggleSuperscript,
-        }),
-    };
-  },
-  extendEditorState: (editor) => {
-    return {
-      canToggleSuperscript: editor.can().toggleSuperscript(),
-      isSuperscriptActive: editor.isActive('superscript'),
-    };
-  },
+		return false;
+	},
+	extendEditorInstance: (sendBridgeMessage) => ({
+		toggleSuperscript: () =>
+			sendBridgeMessage({
+				type: SuperscriptEditorActionType.toggleSuperscript,
+			}),
+	}),
+	extendEditorState: (editor) => ({
+		canToggleSuperscript: editor.can().toggleSuperscript(),
+		isSuperscriptActive: editor.isActive("superscript"),
+	}),
 });
+
+export { SuperscriptBridge, SuperscriptEditorActionType };

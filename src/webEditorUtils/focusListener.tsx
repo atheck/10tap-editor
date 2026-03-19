@@ -1,44 +1,41 @@
-import { isExpo } from '../utils/misc';
+import { isExpo } from "../utils/misc";
 
 // Type guard to check if we're in a browser/webview context
 const hasDocument = (): boolean => {
-  // @ts-ignore - window may not be defined in all contexts
-  return (
-    // @ts-ignore
-    typeof window !== 'undefined' &&
-    // @ts-ignore
-    typeof window.document !== 'undefined'
-  );
+	return (
+		// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+		window !== undefined &&
+		// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+		window.document !== undefined
+	);
 };
 
 class FocusListener {
-  private focus: boolean;
-  constructor() {
-    this.focus = false;
+	private focus = false;
 
-    // Only add event listeners if we're in a webview context where document exists
-    if (hasDocument()) {
-      // @ts-ignore
-      window.document.addEventListener(
-        'focus',
-        () => {
-          this.focus = true;
-        },
-        true
-      );
-      // @ts-ignore
-      window.document.addEventListener(
-        'blur',
-        () => {
-          this.focus = false;
-        },
-        true
-      );
-    }
-  }
-  public get isFocused() {
-    return this.focus;
-  }
+	public constructor() {
+		// Only add event listeners if we're in a webview context where document exists
+		if (hasDocument()) {
+			window.document.addEventListener(
+				"focus",
+				() => {
+					this.focus = true;
+				},
+				true,
+			);
+			window.document.addEventListener(
+				"blur",
+				() => {
+					this.focus = false;
+				},
+				true,
+			);
+		}
+	}
+
+	public get isFocused(): boolean {
+		return this.focus;
+	}
 }
 
 // Check if we're in a React Native environment (no document) or webview (has document)
@@ -46,6 +43,6 @@ class FocusListener {
 const isReactNativeContext = isExpo() || !hasDocument();
 const shimmedFocusListener = { isFocused: false };
 
-export const focusListener = isReactNativeContext
-  ? shimmedFocusListener
-  : new FocusListener();
+const focusListener = isReactNativeContext ? shimmedFocusListener : new FocusListener();
+
+export { focusListener };

@@ -1,58 +1,53 @@
-import HorizontalRule, {
-  type HorizontalRuleOptions,
-} from '@tiptap/extension-horizontal-rule';
-import BridgeExtension from './base';
+import { HorizontalRule, type HorizontalRuleOptions } from "@tiptap/extension-horizontal-rule";
+import { BridgeExtension } from "./base";
 
-type HorizontalRuleEditorState = {
-  canSetHorizontalRule: boolean;
-};
-
-type HorizontalRuleEditorInstance = {
-  setHorizontalRule: () => void;
-};
-
-declare module '../types/EditorBridge' {
-  interface BridgeState extends HorizontalRuleEditorState {}
-  interface EditorBridge extends HorizontalRuleEditorInstance {}
+interface HorizontalRuleEditorState {
+	canSetHorizontalRule: boolean;
 }
 
-export enum HorizontalRuleEditorActionType {
-  SetHorizontalRule = 'set-horizontal-rule',
+interface HorizontalRuleEditorInstance {
+	setHorizontalRule: () => void;
 }
 
-type HorizontalRuleMessage = {
-  type: HorizontalRuleEditorActionType.SetHorizontalRule;
-  payload?: undefined;
-};
+declare module "../types/EditorBridge" {
+	interface BridgeState extends HorizontalRuleEditorState {}
+	interface EditorBridge extends HorizontalRuleEditorInstance {}
+}
 
-export const HorizontalRuleBridge = new BridgeExtension<
-  HorizontalRuleEditorState,
-  HorizontalRuleEditorInstance,
-  HorizontalRuleMessage,
-  HorizontalRuleOptions
+interface HorizontalRuleMessage {
+	type: "set-horizontal-rule";
+	payload?: undefined;
+}
+
+const HorizontalRuleEditorActionType = {
+	setHorizontalRule: "set-horizontal-rule",
+} as const;
+
+const HorizontalRuleBridge = new BridgeExtension<
+	HorizontalRuleEditorState,
+	HorizontalRuleEditorInstance,
+	HorizontalRuleMessage,
+	HorizontalRuleOptions
 >({
-  tiptapExtension: HorizontalRule,
-  onBridgeMessage: (editor, message) => {
-    if (message.type === HorizontalRuleEditorActionType.SetHorizontalRule) {
-      editor.chain().focus().setHorizontalRule().run();
-    }
+	tiptapExtension: HorizontalRule,
+	onBridgeMessage: (editor, message) => {
+		// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- The only message for now.
+		if (message.type === HorizontalRuleEditorActionType.setHorizontalRule) {
+			editor.chain().focus().setHorizontalRule().run();
+		}
 
-    return false;
-  },
-  extendEditorInstance: (sendBridgeMessage) => {
-    return {
-      setHorizontalRule: () =>
-        sendBridgeMessage({
-          type: HorizontalRuleEditorActionType.SetHorizontalRule,
-        }),
-    };
-  },
-  extendEditorState: (editor) => {
-    return {
-      canSetHorizontalRule: editor.can().setHorizontalRule(),
-    };
-  },
-  extendCSS: `
+		return false;
+	},
+	extendEditorInstance: (sendBridgeMessage) => ({
+		setHorizontalRule: () =>
+			sendBridgeMessage({
+				type: HorizontalRuleEditorActionType.setHorizontalRule,
+			}),
+	}),
+	extendEditorState: (editor) => ({
+		canSetHorizontalRule: editor.can().setHorizontalRule(),
+	}),
+	extendCss: `
   hr {
     border-width: 0;
     border-top-width: thin;
@@ -61,3 +56,5 @@ export const HorizontalRuleBridge = new BridgeExtension<
   }
   `,
 });
+
+export { HorizontalRuleBridge, HorizontalRuleEditorActionType };

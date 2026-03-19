@@ -1,57 +1,47 @@
-import Code, { type CodeOptions } from '@tiptap/extension-code';
-import BridgeExtension from './base';
+import { Code, type CodeOptions } from "@tiptap/extension-code";
+import { BridgeExtension } from "./base";
 
-type CodeEditorState = {
-  isCodeActive: boolean;
-  canToggleCode: boolean;
-};
-
-type CodeEditorInstance = {
-  toggleCode: () => void;
-};
-
-declare module '../types/EditorBridge' {
-  interface BridgeState extends CodeEditorState {}
-  interface EditorBridge extends CodeEditorInstance {}
+interface CodeEditorState {
+	isCodeActive: boolean;
+	canToggleCode: boolean;
 }
 
-export enum CodeEditorActionType {
-  ToggleCode = 'toggle-code',
+interface CodeEditorInstance {
+	toggleCode: () => void;
 }
 
-type CodeMessage = {
-  type: CodeEditorActionType.ToggleCode;
-  payload?: undefined;
-};
+declare module "../types/EditorBridge" {
+	interface BridgeState extends CodeEditorState {}
+	interface EditorBridge extends CodeEditorInstance {}
+}
 
-export const CodeBridge = new BridgeExtension<
-  CodeEditorState,
-  CodeEditorInstance,
-  CodeMessage,
-  CodeOptions
->({
-  tiptapExtension: Code,
-  //   tiptapExtensionDeps: [CodeBlock],
-  onBridgeMessage: (editor, message) => {
-    if (message.type === CodeEditorActionType.ToggleCode) {
-      editor.chain().focus().toggleCode().run();
-    }
+interface CodeMessage {
+	type: "toggle-code";
+	payload?: undefined;
+}
 
-    return false;
-  },
-  extendEditorInstance: (sendBridgeMessage) => {
-    return {
-      toggleCode: () =>
-        sendBridgeMessage({ type: CodeEditorActionType.ToggleCode }),
-    };
-  },
-  extendEditorState: (editor) => {
-    return {
-      canToggleCode: editor.can().toggleCode(),
-      isCodeActive: editor.isActive('code'),
-    };
-  },
-  extendCSS: `
+const CodeEditorActionType = {
+	toggleCode: "toggle-code",
+} as const;
+
+const CodeBridge = new BridgeExtension<CodeEditorState, CodeEditorInstance, CodeMessage, CodeOptions>({
+	tiptapExtension: Code,
+	onBridgeMessage: (editor, message) => {
+		// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- The only message for now.
+		if (message.type === CodeEditorActionType.toggleCode) {
+			editor.chain().focus().toggleCode().run();
+		}
+
+		return false;
+	},
+	extendEditorInstance: (sendBridgeMessage) => ({
+		toggleCode: () => sendBridgeMessage({ type: CodeEditorActionType.toggleCode }),
+	}),
+	extendEditorState: (editor) => ({
+		canToggleCode: editor.can().toggleCode(),
+		isCodeActive: editor.isActive("code"),
+	}),
+	extendCss: `
     code {
         background-color: #6161611a;
         border-radius: 0.25em;
@@ -62,3 +52,5 @@ export const CodeBridge = new BridgeExtension<
     }
   `,
 });
+
+export { CodeBridge, CodeEditorActionType };

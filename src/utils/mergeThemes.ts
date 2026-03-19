@@ -1,8 +1,9 @@
-import merge from 'lodash/merge';
-import type { EditorTheme } from '../types';
-import type { RecursivePartial } from '../RichText';
+import merge from "lodash/merge";
+import type { RecursivePartial } from "../RichText";
+import type { EditorTheme } from "../types";
 
-export const mergeThemes = (
-  theme1: EditorTheme,
-  theme2: RecursivePartial<EditorTheme> | undefined
-) => merge(theme1, theme2);
+function mergeThemes(theme1: EditorTheme, theme2: RecursivePartial<EditorTheme> | undefined): EditorTheme {
+	return merge(theme1, theme2);
+}
+
+export { mergeThemes };

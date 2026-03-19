@@ -1,13 +1,16 @@
-import { useEffect, useState } from 'react';
-import type { EditorBridge } from '../types';
+import { useEffect, useState } from "react";
+import type { BridgeState, EditorBridge } from "../types";
 
-export const useBridgeState = (editor: EditorBridge) => {
-  const [editorState, setEditorState] = useState(editor.getEditorState());
+const useBridgeState = (editor: EditorBridge): BridgeState => {
+	const [editorState, setEditorState] = useState(editor.getEditorState());
 
-  useEffect(() => {
-    const unsubscribe = editor._subscribeToEditorStateUpdate(setEditorState);
-    return unsubscribe;
-  }, [editor]);
+	useEffect(() => {
+		const unsubscribe = editor.subscribeToEditorStateUpdate(setEditorState);
 
-  return editorState;
+		return unsubscribe;
+	}, [editor]);
+
+	return editorState;
 };
+
+export { useBridgeState };

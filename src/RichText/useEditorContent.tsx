@@ -1,54 +1,64 @@
-import debounce from 'lodash/debounce';
-import type { EditorBridge } from '../types';
-import { useEffect, useState } from 'react';
-import type { EditorContentType } from '../bridges/core';
+import debounce from "lodash/debounce";
+import { useEffect, useState } from "react";
+import type { EditorContentType } from "../bridges/core";
+import type { EditorBridge } from "../types";
 
-interface Options<T extends EditorContentType> {
-  type?: T;
-  debounceInterval?: number;
+interface Options<TContent extends EditorContentType> {
+	type?: TContent;
+	debounceInterval?: number;
 }
-const DEFAULT_OPTIONS: Required<Options<'html'>> = {
-  type: 'html',
-  debounceInterval: 10,
+
+const DEFAULT_OPTIONS: Required<Options<"html">> = {
+	type: "html",
+	debounceInterval: 10,
 };
 
-type ContentType<T extends EditorContentType> = T extends 'json'
-  ? object
-  : string;
+type ContentType<TContent extends EditorContentType> = TContent extends "json" ? object : string;
 
-export function useEditorContent<T extends EditorContentType>(
-  editor: EditorBridge,
-  { debounceInterval, type }: Options<T> = DEFAULT_OPTIONS as Options<T>
-) {
-  const [content, setContent] = useState<ContentType<T>>();
+function useEditorContent<TContent extends EditorContentType>(
+	editor: EditorBridge,
+	// eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion
+	{ debounceInterval, type }: Options<TContent> = DEFAULT_OPTIONS as Options<TContent>,
+): ContentType<TContent> | undefined {
+	const [content, setContent] = useState<ContentType<TContent>>();
 
-  useEffect(() => {
-    const updateContent = debounce(async () => {
-      switch (type) {
-        case 'json':
-          const json = await editor.getJSON();
-          setContent(json as ContentType<T>);
-          break;
-        case 'text':
-          const text = await editor.getText();
-          setContent(text as ContentType<T>);
-          break;
-        case 'html':
-        default:
-          const html = await editor.getHTML();
-          setContent(html as ContentType<T>);
-          break;
-      }
-    }, debounceInterval);
+	useEffect(() => {
+		const updateContent = debounce(async () => {
+			switch (type) {
+				case "json": {
+					const json = await editor.getJSON();
 
-    const unsubscribe = editor._subscribeToEditorStateUpdate(() => {
-      updateContent();
-    });
+					// eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion
+					setContent(json as ContentType<TContent>);
+					break;
+				}
+				case "text": {
+					const text = await editor.getText();
 
-    return () => {
-      unsubscribe();
-    };
-  }, [editor, debounceInterval, type]);
+					// eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion
+					setContent(text as ContentType<TContent>);
+					break;
+				}
+				default: {
+					const html = await editor.getHTML();
 
-  return content;
+					// eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion
+					setContent(html as ContentType<TContent>);
+					break;
+				}
+			}
+		}, debounceInterval);
+
+		const unsubscribe = editor.subscribeToEditorStateUpdate(() => {
+			updateContent();
+		});
+
+		return () => {
+			unsubscribe();
+		};
+	}, [editor, debounceInterval, type]);
+
+	return content;
 }
+
+export { useEditorContent };
