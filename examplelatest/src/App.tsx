@@ -2,7 +2,6 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator, type NativeStackScreenProps } from "@react-navigation/native-stack";
 import type { JSX } from "react";
 import { Button, StyleSheet, Text, View } from "react-native";
-import { Advanced } from "./Examples/Advanced/AdvancedRichText";
 import { Basic } from "./Examples/Basic";
 import { ConfigureExtensions } from "./Examples/ConfigureExtentions";
 import { CustomAndStaticToolbar } from "./Examples/CustomAndStaticToolbar/CustomAndStaticToolbar";
@@ -20,7 +19,6 @@ interface RootStackParamList {
 	editorStickToKeyboard: undefined;
 	navigationHeader: undefined;
 	customAndStaticToolbar: undefined;
-	advanced: undefined;
 }
 
 const examples = [
@@ -31,7 +29,6 @@ const examples = [
 	{ name: "editorStickToKeyboard" as const, title: "EditorStickToKeyboardExample", component: EditorStickToKeyboardExample },
 	{ name: "navigationHeader" as const, title: "NavigationHeader", component: NavigationHeader },
 	{ name: "customAndStaticToolbar" as const, title: "CustomAndStaticToolbar", component: CustomAndStaticToolbar },
-	{ name: "advanced" as const, title: "Advanced", component: Advanced },
 ];
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
