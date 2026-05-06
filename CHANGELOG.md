@@ -1,3 +1,10 @@
+## [1.2.1](https://github.com/atheck/10tap-editor/compare/v1.2.0...v1.2.1) (2026-05-06)
+
+
+### Bug Fixes
+
+* update dependencies only ([b38d5f0](https://github.com/atheck/10tap-editor/commit/b38d5f026e0a21954513d4c8c4e820d02b5c44d6))
+
 # [1.2.0](https://github.com/atheck/10tap-editor/compare/v1.1.0...v1.2.0) (2026-03-19)
 
 
