@@ -1,7 +1,5 @@
 import { Document } from "@tiptap/extension-document";
-// biome-ignore lint/correctness/noUndeclaredDependencies: transitive tiptap dep
 import { Paragraph } from "@tiptap/extension-paragraph";
-// biome-ignore lint/correctness/noUndeclaredDependencies: transitive tiptap dep
 import { Text } from "@tiptap/extension-text";
 import type { Content } from "@tiptap/react";
 import { asyncMessages } from "../RichText/AsyncMessages";

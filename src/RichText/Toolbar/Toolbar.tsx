@@ -27,7 +27,7 @@ function Toolbar({
 	const { isKeyboardUp } = useKeyboard();
 	const [toolbarContext, setToolbarContext] = React.useState<ToolbarContextValue>(ToolbarContext.main);
 
-	const hideToolbar = hidden === undefined ? !isKeyboardUp || !editorState.isFocused : hidden;
+	const hideToolbar = hidden ?? (!isKeyboardUp || !editorState.isFocused);
 
 	const args = {
 		editor,

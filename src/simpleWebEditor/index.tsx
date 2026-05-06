@@ -14,7 +14,7 @@ declare global {
  */
 const contentInjected = (): boolean | undefined => window.contentInjected;
 
-let interval: NodeJS.Timeout;
+let interval: number;
 
 interval = setInterval(() => {
 	if (!contentInjected()) {
@@ -22,7 +22,7 @@ interval = setInterval(() => {
 	}
 
 	// Once content is injected into the webview, we can render the editor
-	const container = document.getElementById("root");
+	const container = document.querySelector("#root");
 
 	// biome-ignore lint/style/noNonNullAssertion: root element is guaranteed to exist in the HTML template
 	const root = createRoot(container!);

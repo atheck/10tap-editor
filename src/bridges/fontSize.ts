@@ -24,7 +24,6 @@ const FontSize = Extension.create({
 	addGlobalAttributes() {
 		return [
 			{
-				// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
 				types: this.options.types,
 				attributes: {
 					fontSize: {

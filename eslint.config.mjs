@@ -1,5 +1,4 @@
 import nodeWithBiome from "eslint-config-heck/nodeWithBiome";
-import reactNative from "eslint-config-heck/reactNative";
 
 // biome-ignore lint/style/noDefaultExport: Required for ESLint config file.
 export default [
@@ -17,7 +16,6 @@ export default [
 		],
 	},
 	...nodeWithBiome,
-	...reactNative,
 	{
 		languageOptions: {
 			sourceType: "module",

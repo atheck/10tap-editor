@@ -113,7 +113,6 @@ class BridgeExtension<TState = any, TEditorInstance = any, TMessage = any, TConf
 				this.tiptapExtension = this.tiptapExtension.configure(mainConfig);
 			}
 
-			// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
 			if (extendConfig) {
 				this.tiptapExtension = this.tiptapExtension.extend(extendConfig);
 			}
