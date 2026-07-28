@@ -27,7 +27,6 @@ const HeadingEditorActionType = {
 const HeadingBridge = new BridgeExtension<HeadingEditorState, HeadingEditorInstance, HeadingMessage, HeadingOptions>({
 	tiptapExtension: Heading,
 	onBridgeMessage: (editor, message) => {
-		// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- The only message for now.
 		if (message.type === HeadingEditorActionType.toggleHeading) {
 			editor.chain().focus().toggleHeading({ level: message.payload }).run();
 		}

@@ -49,7 +49,7 @@ const RichTextStyles = StyleSheet.create({
 function RichText({ editor, onMessage, exclusivelyUseCustomOnMessage = true, ...props }: RichTextProps): JSX.Element {
 	const [editorHeight, setEditorHeight] = useState(0);
 	const [key, setKey] = useState("webview");
-	const [loaded, setLoaded] = useState(isFabric());
+	const [loaded, setLoaded] = useState(() => isFabric());
 	const { keyboardHeight, isKeyboardUp } = useKeyboard();
 	const source: WebViewProps["source"] = editor.DEV
 		? { uri: editor.DEV_SERVER_URL ?? DEV_SERVER_URL }
@@ -79,14 +79,15 @@ function RichText({ editor, onMessage, exclusivelyUseCustomOnMessage = true, ...
 			setEditorHeight(payload);
 		}
 
-		for (const bridgeExt of editor.bridgeExtensions ?? []) {
+		const bridgeExtensions = editor.bridgeExtensions ?? [];
+
+		for (const bridgeExt of bridgeExtensions) {
 			bridgeExt.onEditorMessage?.({ type, payload }, editor);
 		}
 	};
 
 	useEffect(() => {
 		const setDocBottomPadding = (height: number): void => {
-			// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
 			if (editor.webviewRef.current) {
 				editor.webviewRef.current.injectJavaScript(`
 					doc = document.querySelector('.ProseMirror');
@@ -95,12 +96,14 @@ function RichText({ editor, onMessage, exclusivelyUseCustomOnMessage = true, ...
 			}
 		};
 
+		let setPaddingTimeout: number | undefined;
+
 		if (Platform.OS === "android") {
 			// In case the keyboard is up we need to add padding to the bottom of the document
 			// avoidIosKeyboard should change to avoidKeyboard because used in android too (v1.0.0)
-			const paddingThreshold = editor.avoidIosKeyboard && keyboardHeight && isKeyboardUp ? TOOLBAR_HEIGHT : 0;
+			const paddingThreshold = keyboardHeight && isKeyboardUp && editor.avoidIosKeyboard ? TOOLBAR_HEIGHT : 0;
 
-			setTimeout(() => {
+			setPaddingTimeout = setTimeout(() => {
 				setDocBottomPadding(paddingThreshold);
 				editor.updateScrollThresholdAndMargin(paddingThreshold);
 			}, 200);
@@ -117,6 +120,8 @@ function RichText({ editor, onMessage, exclusivelyUseCustomOnMessage = true, ...
 				editor.updateScrollThresholdAndMargin(0);
 			}
 		}
+
+		return () => clearTimeout(setPaddingTimeout);
 	}, [editor.avoidIosKeyboard, editor, keyboardHeight, isKeyboardUp]);
 
 	const injectedJavaScript = useMemo(() => getInjectedJS(editor.bridgeExtensions ?? []), [editor.bridgeExtensions]);
@@ -124,7 +129,7 @@ function RichText({ editor, onMessage, exclusivelyUseCustomOnMessage = true, ...
 	return (
 		<>
 			{editor.autofocus && Platform.OS === "android" && <TextInput autoFocus style={styles.hiddenInput} />}
-			<WebView
+			<WebView<object>
 				scrollEnabled={false}
 				key={key}
 				style={[
@@ -147,7 +152,7 @@ function RichText({ editor, onMessage, exclusivelyUseCustomOnMessage = true, ...
 					setLoaded(true);
 					// This is a workaround for iOS to make sure the webview is loaded
 					// See https://github.com/react-native-webview/react-native-webview/issues/3578
-					if (Platform.OS === "ios" && key === "webview") {
+					if (key === "webview" && Platform.OS === "ios") {
 						setKey("webview_reloaded");
 					}
 					props.onLoad?.(event);

@@ -9,7 +9,7 @@ function uniqueBy<TItem>(items: TItem[], keyOrFn: keyof TItem | ((item: TItem) =
 		seen.set(key, item);
 	}
 
-	return [...seen.values()];
+	return seen.values().toArray();
 }
 
 export { uniqueBy };

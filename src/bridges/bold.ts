@@ -27,7 +27,6 @@ const BoldEditorActionType = {
 const BoldBridge = new BridgeExtension<BoldEditorState, BoldEditorInstance, BoldMessage, BoldOptions>({
 	tiptapExtension: Bold,
 	onBridgeMessage: (editor, message) => {
-		// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- The only message for now.
 		if (message.type === BoldEditorActionType.toggleBold) {
 			editor.chain().focus().toggleBold().run();
 		}

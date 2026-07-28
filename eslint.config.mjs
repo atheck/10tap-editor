@@ -8,7 +8,7 @@ export default [
 			"babel.config.js",
 			"node_modules/",
 			"lib/",
-			"lib-web/",
+			"**/lib-web/",
 			"**/build/",
 			"**/android/build/",
 			"**/ios/build/",
@@ -19,6 +19,11 @@ export default [
 	{
 		languageOptions: {
 			sourceType: "module",
+		},
+	},
+	{
+		rules: {
+			"unicorn/consistent-boolean-name": "off",
 		},
 	},
 ];

@@ -186,8 +186,11 @@ const useEditorBridge = (options?: {
 		// eslint-disable-next-line @typescript-eslint/no-unsafe-return
 		return Object.assign(
 			acc,
+			// eslint-disable-next-line react/refs -- extendEditorInstance implementations only read `.current` lazily inside closures, not during this render call
 			cur.extendEditorInstance(sendAction, webviewRefCast, editorStateRef, updateEditorState, Platform.OS),
+			// eslint-disable-next-line react/refs -- the bridge exposes `webviewRef` itself (not a read `.current` value) for consumers to attach to their own WebView ref
 			webviewRef,
+			// eslint-disable-next-line react/refs -- editorInstance is rebuilt every render, so reading the ref's current value here is required for the bridge to be up to date
 			editorStateRef.current,
 			updateEditorState,
 		);
@@ -198,4 +201,6 @@ const useEditorBridge = (options?: {
 	return editorInstance;
 };
 
-export { type RecursivePartial, useEditorBridge };
+export type { RecursivePartial };
+
+export { useEditorBridge };

@@ -5,12 +5,14 @@ const useRefHandle = (compRef: RefObject<HostComponent<unknown>>): number | unde
 	const [handle, setHandle] = useState<number | undefined>();
 
 	useEffect(() => {
-		// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-		if (compRef.current) {
-			const reactTag = findNodeHandle(compRef.current);
-
-			setHandle(reactTag || undefined);
+		if (!compRef.current) {
+			return;
 		}
+
+		const reactTag = findNodeHandle(compRef.current);
+
+		// eslint-disable-next-line react/set-state-in-effect -- the native tag is only resolvable via findNodeHandle after the ref is committed, so it can't be derived during render
+		setHandle(reactTag || undefined);
 	}, [compRef]);
 
 	return handle;

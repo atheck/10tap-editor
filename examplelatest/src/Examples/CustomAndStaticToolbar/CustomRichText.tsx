@@ -1,4 +1,4 @@
-import { type JSX, useEffect, useMemo, useState } from "react";
+import { type JSX, useMemo, useState } from "react";
 import { KeyboardAvoidingView, StyleSheet, TouchableOpacity, View } from "react-native";
 import { RichText, useBridgeState } from "../../../../src/RichText";
 import type { EditorBridge } from "../../../../src/types";
@@ -85,11 +85,16 @@ function ComposeToolbar({ editor, onSendClick }: ComposeToolbarProps): JSX.Eleme
 
 	const hideToolbar = !isKeyboardUp || !editorState.isFocused;
 
-	useEffect(() => {
+	// Reset to the main toolbar as soon as it becomes hidden, computed during render instead of an effect to avoid an extra render.
+	const [prevHideToolbar, setPrevHideToolbar] = useState(hideToolbar);
+
+	if (hideToolbar !== prevHideToolbar) {
+		setPrevHideToolbar(hideToolbar);
+
 		if (hideToolbar) {
 			setToolbarType(TOOLBAR_MAIN);
 		}
-	}, [hideToolbar]);
+	}
 
 	const formattingOptions: CustomToolbarAction[] = useMemo(
 		() => [

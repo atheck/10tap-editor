@@ -33,7 +33,6 @@ const PlaceholderBridge = new BridgeExtension<PlaceholderEditorState, Placeholde
   `,
 	onBridgeMessage: (editor, message) => {
 		switch (message.type) {
-			// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- The only message for now.
 			case PlaceholderEditorActionType.setPlaceholder: {
 				const currentExtensions = editor.extensionManager.extensions;
 
@@ -66,4 +65,6 @@ const PlaceholderBridge = new BridgeExtension<PlaceholderEditorState, Placeholde
 	},
 });
 
-export { PlaceholderBridge, PlaceholderEditorActionType, type PlaceholderMessage };
+export type { PlaceholderMessage };
+
+export { PlaceholderBridge, PlaceholderEditorActionType };

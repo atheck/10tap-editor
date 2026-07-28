@@ -26,7 +26,7 @@ function WebToolbar({ args, editor, hidden, items }: WebToolbarProps): JSX.Eleme
 		<View style={styles.container}>
 			{items.map((item, i) => (
 				// biome-ignore lint/suspicious/noArrayIndexKey: toolbar items have no stable unique id
-				<ToolbarItemComp {...item} args={args} editor={editor} key={i} />
+				<ToolbarItemComp key={i} {...item} args={args} editor={editor} />
 			))}
 		</View>
 	);

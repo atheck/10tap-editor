@@ -32,7 +32,6 @@ const BlockquoteBridge = new BridgeExtension<
 >({
 	tiptapExtension: Blockquote,
 	onBridgeMessage: (editor, message) => {
-		// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- The only message for now.
 		if (message.type === BlockquoteEditorActionType.toggleBlockquote) {
 			editor.chain().focus().toggleBlockquote().run();
 		}

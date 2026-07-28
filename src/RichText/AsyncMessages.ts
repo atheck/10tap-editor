@@ -18,10 +18,14 @@ class AsyncMessages {
 	}
 
 	public onMessage(id: string, value: unknown): void {
-		if (this.subscriptions[id]) {
-			for (const callback of this.subscriptions[id]) {
-				callback(value);
-			}
+		if (!this.subscriptions[id]) {
+			return;
+		}
+
+		const callbacks = this.subscriptions[id];
+
+		for (const callback of callbacks) {
+			callback(value);
 		}
 	}
 

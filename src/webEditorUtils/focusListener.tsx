@@ -3,10 +3,8 @@ import { isExpo } from "../utils/misc";
 // Type guard to check if we're in a browser/webview context
 const hasDocument = (): boolean => {
 	return (
-		// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-		window !== undefined &&
-		// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-		window.document !== undefined
+		// biome-ignore lint/suspicious/noUnnecessaryConditions: Can be true in non-browser environments, i.e. react-native.
+		window !== undefined && window.document !== undefined
 	);
 };
 
@@ -15,22 +13,24 @@ class FocusListener {
 
 	public constructor() {
 		// Only add event listeners if we're in a webview context where document exists
-		if (hasDocument()) {
-			window.document.addEventListener(
-				"focus",
-				() => {
-					this.focus = true;
-				},
-				true,
-			);
-			window.document.addEventListener(
-				"blur",
-				() => {
-					this.focus = false;
-				},
-				true,
-			);
+		if (!hasDocument()) {
+			return;
 		}
+
+		window.document.addEventListener(
+			"focus",
+			() => {
+				this.focus = true;
+			},
+			{ capture: true },
+		);
+		window.document.addEventListener(
+			"blur",
+			() => {
+				this.focus = false;
+			},
+			{ capture: true },
+		);
 	}
 
 	public get isFocused(): boolean {

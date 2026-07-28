@@ -27,7 +27,6 @@ const UnderlineEditorActionType = {
 const UnderlineBridge = new BridgeExtension<UnderlineEditorState, UnderlineEditorInstance, UnderlineMessage, UnderlineOptions>({
 	tiptapExtension: Underline,
 	onBridgeMessage: (editor, message) => {
-		// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- The only message for now.
 		if (message.type === UnderlineEditorActionType.toggleUnderline) {
 			editor.chain().focus().toggleUnderline().run();
 		}

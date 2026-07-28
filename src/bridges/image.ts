@@ -25,7 +25,6 @@ const ImageBridge = new BridgeExtension<ImageEditorState, ImageEditorInstance, I
 		allowBase64: true,
 	}),
 	onBridgeMessage: (editor, message) => {
-		// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- The only message for now.
 		if (message.type === ImageEditorActionType.setImage) {
 			editor
 				.chain()

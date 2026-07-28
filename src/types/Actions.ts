@@ -23,4 +23,6 @@ interface RegularAction {
 	payload?: unknown;
 }
 
-export { EditorActionType, EditorUpdateSettings, type RegularAction };
+export type { RegularAction };
+
+export { EditorActionType, EditorUpdateSettings };

@@ -32,7 +32,6 @@ const SuperscriptBridge = new BridgeExtension<
 >({
 	tiptapExtension: Superscript,
 	onBridgeMessage: (editor, message) => {
-		// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- The only message for now.
 		if (message.type === SuperscriptEditorActionType.toggleSuperscript) {
 			editor.chain().focus().toggleSuperscript().run();
 		}

@@ -2,13 +2,15 @@ import { Plugin, PluginKey } from "@tiptap/pm/state";
 import { Decoration, DecorationSet } from "@tiptap/pm/view";
 import { Extension } from "@tiptap/react";
 
+const blueBackgroundPluginKey = new PluginKey<DecorationSet>("blueBackground");
+
 const blueBackgroundPlugin = Extension.create({
 	name: "eventHandler",
 
 	addProseMirrorPlugins() {
 		return [
 			new Plugin({
-				key: new PluginKey("blueBackground"),
+				key: blueBackgroundPluginKey,
 				state: {
 					init() {
 						return DecorationSet.empty;
@@ -34,7 +36,7 @@ const blueBackgroundPlugin = Extension.create({
 				},
 				props: {
 					decorations(state) {
-						return this.getState(state);
+						return blueBackgroundPluginKey.getState(state);
 					},
 				},
 			}),

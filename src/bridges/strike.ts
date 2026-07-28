@@ -27,7 +27,6 @@ const StrikeEditorActionType = {
 const StrikeBridge = new BridgeExtension<StrikeEditorState, StrikeEditorInstance, StrikeMessage, StrikeOptions>({
 	tiptapExtension: Strike,
 	onBridgeMessage: (editor, message) => {
-		// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- The only message for now.
 		if (message.type === StrikeEditorActionType.toggleStrike) {
 			editor.chain().focus().toggleStrike().run();
 		}

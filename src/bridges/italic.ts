@@ -27,7 +27,6 @@ const ItalicEditorActionType = {
 const ItalicBridge = new BridgeExtension<ItalicEditorState, ItalicEditorInstance, ItalicMessage, ItalicOptions>({
 	tiptapExtension: Italic,
 	onBridgeMessage: (editor, message) => {
-		// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- The only message for now.
 		if (message.type === ItalicEditorActionType.toggleItalic) {
 			editor.chain().focus().toggleItalic().run();
 		}

@@ -30,10 +30,10 @@ class _EditorHelper {
 const EditorHelper = new _EditorHelper();
 
 const useRemoteEditorBridge = (): EditorBridge | undefined => {
-	// eslint-disable-next-line react/hook-use-state -- setEditor is unused for now.
+	// eslint-disable-next-line react/use-state -- setEditor is unused for now.
 	const [editor, _setEditor] = useState<EditorBridge | undefined>(EditorHelper.editorLastInstance);
 
-	// TODO: There is currently a bug on ios where the keyboard isn't unmounted when removed from subview
+	// TODO: There is currently a bug on ios where the keyboard isn't unmounted when removed from subview.
 	// Because of this we can't rely on it to unsubscribe. Once this is fixed we can add this again make it be reactive
 	// useEffect(() => {
 	//   const unsubscribe = EditorHelper.subscribe((editor) => {

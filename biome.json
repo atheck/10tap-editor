@@ -16,11 +16,15 @@
   },
   "linter": {
     "rules": {
+      "a11y": {
+        "noSvgWithoutTitle": "off"
+      },
       "nursery": {
         "noMisleadingReturnType": "off",
         "noReactNativeDeepImports": "error",
         "noReactNativeLiteralColors": "error",
         "noReactNativeRawText": "error",
+        "noRestrictedDependencies": "off",
         "useReactNativePlatformComponents": "error"
       }
     }

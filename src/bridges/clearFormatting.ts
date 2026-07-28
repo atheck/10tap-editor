@@ -29,7 +29,6 @@ const ClearFormattingBridge = new BridgeExtension<
 >({
 	forceName: "clearFormatting",
 	onBridgeMessage: (editor, message) => {
-		// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- The only message for now.
 		if (message.type === ClearFormattingEditorActionType.clearFormatting) {
 			editor.chain().focus().unsetAllMarks().run();
 		}

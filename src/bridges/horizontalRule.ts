@@ -31,7 +31,6 @@ const HorizontalRuleBridge = new BridgeExtension<
 >({
 	tiptapExtension: HorizontalRule,
 	onBridgeMessage: (editor, message) => {
-		// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- The only message for now.
 		if (message.type === HorizontalRuleEditorActionType.setHorizontalRule) {
 			editor.chain().focus().setHorizontalRule().run();
 		}

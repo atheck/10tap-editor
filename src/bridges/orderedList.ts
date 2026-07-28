@@ -33,7 +33,6 @@ const OrderedListBridge = new BridgeExtension<
 	tiptapExtension: OrderedList,
 	tiptapExtensionDeps: [ListItem],
 	onBridgeMessage: (editor, message) => {
-		// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- The only message for now.
 		if (message.type === OrderedListEditorActionType.toggleOrderedList) {
 			editor.chain().focus().toggleOrderedList().run();
 		}

@@ -257,4 +257,6 @@ const HEADING_ITEMS: ToolbarItem[] = [
 	},
 ];
 
-export { DEFAULT_TOOLBAR_ITEMS, HEADING_ITEMS, ToolbarContext, type ToolbarContextValue, type ToolbarItem, ToolbarItems };
+export type { ToolbarContextValue, ToolbarItem };
+
+export { DEFAULT_TOOLBAR_ITEMS, HEADING_ITEMS, ToolbarContext, ToolbarItems };

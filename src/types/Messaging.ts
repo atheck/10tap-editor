@@ -13,4 +13,6 @@ interface EditorActionMessage {
 
 type EditorMessage = EditorActionMessage | CoreMessages;
 
-export { type EditorActionMessage, type EditorMessage, EditorMessageType };
+export type { EditorActionMessage, EditorMessage };
+
+export { EditorMessageType };

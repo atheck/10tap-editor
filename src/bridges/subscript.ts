@@ -32,7 +32,6 @@ const SubscriptBridge = new BridgeExtension<
 >({
 	tiptapExtension: Subscript,
 	onBridgeMessage: (editor, message) => {
-		// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- The only message for now.
 		if (message.type === SubscriptEditorActionType.toggleSubscript) {
 			editor.chain().focus().toggleSubscript().run();
 		}

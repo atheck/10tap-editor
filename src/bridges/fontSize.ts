@@ -24,6 +24,7 @@ const FontSize = Extension.create({
 	addGlobalAttributes() {
 		return [
 			{
+				// eslint-disable-next-line unicorn/no-this-outside-of-class -- Tiptap's Extension.create binds `this` to the extension instance here.
 				types: this.options.types,
 				attributes: {
 					fontSize: {

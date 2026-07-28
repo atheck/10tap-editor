@@ -27,7 +27,6 @@ const CodeEditorActionType = {
 const CodeBridge = new BridgeExtension<CodeEditorState, CodeEditorInstance, CodeMessage, CodeOptions>({
 	tiptapExtension: Code,
 	onBridgeMessage: (editor, message) => {
-		// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- The only message for now.
 		if (message.type === CodeEditorActionType.toggleCode) {
 			editor.chain().focus().toggleCode().run();
 		}

@@ -31,7 +31,6 @@ const LinkBridge = new BridgeExtension<LinkEditorState, LinkEditorInstance, Link
 		autolink: true,
 	}),
 	onBridgeMessage: (editor, { type, payload }) => {
-		// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- The only message for now.
 		if (type === LinkEditorActionType.setLink) {
 			// cancelled
 			if (payload === null) {

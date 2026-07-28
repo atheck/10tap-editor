@@ -37,7 +37,6 @@ interface CoreEditorInstance {
 }
 
 declare module "../types/EditorBridge" {
-	// biome-ignore lint/nursery/noShadow: intentional module augmentation pattern
 	interface BridgeState extends CoreEditorState {}
 	interface EditorBridge extends CoreEditorInstance {}
 }
@@ -337,13 +336,11 @@ const CoreBridge = new BridgeExtension<CoreEditorState, Omit<CoreEditorInstance,
 			focus: (pos: FocusArgs) => {
 				if (platform === "android") {
 					setTimeout(() => {
-						// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
 						webviewRef?.current?.requestFocus();
 						// Adding this for android, there is a race where the focus is not set if it's too close to Load
 						// https://github.com/react-native-webview/react-native-webview/issues/1172
 					}, 100);
 				} else {
-					// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
 					webviewRef?.current?.requestFocus();
 				}
 
@@ -368,7 +365,6 @@ const CoreBridge = new BridgeExtension<CoreEditorState, Omit<CoreEditorInstance,
 			},
 			// biome-ignore lint/style/useNamingConvention: public API method name
 			injectJS: (js: string) => {
-				// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
 				webviewRef?.current?.injectJavaScript(js);
 			},
 			setEditable: (editable: boolean) => {
@@ -396,4 +392,6 @@ const CoreBridge = new BridgeExtension<CoreEditorState, Omit<CoreEditorInstance,
   }`,
 });
 
-export { CoreBridge, CoreEditorActionType, type CoreMessages, type EditorContentType };
+export type { CoreMessages, EditorContentType };
+
+export { CoreBridge, CoreEditorActionType };

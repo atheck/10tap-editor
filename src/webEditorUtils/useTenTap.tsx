@@ -30,7 +30,7 @@ interface UseTenTapArgs {
 }
 
 const sendMessage = (message: EditorMessage): void => {
-	// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition, unicorn/require-post-message-target-origin
+	// eslint-disable-next-line unicorn/require-post-message-target-origin, unicorn/no-optional-chaining-on-undeclared-variable
 	window.ReactNativeWebView?.postMessage(JSON.stringify(message));
 };
 
@@ -38,14 +38,14 @@ function filterExists<TItem>(object: TItem): object is NonNullable<TItem> {
 	return object !== null && object !== undefined;
 }
 
-// Wrapper for tiptap editor that will add specific mobile functionality and support tentap bridges
+// Wrapper for tiptap editor that will add specific mobile functionality and support tentap bridges.
 // args:
 // tiptapOptions - all the options that tiptap editor accepts
 // bridges - array of bridges that will be used to extend the editor
 const useTenTap = (options?: UseTenTapArgs): ReturnType<typeof useEditor> => {
 	const { tiptapOptions = {}, bridges = [] } = options ?? {};
 	const extensionConfigs = useMemo<Record<string, { optionsConfig: unknown; extendConfig: unknown }>>(
-		// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition, @typescript-eslint/no-unsafe-return
+		// eslint-disable-next-line @typescript-eslint/no-unsafe-return
 		() => JSON.parse(window.bridgeExtensionConfigMap ?? "{}"),
 		[],
 	);
@@ -54,7 +54,6 @@ const useTenTap = (options?: UseTenTapArgs): ReturnType<typeof useEditor> => {
 		.map((ext) => {
 			const extensionConfig = extensionConfigs[ext.name];
 
-			// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
 			if (!extensionConfig) {
 				return null;
 			}
@@ -100,7 +99,6 @@ const useTenTap = (options?: UseTenTapArgs): ReturnType<typeof useEditor> => {
 		});
 	}, 10);
 
-	// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
 	const content = window.initialContent ?? "";
 
 	const editor = useEditor({
@@ -125,7 +123,6 @@ const useTenTap = (options?: UseTenTapArgs): ReturnType<typeof useEditor> => {
 	});
 
 	useEffect(() => {
-		// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
 		if (!editor) {
 			return;
 		}
@@ -155,6 +152,7 @@ const useTenTap = (options?: UseTenTapArgs): ReturnType<typeof useEditor> => {
 					}
 
 					// @ts-expect-error
+					// eslint-disable-next-line unicorn/no-global-object-property-assignment
 					window.lastMessageID = message.id;
 				}
 
@@ -175,24 +173,25 @@ const useTenTap = (options?: UseTenTapArgs): ReturnType<typeof useEditor> => {
 	}, [editor, bridges]);
 
 	useEffect(() => {
-		// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-		if (editor && !contentHeightListener.connected && window.dynamicHeight) {
-			const dynamicHeightDiv = document.querySelector(".dynamic-height");
-
-			// biome-ignore lint/style/noNonNullAssertion: element is guaranteed to exist when dynamicHeight is true
-			contentHeightListener.connect(document.querySelector(".ProseMirror")!, (height) => {
-				// We need to reset the scroll position to fix a text jumping issue
-				// to avoid an issue where text jumps https://github.com/10play/10tap-editor/issues/236 and https://github.com/10play/10tap-editor/issues/244
-				if (dynamicHeightDiv) {
-					dynamicHeightDiv.scrollTop = 0;
-				}
-
-				sendMessage({
-					type: CoreEditorActionType.documentHeight,
-					payload: height,
-				});
-			});
+		if (!editor || contentHeightListener.connected || !window.dynamicHeight) {
+			return;
 		}
+
+		const dynamicHeightDiv = document.querySelector(".dynamic-height");
+
+		// biome-ignore lint/style/noNonNullAssertion: element is guaranteed to exist when dynamicHeight is true
+		contentHeightListener.connect(document.querySelector(".ProseMirror")!, (height) => {
+			// We need to reset the scroll position to fix a text jumping issue
+			// to avoid an issue where text jumps https://github.com/10play/10tap-editor/issues/236 and https://github.com/10play/10tap-editor/issues/244
+			if (dynamicHeightDiv) {
+				dynamicHeightDiv.scrollTop = 0;
+			}
+
+			sendMessage({
+				type: CoreEditorActionType.documentHeight,
+				payload: height,
+			});
+		});
 	}, [editor]);
 
 	return editor;

@@ -66,4 +66,6 @@ const ListItemBridge = new BridgeExtension<ListItemEditorState, ListItemEditorIn
 	}),
 });
 
-export { ListItemBridge, ListItemEditorActionType, type ListItemMessage };
+export type { ListItemMessage };
+
+export { ListItemBridge, ListItemEditorActionType };
