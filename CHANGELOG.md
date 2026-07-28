@@ -1,3 +1,10 @@
+## [1.2.2](https://github.com/atheck/10tap-editor/compare/v1.2.1...v1.2.2) (2026-07-28)
+
+
+### Bug Fixes
+
+* update deps, fix linting issues ([cfc1fd0](https://github.com/atheck/10tap-editor/commit/cfc1fd0467a51b4c2b38c329fb45acd0641228ca))
+
 ## [1.2.1](https://github.com/atheck/10tap-editor/compare/v1.2.0...v1.2.1) (2026-05-06)
 
 
