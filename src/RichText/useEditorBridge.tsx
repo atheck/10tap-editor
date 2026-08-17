@@ -61,12 +61,14 @@ const useEditorBridge = (options?: {
 
 	// biome-ignore lint/correctness/useExhaustiveDependencies: editorInstance is intentionally excluded to avoid circular dependency
 	useEffect(() => {
+		// biome-ignore lint/suspicious/noUnnecessaryConditions: Bug in the linting rule. tsc confirms `.current` is `WebView | null` — dropping this guard fails typecheck.
 		if (!webviewRef.current) {
 			return;
 		}
 
 		if (options) {
 			// Special case for editable prop, since its command is on the core bridge and we want to access it via useEditorBridge
+			// biome-ignore lint/nursery/useReactCompiler: setEditable only posts a message to the webview, it does not mutate editorInstance, and editorInstance is intentionally kept out of the deps (see above). eslint's react/immutability rule is enabled and does not flag this.
 			editorInstance.setEditable(editable);
 		}
 	}, [editable]);
@@ -106,6 +108,7 @@ const useEditorBridge = (options?: {
 	const getEditorState = (): BridgeState | Record<string, never> => editorStateRef.current;
 
 	const sendMessage = (message: EditorActionMessage): void => {
+		// biome-ignore lint/suspicious/noUnnecessaryConditions: Bug in the linting rule.
 		if (!webviewRef.current) {
 			// biome-ignore lint/suspicious/noConsole: intentional developer warning
 			console.warn("Editor isn't ready yet");
@@ -117,6 +120,7 @@ const useEditorBridge = (options?: {
 		// On the new arch on Android, messages are sent twice, so if we toggle bold it immediately toggles back
 		// We workaround this by adding a random id to the message and not handling it twice on the web side
 		if (isFabric() && Platform.OS === "android") {
+			// biome-ignore lint/nursery/useReactCompiler: sendMessage is only ever invoked from event handlers and bridge actions, never during render, so Math.random() here is not render-phase impurity. eslint's react/purity rule is enabled and does not flag this.
 			message.id = Math.random().toString(36).slice(7);
 		}
 
@@ -174,6 +178,7 @@ const useEditorBridge = (options?: {
 		subscribeToContentUpdate,
 	};
 
+	// biome-ignore-start lint/nursery/useReactCompiler: genuine render-phase ref access, kept deliberately — see the per-argument react/refs justifications on the Object.assign below, which eslint's react/refs rule flags identically.
 	// eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion
 	const editorInstance = bridgeExtensions.reduce((acc, cur) => {
 		if (!cur.extendEditorInstance) {
@@ -195,6 +200,7 @@ const useEditorBridge = (options?: {
 			updateEditorState,
 		);
 	}, editorBridge) as EditorBridge;
+	// biome-ignore-end lint/nursery/useReactCompiler: end of the deliberate render-phase ref access above.
 
 	EditorHelper.setEditorLastInstance(editorInstance);
 

@@ -1,4 +1,4 @@
-import { type JSX, useEffect, useMemo, useState } from "react";
+import { type JSX, type RefObject, useEffect, useMemo, useState } from "react";
 import { Platform, StyleSheet, TextInput } from "react-native";
 import { WebView, type WebViewMessageEvent, type WebViewProps } from "react-native-webview";
 import { CoreEditorActionType } from "../bridges/core";
@@ -47,6 +47,9 @@ const RichTextStyles = StyleSheet.create({
 });
 
 function RichText({ editor, onMessage, exclusivelyUseCustomOnMessage = true, ...props }: RichTextProps): JSX.Element {
+	// Hoisted out of `editor` so that passing it to the WebView's `ref` prop below doesn't make
+	// biome's useReactCompiler treat every other `editor.*` read in this render as a ref access.
+	const { webviewRef } = editor;
 	const [editorHeight, setEditorHeight] = useState(0);
 	const [key, setKey] = useState("webview");
 	const [loaded, setLoaded] = useState(() => isFabric());
@@ -87,42 +90,32 @@ function RichText({ editor, onMessage, exclusivelyUseCustomOnMessage = true, ...
 	};
 
 	useEffect(() => {
-		const setDocBottomPadding = (height: number): void => {
-			if (editor.webviewRef.current) {
-				editor.webviewRef.current.injectJavaScript(`
-					doc = document.querySelector('.ProseMirror');
-					if(doc) doc.style.paddingBottom = '${height}px';
-				`);
-			}
-		};
+		// In case the keyboard is up we need to add padding to the bottom of the document
+		// avoidIosKeyboard should change to avoidKeyboard because used in android too (v1.0.0)
+		const paddingThreshold = keyboardHeight && isKeyboardUp && editor.avoidIosKeyboard ? TOOLBAR_HEIGHT : 0;
 
-		let setPaddingTimeout: number | undefined;
-
-		if (Platform.OS === "android") {
-			// In case the keyboard is up we need to add padding to the bottom of the document
-			// avoidIosKeyboard should change to avoidKeyboard because used in android too (v1.0.0)
-			const paddingThreshold = keyboardHeight && isKeyboardUp && editor.avoidIosKeyboard ? TOOLBAR_HEIGHT : 0;
-
-			setPaddingTimeout = setTimeout(() => {
-				setDocBottomPadding(paddingThreshold);
-				editor.updateScrollThresholdAndMargin(paddingThreshold);
-			}, 200);
-		}
+		const setPaddingTimeout =
+			Platform.OS === "android"
+				? setTimeout(() => {
+						setDocBottomPadding(webviewRef, paddingThreshold);
+						editor.updateScrollThresholdAndMargin(paddingThreshold);
+					}, 200)
+				: undefined;
 
 		// On iOS we want to control the scroll and not use the scrollview that comes with react-native-webview
 		// That's way we can get better exp on scroll and scroll to element when we need to
 		if (editor.avoidIosKeyboard && Platform.OS === "ios") {
 			if (keyboardHeight) {
-				setDocBottomPadding(keyboardHeight + 10);
+				setDocBottomPadding(webviewRef, keyboardHeight + 10);
 				editor.updateScrollThresholdAndMargin(keyboardHeight + 10);
 			} else {
-				setDocBottomPadding(0);
+				setDocBottomPadding(webviewRef, 0);
 				editor.updateScrollThresholdAndMargin(0);
 			}
 		}
 
 		return () => clearTimeout(setPaddingTimeout);
-	}, [editor.avoidIosKeyboard, editor, keyboardHeight, isKeyboardUp]);
+	}, [editor, keyboardHeight, isKeyboardUp, webviewRef]);
 
 	const injectedJavaScript = useMemo(() => getInjectedJS(editor.bridgeExtensions ?? []), [editor.bridgeExtensions]);
 
@@ -143,7 +136,7 @@ function RichText({ editor, onMessage, exclusivelyUseCustomOnMessage = true, ...
 				injectedJavaScriptBeforeContentLoaded={getInjectedJSBeforeContentLoad(editor)}
 				hideKeyboardAccessoryView={true}
 				onMessage={onWebviewMessage}
-				ref={editor.webviewRef}
+				ref={webviewRef}
 				webviewDebuggingEnabled={__DEV__}
 				keyboardDisplayRequiresUserAction={false}
 				{...props}
@@ -160,6 +153,15 @@ function RichText({ editor, onMessage, exclusivelyUseCustomOnMessage = true, ...
 			/>
 		</>
 	);
+}
+
+function setDocBottomPadding(webviewRef: RefObject<WebView>, height: number): void {
+	if (webviewRef.current) {
+		webviewRef.current.injectJavaScript(`
+			doc = document.querySelector('.ProseMirror');
+			if(doc) doc.style.paddingBottom = '${height}px';
+		`);
+	}
 }
 
 export { RichText };
