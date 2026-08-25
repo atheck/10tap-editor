@@ -17,7 +17,6 @@ type ContentType<TContent extends EditorContentType> = TContent extends "json" ?
 
 function useEditorContent<TContent extends EditorContentType>(
 	editor: EditorBridge,
-	// eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion
 	{ debounceInterval, type }: Options<TContent> = DEFAULT_OPTIONS as Options<TContent>,
 ): ContentType<TContent> | undefined {
 	const [content, setContent] = useState<ContentType<TContent>>();
@@ -28,21 +27,18 @@ function useEditorContent<TContent extends EditorContentType>(
 				case "json": {
 					const json = await editor.getJSON();
 
-					// eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion
 					setContent(json as ContentType<TContent>);
 					break;
 				}
 				case "text": {
 					const text = await editor.getText();
 
-					// eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion
 					setContent(text as ContentType<TContent>);
 					break;
 				}
 				default: {
 					const html = await editor.getHTML();
 
-					// eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion
 					setContent(html as ContentType<TContent>);
 					break;
 				}

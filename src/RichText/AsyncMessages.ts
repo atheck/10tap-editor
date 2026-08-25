@@ -46,7 +46,6 @@ class AsyncMessages {
 
 		return new Promise<TResult>((resolve) => {
 			const callback: Callback = (value) => {
-				// eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion
 				resolve(value as TResult);
 			};
 

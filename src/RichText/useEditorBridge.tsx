@@ -179,13 +179,11 @@ const useEditorBridge = (options?: {
 	};
 
 	// biome-ignore-start lint/nursery/useReactCompiler: genuine render-phase ref access, kept deliberately — see the per-argument react/refs justifications on the Object.assign below, which eslint's react/refs rule flags identically.
-	// eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion
 	const editorInstance = bridgeExtensions.reduce((acc, cur) => {
 		if (!cur.extendEditorInstance) {
 			return acc;
 		}
 
-		// eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion
 		const webviewRefCast = webviewRef as RefObject<WebView>;
 
 		// eslint-disable-next-line @typescript-eslint/no-unsafe-return

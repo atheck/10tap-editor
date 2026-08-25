@@ -61,9 +61,7 @@ const useTenTap = (options?: UseTenTapArgs): ReturnType<typeof useEditor> => {
 			const { optionsConfig, extendConfig } = extensionConfig;
 
 			return ext.configureTiptapExtensionsOnRunTime(
-				// eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion
 				optionsConfig as Record<string, unknown>,
-				// eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion
 				extendConfig as Record<string, unknown>,
 			);
 		})
@@ -83,7 +81,6 @@ const useTenTap = (options?: UseTenTapArgs): ReturnType<typeof useEditor> => {
 	const sendStateUpdate = debounce((tiptapEditor: Editor) => {
 		const payload = {};
 
-		// eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion
 		const state = bridges.reduce((acc, ext) => {
 			if (!ext.extendEditorState) {
 				return acc;
@@ -140,7 +137,6 @@ const useTenTap = (options?: UseTenTapArgs): ReturnType<typeof useEditor> => {
 				return;
 			}
 
-			// eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion
 			const message = JSON.parse(event.data as string) as EditorMessage;
 
 			if (message.type === EditorMessageType.action) {

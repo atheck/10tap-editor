@@ -75,7 +75,6 @@ function RichText({ editor, onMessage, exclusivelyUseCustomOnMessage = true, ...
 		}
 
 		// Parse the message sent from the editor
-		// eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion
 		const { type, payload } = JSON.parse(data) as EditorMessage;
 
 		if (type === CoreEditorActionType.documentHeight) {

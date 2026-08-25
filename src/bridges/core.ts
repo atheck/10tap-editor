@@ -304,7 +304,6 @@ const CoreBridge = new BridgeExtension<CoreEditorState, Omit<CoreEditorInstance,
 					{
 						type: CoreEditorActionType.getHTML,
 					},
-					// eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion
 					(msg) => sendBridgeMessage(msg as CoreMessages),
 				);
 
@@ -315,7 +314,6 @@ const CoreBridge = new BridgeExtension<CoreEditorState, Omit<CoreEditorInstance,
 					{
 						type: CoreEditorActionType.getText,
 					},
-					// eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion
 					(msg) => sendBridgeMessage(msg as CoreMessages),
 				);
 
@@ -327,7 +325,6 @@ const CoreBridge = new BridgeExtension<CoreEditorState, Omit<CoreEditorInstance,
 					{
 						type: CoreEditorActionType.getJSON,
 					},
-					// eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion
 					(msg) => sendBridgeMessage(msg as CoreMessages),
 				);
 
@@ -346,7 +343,6 @@ const CoreBridge = new BridgeExtension<CoreEditorState, Omit<CoreEditorInstance,
 
 				if (editorStateRef?.current) {
 					updateEditorState?.({
-						// eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion
 						...(editorStateRef.current as BridgeState),
 						isFocused: true,
 					});

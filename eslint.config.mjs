@@ -24,6 +24,7 @@ export default [
 	{
 		rules: {
 			"unicorn/consistent-boolean-name": "off",
+			"@typescript-eslint/no-unsafe-type-assertion": "off",
 		},
 	},
 ];

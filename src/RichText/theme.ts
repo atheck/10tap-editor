@@ -12,7 +12,6 @@ const defaultEditorTheme: EditorTheme = {
 };
 
 const darkEditorTheme: EditorTheme = {
-	// eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion
 	toolbar: darkToolbarTheme as ToolbarTheme,
 	webview: {
 		backgroundColor: DARK_EDITOR_BACKGROUND_COLOR,

@@ -25,6 +25,7 @@
         "noReactNativeLiteralColors": "error",
         "noReactNativeRawText": "error",
         "noRestrictedDependencies": "off",
+        "noUnsafeTypeAssertion": "off",
         "useReactNativePlatformComponents": "error"
       }
     }
