@@ -1,3 +1,10 @@
+# [1.3.0](https://github.com/atheck/10tap-editor/compare/v1.2.3...v1.3.0) (2026-08-25)
+
+
+### Features
+
+* add `resetHeading` function to heading bridge ([218f4c3](https://github.com/atheck/10tap-editor/commit/218f4c3f87c7bc0427b29794ef22170aa2e4418d))
+
 ## [1.2.3](https://github.com/atheck/10tap-editor/compare/v1.2.2...v1.2.3) (2026-08-17)
 
 
