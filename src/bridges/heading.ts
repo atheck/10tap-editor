@@ -2,12 +2,13 @@ import { Heading, type HeadingOptions, type Level } from "@tiptap/extension-head
 import { BridgeExtension } from "./base";
 
 interface HeadingEditorState {
-	headingLevel: number | undefined;
+	headingLevel: Level | undefined;
 	canToggleHeading: boolean;
 }
 
 interface HeadingEditorInstance {
 	toggleHeading: (level: Level) => void;
+	resetHeading: () => void;
 }
 
 declare module "../types/EditorBridge" {
@@ -15,20 +16,29 @@ declare module "../types/EditorBridge" {
 	interface EditorBridge extends HeadingEditorInstance {}
 }
 
-interface HeadingMessage {
-	type: "toggle-heading";
-	payload: Level;
-}
+type HeadingMessage =
+	| {
+			type: "toggle-heading";
+			payload: Level;
+	  }
+	| { type: "reset-heading" };
 
 const HeadingEditorActionType = {
 	toggleHeading: "toggle-heading",
+	resetHeading: "reset-heading",
 } as const;
 
 const HeadingBridge = new BridgeExtension<HeadingEditorState, HeadingEditorInstance, HeadingMessage, HeadingOptions>({
 	tiptapExtension: Heading,
 	onBridgeMessage: (editor, message) => {
-		if (message.type === HeadingEditorActionType.toggleHeading) {
-			editor.chain().focus().toggleHeading({ level: message.payload }).run();
+		switch (message.type) {
+			case "toggle-heading":
+				editor.chain().focus().toggleHeading({ level: message.payload }).run();
+				break;
+
+			case "reset-heading":
+				editor.chain().focus().setParagraph().run();
+				break;
 		}
 
 		return false;
@@ -39,6 +49,7 @@ const HeadingBridge = new BridgeExtension<HeadingEditorState, HeadingEditorInsta
 				type: HeadingEditorActionType.toggleHeading,
 				payload: level,
 			}),
+		resetHeading: () => sendBridgeMessage({ type: HeadingEditorActionType.resetHeading }),
 	}),
 	extendEditorState: (editor) => ({
 		canToggleHeading: editor.can().toggleHeading({ level: 1 }),
@@ -46,5 +57,7 @@ const HeadingBridge = new BridgeExtension<HeadingEditorState, HeadingEditorInsta
 		headingLevel: editor.getAttributes("heading").level,
 	}),
 });
+
+export type { Level as HeadingLevel } from "@tiptap/extension-heading";
 
 export { HeadingBridge, HeadingEditorActionType };
