@@ -2,9 +2,6 @@
 	"extends": "@react-native/typescript-config",
 	"compilerOptions": {
 		"jsx": "react-jsx",
-		"types": [
-			"jest"
-		],
 		"paths": {
 			"tentap-editor-heck": [
 				"../src/index"
