@@ -3,6 +3,7 @@ import type { RecursivePartial } from "../RichText";
 import type { EditorTheme } from "../types";
 
 function mergeThemes(theme1: EditorTheme, theme2: RecursivePartial<EditorTheme> | undefined): EditorTheme {
+	// @ts-expect-error
 	return merge(theme1, theme2);
 }
 
