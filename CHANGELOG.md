@@ -1,3 +1,10 @@
+## [1.3.2](https://github.com/atheck/10tap-editor/compare/v1.3.1...v1.3.2) (2026-09-08)
+
+
+### Bug Fixes
+
+* don't rely on polyfills ([e7ae19d](https://github.com/atheck/10tap-editor/commit/e7ae19d33f552b9a572a937546a96fe76eb11f88))
+
 ## [1.3.1](https://github.com/atheck/10tap-editor/compare/v1.3.0...v1.3.1) (2026-08-31)
 
 
