@@ -1,5 +1,13 @@
 import { type JSX, useRef, useState } from "react";
-import { KeyboardAvoidingView, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import {
+	KeyboardAvoidingView,
+	ScrollView,
+	type ScrollViewInstance,
+	StyleSheet,
+	Text,
+	TouchableOpacity,
+	View,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { WebView } from "react-native-webview";
 import { RichText, Toolbar, useEditorBridge } from "tentap-editor-heck";
@@ -47,7 +55,7 @@ function EditorStickToKeyboardExample(): JSX.Element {
 		autofocus: true,
 		initialContent: "<p>Initial lovely message...</p>",
 	});
-	const messagesScrollViewRef = useRef<ScrollView>(null);
+	const messagesScrollViewRef = useRef<ScrollViewInstance>(null);
 	const tapRef = useRef(null);
 	const [messages, setMessages] = useState<{ text: string; date: number }[]>(defaultMessages);
 
