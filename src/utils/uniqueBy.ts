@@ -1,4 +1,3 @@
-// Unique by, last wins
 function uniqueBy<TItem>(items: TItem[], keyOrFn: keyof TItem | ((item: TItem) => unknown)): TItem[] {
 	const keyFn = typeof keyOrFn === "function" ? keyOrFn : (item: TItem): unknown => item[keyOrFn];
 	const seen = new Map<unknown, TItem>();
@@ -9,7 +8,8 @@ function uniqueBy<TItem>(items: TItem[], keyOrFn: keyof TItem | ((item: TItem) =
 		seen.set(key, item);
 	}
 
-	return seen.values().toArray();
+	// eslint-disable-next-line unicorn/prefer-iterator-to-array -- Not supported by Hermes.
+	return [...seen.values()];
 }
 
 export { uniqueBy };
