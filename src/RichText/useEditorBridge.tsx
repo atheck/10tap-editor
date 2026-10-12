@@ -16,8 +16,10 @@ import { defaultEditorTheme } from "./theme";
 import { getStyleSheetCSS } from "./utils";
 
 type RecursivePartial<TObject> = {
+	/* eslint-disable @typescript-eslint/no-generated-empty-object-type */
 	// biome-ignore lint/style/useNamingConvention: mapped type key P is conventional
 	[P in keyof TObject]?: RecursivePartial<TObject[P]>;
+	/* eslint-enable @typescript-eslint/no-generated-empty-object-type */
 };
 
 const useEditorBridge = (options?: {
@@ -57,11 +59,10 @@ const useEditorBridge = (options?: {
 		[options?.theme],
 	);
 
-	const editable = options?.editable === undefined ? true : options.editable;
+	const editable = options?.editable === undefined || options.editable;
 
 	// biome-ignore lint/correctness/useExhaustiveDependencies: editorInstance is intentionally excluded to avoid circular dependency
 	useEffect(() => {
-		// biome-ignore lint/suspicious/noUnnecessaryConditions: Bug in the linting rule. tsc confirms `.current` is `WebView | null` — dropping this guard fails typecheck.
 		if (!webviewRef.current) {
 			return;
 		}
@@ -108,7 +109,6 @@ const useEditorBridge = (options?: {
 	const getEditorState = (): BridgeState | Record<string, never> => editorStateRef.current;
 
 	const sendMessage = (message: EditorActionMessage): void => {
-		// biome-ignore lint/suspicious/noUnnecessaryConditions: Bug in the linting rule.
 		if (!webviewRef.current) {
 			// biome-ignore lint/suspicious/noConsole: intentional developer warning
 			console.warn("Editor isn't ready yet");

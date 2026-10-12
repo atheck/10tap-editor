@@ -69,7 +69,7 @@ const DEFAULT_TOOLBAR_ITEMS: ToolbarItem[] = [
 					// On android focus outside the editor will lose the tiptap selection so we wait for the next tick and set it with the last selection value we had
 					setTimeout(() => {
 						editor.setSelection(editorState.selection.from, editorState.selection.to);
-					});
+					}, 0);
 				}
 				setToolbarContext(ToolbarContext.link);
 			},

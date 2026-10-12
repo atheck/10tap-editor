@@ -139,22 +139,24 @@ const useTenTap = (options?: UseTenTapArgs): ReturnType<typeof useEditor> => {
 
 			const message = JSON.parse(event.data as string) as EditorMessage;
 
-			if (message.type === EditorMessageType.action) {
-				// Workaround for https://github.com/react-native-webview/react-native-webview/issues/3305
-				if (message.id) {
-					// @ts-expect-error
-					if (window.lastMessageID === message.id) {
-						return;
-					}
+			if (message.type !== EditorMessageType.action) {
+				return;
+			}
 
-					// @ts-expect-error
-					// eslint-disable-next-line unicorn/no-global-object-property-assignment
-					window.lastMessageID = message.id;
+			// Workaround for https://github.com/react-native-webview/react-native-webview/issues/3305
+			if (message.id) {
+				// @ts-expect-error
+				if (window.lastMessageID === message.id) {
+					return;
 				}
 
-				// Handle actions
-				handleEditorAction(message.payload);
+				// @ts-expect-error
+				// eslint-disable-next-line unicorn/no-global-object-property-assignment
+				window.lastMessageID = message.id;
 			}
+
+			// Handle actions
+			handleEditorAction(message.payload);
 		};
 
 		// We need to listen to both window and document events because some platform get

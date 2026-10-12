@@ -18,11 +18,11 @@ class AsyncMessages {
 	}
 
 	public onMessage(id: string, value: unknown): void {
-		if (!this.subscriptions[id]) {
+		const callbacks = this.subscriptions[id];
+
+		if (!callbacks) {
 			return;
 		}
-
-		const callbacks = this.subscriptions[id];
 
 		for (const callback of callbacks) {
 			callback(value);
@@ -30,6 +30,7 @@ class AsyncMessages {
 	}
 
 	public addListener(key: string, callback: Callback): void {
+		// eslint-disable-next-line unicorn/no-computed-property-existence-check -- This is typesafe.
 		if (!this.subscriptions[key]) {
 			this.subscriptions[key] = [];
 		}

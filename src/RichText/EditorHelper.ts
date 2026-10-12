@@ -1,6 +1,5 @@
 import { useState } from "react";
 import type { EditorBridge } from "../types";
-import type { Subscription } from "../types/Subscription";
 
 class _EditorHelper {
 	public editorLastInstance: EditorBridge | undefined;
@@ -18,13 +17,13 @@ class _EditorHelper {
 		}
 	}
 
-	public subscribe: Subscription<EditorBridge | undefined> = (cb) => {
+	public subscribe(cb: (val: EditorBridge | undefined) => void) {
 		this.cbs.push(cb);
 
 		return () => {
 			this.cbs = this.cbs.filter((sub) => sub !== cb);
 		};
-	};
+	}
 }
 
 const EditorHelper = new _EditorHelper();
@@ -36,8 +35,8 @@ const useRemoteEditorBridge = (): EditorBridge | undefined => {
 	// TODO: There is currently a bug on ios where the keyboard isn't unmounted when removed from subview.
 	// Because of this we can't rely on it to unsubscribe. Once this is fixed we can add this again make it be reactive
 	// useEffect(() => {
-	//   const unsubscribe = EditorHelper.subscribe((editor) => {
-	//     setEditor(editor);
+	//   const unsubscribe = EditorHelper.subscribe((editorBridge) => {
+	//     setEditor(editorBridge);
 	//   });
 
 	//   return () => {

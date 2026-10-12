@@ -11,8 +11,8 @@ interface EditLinkBarProps {
 	initialLink: string | undefined;
 }
 
-function EditLinkBar({ theme, initialLink, onEditLink, onLinkIconClick, onBlur }: EditLinkBarProps): JSX.Element {
-	const [link, setLink] = useState(initialLink ?? "");
+function EditLinkBar({ theme, initialLink = "", onEditLink, onLinkIconClick, onBlur }: EditLinkBarProps): JSX.Element {
+	const [link, setLink] = useState(initialLink);
 
 	return (
 		<View style={theme.toolbar.linkBarTheme.addLinkContainer}>

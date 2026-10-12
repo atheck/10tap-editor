@@ -2,9 +2,9 @@
 import { isExpo } from "../utils/misc";
 
 class ContentHeightListener {
-	public connected = false;
 	private resizeObserver: ResizeObserver | null = null;
 	private currentHeight: number | null = null;
+	public connected = false;
 
 	public connect(element: Element, cb: (height: number) => void): void {
 		this.connected = true;
@@ -15,10 +15,12 @@ class ContentHeightListener {
 			for (const entry of entries) {
 				const newHeight = entry.target.getBoundingClientRect().height;
 
-				if (this.currentHeight !== newHeight) {
-					this.currentHeight = newHeight;
-					cb(newHeight);
+				if (this.currentHeight === newHeight) {
+					continue;
 				}
+
+				this.currentHeight = newHeight;
+				cb(newHeight);
 			}
 		});
 

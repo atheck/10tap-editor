@@ -32,7 +32,7 @@ const getStyleSheetCSS = (css: string, styleSheetTag: string): string => `
 const getInjectedJS = (bridgeExtensions: BridgeExtension[]): string => {
 	let injectJs = "";
 	// For each bridge extension, we create a stylesheet with it's name as the tag
-	const styleSheets = bridgeExtensions.map(({ extendCss, name }) => getStyleSheetCSS(extendCss || "", name));
+	const styleSheets = bridgeExtensions.map(({ extendCss = "", name }) => getStyleSheetCSS(extendCss, name));
 
 	injectJs += styleSheets.join(" ");
 	injectJs += " true;";

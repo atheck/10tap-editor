@@ -3,8 +3,7 @@ import { defineConfig } from "vite";
 
 // This config is used to build the web editor into a single file
 
-// biome-ignore lint/style/noDefaultExport: Config file export.
-export default defineConfig({
+const config = defineConfig({
 	build: {
 		lib: {
 			// Could also be a dictionary or array of multiple entry points
@@ -28,3 +27,6 @@ export default defineConfig({
 		},
 	},
 });
+
+// biome-ignore lint/style/noDefaultExport: Config file export.
+export default config;

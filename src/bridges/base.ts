@@ -35,7 +35,7 @@ class BridgeExtension<TState = any, TEditorInstance = any, TMessage = any, TConf
 	public extendConfig?: Record<string, unknown>;
 
 	public constructor({
-		forceName,
+		forceName = "BridgeExtension",
 		tiptapExtension,
 		tiptapExtensionDeps,
 		onBridgeMessage,
@@ -50,7 +50,7 @@ class BridgeExtension<TState = any, TEditorInstance = any, TMessage = any, TConf
 			// eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-member-access
 			this.name = Array.isArray(tiptapExtension) ? tiptapExtension.map((ext) => ext.name).join("+") : tiptapExtension.name;
 		} else {
-			this.name = forceName ?? "BridgeExtension";
+			this.name = forceName;
 		}
 
 		this.tiptapExtension = tiptapExtension;
