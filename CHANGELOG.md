@@ -1,3 +1,10 @@
+## [1.3.4](https://github.com/atheck/10tap-editor/compare/v1.3.3...v1.3.4) (2026-10-19)
+
+
+### Bug Fixes
+
+* update deps only ([84f9849](https://github.com/atheck/10tap-editor/commit/84f9849c44881f53751d89ee38410f3837c6c3dd))
+
 ## [1.3.3](https://github.com/atheck/10tap-editor/compare/v1.3.2...v1.3.3) (2026-09-08)
 
 
