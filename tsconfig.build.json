@@ -5,6 +5,8 @@
 		"./src/webEditorUtils",
 		"examplelatest",
 		"./src/webEditorUtils/vite.config.ts",
-		"./vite.config.ts"
+		"./vite.config.ts",
+		"lib",
+		"lib-web"
 	]
 }
